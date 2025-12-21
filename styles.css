@@ -148,7 +148,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height:100%;
   z-index:-3;
   /* Make the animated sky partially transparent so the static artwork below shows through */
-  opacity: 0.72; /* lowered to reveal static artwork */
+  opacity: 0.70; /* lowered to reveal static artwork */
   mix-blend-mode: normal;
   transition: opacity .6s var(--ease2);
 }
@@ -389,14 +389,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   min-height:100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  padding: 86px 18px 22px;
+  /* Increased top padding so top navigation (constellation) doesn't overlap page content */
+  padding: 140px 18px 22px;
   position:relative;
 }
 @media (min-width: 720px){
-  .panel{ padding: 132px 28px 28px; }
+  /* On medium screens, provide more vertical space for nav + labels */
+  .panel{ padding: 190px 28px 28px; }
 }
 @media (min-width: 1024px){
-  .panel{ padding: 134px 48px 34px; }
+  /* Desktop gets the most top spacing to comfortably sit below the nav */
+  .panel{ padding: 210px 48px 34px; }
 }
 
 .panel__inner{
@@ -525,7 +528,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     radial-gradient(800px 500px at 25% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
     radial-gradient(700px 500px at 70% 40%, color-mix(in srgb, var(--accent2) 20%, transparent), transparent 62%),
     radial-gradient(1000px 700px at 20% 90%, color-mix(in srgb, var(--ember) 10%, transparent), transparent 55%);
-  opacity:.72;
+  opacity:.50;
   filter:url(#brush);
   pointer-events:none;
   mix-blend-mode: screen;
@@ -538,7 +541,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   inset:0;
   /* darken the card slightly to keep text legible against busy backgrounds */
   background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.10));
-  opacity:.72;
+  opacity:.50;
   pointer-events:none;
 }
 
