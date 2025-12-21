@@ -472,7 +472,7 @@
               <p class="p">${escapeHtml(pr.desc)}</p>
 
               <div class="row" style="margin-top:12px;">
-                ${pr.tags.map(t => `<span class="chip">${escapeHtml(t)}</span>`).join("")}
+                ${pr.tags.map((t, idx) => { const tones = ['sun','cobalt','cypress','ember','azure']; const tone = tones[idx % tones.length]; return `<span class="chip chip--${tone}">${escapeHtml(t)}</span>` }).join("")}
               </div>
             </article>
           `).join("")}
