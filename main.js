@@ -519,7 +519,7 @@
               </div>
               <hr class="sep"/>
               <div class="skill-list" id="skillList" aria-label="All skills">
-                ${s.groups.map(g => g.items.map(it => `<button class="chip skill-chip ${g.tone === "accent" ? "chip--accent" : ""}" type="button" data-action="copySkill" data-skill="${escapeHtml(it)}" title="Click to copy">${escapeHtml(it)}</button>`).join("")).join("")}
+                ${s.groups.map(g => g.items.map(it => `<button class="chip skill-chip ${g.tone ? `chip--${g.tone}` : ''}" type="button" data-action="copySkill" data-skill="${escapeHtml(it)}" title="Click to copy">${escapeHtml(it)}</button>`).join("")).join("") }
               </div>
             </div>
           </div>

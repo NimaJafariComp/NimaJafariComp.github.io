@@ -224,7 +224,7 @@ window.PORTFOLIO = {
     groups: [
       {
         name: "Languages & Frameworks",
-        tone: "accent",
+        tone: "sun",
         items: [
           "Python", "Java", "C++", "JavaScript", "TypeScript", "HTML/CSS", "SQL",
           "PyTorch", "TensorFlow/Keras", "scikit‑learn", "NumPy", "Pandas", "Jupyter",
@@ -233,6 +233,7 @@ window.PORTFOLIO = {
       },
       {
         name: "Machine Learning & Research",
+        tone: "cobalt",
         items: [
           "Reinforcement Learning (PPO, A2C, DQN, SAC, TD3)",
           "Computer Vision (ViT, ResNet, EfficientNet, Faster R-CNN, YOLO, Swin Transformer)",
@@ -249,12 +250,14 @@ window.PORTFOLIO = {
       }, 
       {
         name: "Databases & Infrastructure",
+        tone: "cypress",
         items: [
           "PostgreSQL", "MySQL", "SQLite", "Neo4j", "Redis", "MinIO", "Docker", "Docker Compose", "Alembic", "REST APIs"
         ]
       },
       {
         name: "Engineering & Tooling",
+        tone: "ember",
         items: [
           "Git", "pytest", "CI/CD (GitHub Actions)", "Linux + Bash", "Observability (logs/metrics)", "Security basics (auth, OWASP)",
           "Performance profiling", "Testing strategy", "API design", "Data structures & algorithms", "System design", "Debugging", "Documentation"
@@ -262,6 +265,7 @@ window.PORTFOLIO = {
       },
       {
         name: "Data & Analysis",
+        tone: "azure",
         items: [
           "Statistics", "Feature engineering", "Data cleaning", "Exploratory Data Analysis (EDA)", "Visualization",
           "Forecasting", "A/B testing basics"

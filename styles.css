@@ -29,8 +29,8 @@
   --cypress:#0b2b2a;
   --ember:#ff7d4a;
 
-  --accent: var(--moon); /* yellow */
-  --accent2: var(--cypress); /* green */
+  --accent: var(--moon);
+  --accent2: var(--azure);
 
   --card: rgba(10, 14, 30, .62);
   --card2: rgba(10, 14, 30, .42);
@@ -82,9 +82,16 @@
   --cypress:#2f6b3f;
   --ember:#e86b3a;
 
-  /* Provence uses green + blue hues */
-  --accent: var(--cypress); /* green */
-  --accent2: var(--azure); /* blue */
+  /* Force yellowish accent across themes */
+  --accent: var(--moon);
+  --accent2: color-mix(in srgb, var(--moon) 36%, white);
+
+  /* Tone palette (default: Starry Night — yellow + green) */
+  --tone-sun: #ffd45a; /* yellow */
+  --tone-cobalt: #1d6fe0; /* blue */
+  --tone-cypress: #0b6b4f; /* green */
+  --tone-ember: #ff7d4a; /* orange */
+  --tone-azure: #4aa3d9; /* light blue */
 
   /* Light, slightly tinted card backgrounds so text is dark and legible */
   --card: rgba(255,255,255,.96);
