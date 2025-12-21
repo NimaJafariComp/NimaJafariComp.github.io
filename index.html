@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Painterly SVG filters live in-document so we can reference them in CSS -->
+  
   <svg class="svg-filters" width="0" height="0" aria-hidden="true" focusable="false">
     <filter id="brush">
       <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="2" result="noise"/>
@@ -40,7 +40,7 @@
       <feTurbulence type="turbulence" baseFrequency="0.8" numOctaves="2" seed="8" result="noise"/>
   </svg>
 
-  <!-- Static theme-backed canvas: starry night (dark) / sunflowers (light) -->
+  
   <div id="staticBg" aria-hidden="true"></div>      <feColorMatrix type="saturate" values="0" />
       <feComponentTransfer>
         <feFuncA type="table" tableValues="0 0.35" />
@@ -103,7 +103,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- Vinyl player (custom UI, audio via YouTube embed) -->
+  
   <aside class="vinyl" id="vinyl" aria-label="Music player">
     <div class="vinyl__shell brush-card">
       <button class="vinyl__collapse" id="vinylCollapse" type="button" aria-label="Collapse music player">—</button>
@@ -125,7 +125,7 @@
         <div class="vinyl__hint" id="vinylHint">Tip: press <span class="mono">M</span> to toggle music</div>
       </div>
 
-      <!-- Hidden YouTube player root -->
+      
       <div class="yt" id="ytPlayer" aria-hidden="true"></div>
     </div>
   </aside>

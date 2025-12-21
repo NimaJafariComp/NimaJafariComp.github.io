@@ -1,7 +1,4 @@
-/* =========================================================
-   Editable content lives here.
-   Update this file to personalize the site without touching JS.
-   ========================================================= */
+
 
 window.PORTFOLIO = {
   meta: {
@@ -10,13 +7,10 @@ window.PORTFOLIO = {
     email: "mohammadnimajafari@yahoo.com",
     githubUser: "NimaJafariComp",
 
-    // Public CV. Replace with your own file if you want.
     resumeUrl: "assets/Nima_Jafari_Resume_2025_public.pdf",
 
-    // Headshot (placeholder included). Replace this file with your real photo.
     headshotUrl: "assets/headshot.png",
 
-    // Safety: don't show phone publicly.
     showPhone: false,
   },
 

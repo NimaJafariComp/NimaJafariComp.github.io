@@ -22,7 +22,7 @@
 
   <rect width="256" height="256" rx="56" fill="url(#g0)"/>
 
-  <!-- A simple “brush swirl star” mark -->
+  
   <path d="M55 136c24-42 76-66 122-44 41 20 30 66-1 77-33 12-70-15-68-42 2-30 48-39 61-14 13 24-10 44-33 38" stroke="#FFD45A" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.92" filter="url(#glow)"/>
 
   <circle cx="178" cy="72" r="10" fill="#FFD45A" filter="url(#glow)"/>

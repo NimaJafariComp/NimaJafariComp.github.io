@@ -1,6 +1,4 @@
-/* =========================================================
-   Main interactive logic (Portfolio)
-   ========================================================= */
+
 
 (() => {
   const data = window.PORTFOLIO;
@@ -25,9 +23,7 @@
     pinnedMachine: null,
   };
 
-  /* -----------------------------
-     Small utils
-     ----------------------------- */
+  
   function escapeHtml(str) {
     return String(str)
       .replaceAll("&", "&amp;")
@@ -57,9 +53,7 @@
     }
   }
 
-  /* -----------------------------
-     Theme manager
-     ----------------------------- */
+  
   function setTheme(theme, { save = true, announce = true } = {}) {
     const t = (theme === "provence") ? "provence" : "night";
     state.theme = t;
@@ -68,7 +62,6 @@
     const meta = data.themes?.[t];
     if (themeLabel && meta) themeLabel.textContent = meta.label;
 
-    // Update theme button icon
     const btnTheme = $("#btnTheme");
     if (btnTheme && meta) {
       const icon = $(".btn__icon", btnTheme);
@@ -78,7 +71,6 @@
       btnTheme.setAttribute("aria-label", `Toggle theme (current: ${meta.label})`);
     }
 
-    // Update browser UI color
     if (themeColorMeta) {
       themeColorMeta.setAttribute("content", t === "provence" ? "#f6f0d2" : "#0b1020");
     }
@@ -87,12 +79,9 @@
       try { localStorage.setItem("theme", t); } catch {}
     }
 
-    // Inform background
     sky?.setTheme?.(t);
 
-    // Refresh constellation SVG lines (update colors) after theme change
     try { drawLines(); } catch(e){}
-    // Small deferred redraw to account for any layout changes
     setTimeout(() => { try { drawLines(); } catch(e){} }, 80);
 
     if (announce) {
@@ -104,9 +93,7 @@
     setTheme(state.theme === "night" ? "provence" : "night");
   }
 
-  /* -----------------------------
-     Motion manager
-     ----------------------------- */
+  
   function setMotion(enabled) {
     state.motionEnabled = !!enabled;
     root.style.setProperty("--motion", state.motionEnabled ? 1 : 0);
@@ -128,9 +115,7 @@
     showToast(state.motionEnabled ? "Motion: on" : "Motion: off");
   }
 
-  /* -----------------------------
-     Sections + rendering
-     ----------------------------- */
+  
   function render() {
     renderHome($("#panel-home"));
     renderAbout($("#panel-about"));
@@ -354,7 +339,6 @@
     if (!host) return;
     const t = data.machines;
 
-    // Extract unique categories
     const categories = ['All', ...new Set(t.items.map(it => it.category).filter(Boolean))];
 
     host.innerHTML = `
@@ -398,9 +382,6 @@
       </div>
     `;
 
-    // -----------------------------
-    // Category filtering
-    // -----------------------------
     const filterBtns = Array.from(host.querySelectorAll('.filterPill'));
     const nodeEls = Array.from(host.querySelectorAll('.timelineNode'));
 
@@ -408,11 +389,9 @@
       btn.addEventListener('click', () => {
         const selectedCategory = btn.dataset.category;
         
-        // Update active state
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
-        // Filter nodes
         nodeEls.forEach(node => {
           const nodeCategory = node.dataset.category;
           if (selectedCategory === 'All' || nodeCategory === selectedCategory) {
@@ -424,9 +403,6 @@
       });
     });
 
-    // -----------------------------
-    // Smooth scroll on node click
-    // -----------------------------
     nodeEls.forEach((node, i) => {
       node.addEventListener('click', () => {
         node.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -639,9 +615,7 @@
     `;
   }
 
-  /* -----------------------------
-     Constellation nav + scrolling
-     ----------------------------- */
+  
   const sections = $$(".panel").map((p) => ({
     id: p.dataset.section,
     label: p.dataset.label || (p.dataset.section || "").replace(/^\w/, (m) => m.toUpperCase()),
@@ -687,7 +661,6 @@
     svg.innerHTML = "";
 
     const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    // Theme-specific gradient stops: dark ink for Provence (Sunflowers), bright white for Night (Starry Night)
     const isProvence = (state?.theme === "provence" || document.documentElement.dataset.theme === "provence");
     const gradStops = isProvence ? `
       <stop offset="0" stop-color="rgba(0,0,0,0)"/>
@@ -710,7 +683,6 @@
       line.setAttribute("x2", pts[i + 1].x);
       line.setAttribute("y2", pts[i + 1].y);
       line.setAttribute("stroke", "url(#lineGrad)");
-      // Use slightly different weight/opacity per theme to increase visibility
       line.setAttribute("stroke-width", isProvence ? "2" : "2.5");
       line.setAttribute("stroke-linecap", "round");
       line.setAttribute("opacity", isProvence ? "0.85" : "0.95");
@@ -725,7 +697,6 @@
     const left = target ? target.offsetLeft : idx * window.innerWidth;
     deck.scrollTo({ left, behavior: "smooth" });
 
-    // Auto-collapse the vinyl player a short time after navigation (helps keep content visible)
     try { vinyl?.scheduleAutoCollapse?.(900); } catch (e) {}
   }
 
@@ -740,9 +711,6 @@
     return Math.round(left / deck.clientWidth);
   }
 
-  // Wheel = vertical inside panel, but drift horizontally when at edges
-  // To avoid accidental tab switches when the user reaches the bottom/top of a panel,
-  // require a small accumulated extra scroll (threshold) before initiating horizontal drift
   const _wheelState = { el: null, acc: 0, dir: 0, threshold: 80 };
 
   deck.addEventListener("wheel", (e) => {
@@ -758,26 +726,20 @@
     const atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 1;
     const goingDown = e.deltaY > 0;
 
-    // Only drift horizontally when user explicitly requests it (Shift) or the inner can't scroll.
-    // This prevents accidental tab switches when the user reaches the top/bottom of a panel.
     const wantHorizontal = e.shiftKey || !canScroll;
 
     if (!wantHorizontal) {
-      // If the user is scrolling inside the content area, reset any accumulated state
       if (_wheelState.el === inner) { _wheelState.acc = 0; _wheelState.el = null; _wheelState.dir = 0; }
-      return; // let inner scroll normally
+      return;
     }
 
-    // Candidate for horizontal drift
     e.preventDefault();
 
-    // If the inner can't scroll at all, immediately drift horizontally
     if (!canScroll) {
       deck.scrollBy({ left: e.deltaY, behavior: "smooth" });
       return;
     }
 
-    // If we are at the edge and the panel CAN scroll, require extra gesture (accumulation)
     const dir = goingDown ? 1 : -1;
     if (_wheelState.el !== inner || _wheelState.dir !== dir) {
       _wheelState.el = inner;
@@ -787,13 +749,10 @@
 
     _wheelState.acc += Math.abs(e.deltaY);
 
-    // If the accumulated delta is below the threshold, don't drift yet (but prevent default)
     if (_wheelState.acc < _wheelState.threshold) {
-      // optional: small subtle hint could be shown here
       return;
     }
 
-    // Otherwise perform a smooth horizontal drift and reset accumulator
     deck.scrollBy({ left: dir * Math.max(160, _wheelState.acc), behavior: "smooth" });
     _wheelState.acc = 0;
     _wheelState.el = null;
@@ -801,7 +760,6 @@
 
   }, { passive: false });
 
-  // Reset accumulator if user scrolls the inner panel (we don't want stale accumulation)
   $$(".panel__inner").forEach(inner => {
     inner.addEventListener("scroll", () => {
       if (_wheelState.el === inner) {
@@ -810,7 +768,6 @@
     });
   });
 
-  // Highlight current nav dot
   const obs = new IntersectionObserver((entries) => {
     const visible = entries
       .filter(e => e.isIntersecting)
@@ -827,9 +784,7 @@
 
   $$(".panel").forEach(p => obs.observe(p));
 
-  /* -----------------------------
-     Actions
-     ----------------------------- */
+  
   async function copyEmail() {
     const email = data.meta.email;
     try {
@@ -880,7 +835,6 @@
     $("#btnMusic")?.addEventListener("click", () => vinyl?.togglePlay?.());
   }
 
-  // Keyboard navigation + shortcuts
   window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight") return jumpRelative(1);
     if (e.key === "ArrowLeft") return jumpRelative(-1);
@@ -891,11 +845,8 @@
     if (k === "m") return vinyl?.togglePlay?.();
   });
 
-  /* -----------------------------
-     Magnetic buttons
-     ----------------------------- */
+  
   function attachMagnetic() {
-    // Disable magnetic effect on small screens for better performance
     if (window.innerWidth <= 640) return;
     
     const strength = 0.22;
@@ -919,9 +870,7 @@
     });
   }
 
-  /* -----------------------------
-     Tilt cards
-     ----------------------------- */
+  
   function attachTilt() {
     const cards = $$(".tilt");
     cards.forEach((card) => {
@@ -950,9 +899,7 @@
     });
   }
 
-  /* -----------------------------
-     GitHub stats
-     ----------------------------- */
+  
   async function loadGitHubStats() {
     const user = data.meta.githubUser;
     if (!user) return;
@@ -978,11 +925,9 @@
     }
   }
 
-  /* Command palette removed */
+  
 
-  /* -----------------------------
-     Van Gogh background (canvas)
-     ----------------------------- */
+  
   class VanGoghSky {
     constructor(canvas) {
       this.canvas = canvas;
@@ -996,7 +941,6 @@
 
       this.pointer = { x: 0, y: 0, active: false };
 
-      // Theme mixing: 0 = night, 1 = provence
       this.mix = 0;
       this.targetMix = 0;
 
@@ -1102,7 +1046,6 @@
       const nx = x / this.w;
       const ny = y / this.h;
 
-      // Swirl center shifts with theme
       const cx = nx - this.lerp(0.58, 0.42, this.mix);
       const cy = ny - this.lerp(0.35, 0.55, this.mix);
       const r = Math.sqrt(cx * cx + cy * cy) + 1e-6;
@@ -1114,7 +1057,6 @@
       const noiseStrength = this.lerp(4.0, 2.4, this.mix);
       const drift = (n - 0.5) * noiseStrength;
 
-      // Add a gentle "wind" direction in the Provence theme
       const wind = this.mix * (Math.sin(t * 0.12) * 0.6 + 0.2);
 
       return swirl + drift + wind;
@@ -1133,7 +1075,6 @@
       const pCount = Math.floor((this.w * this.h) / (20000 * this.dpr));
       this.particles = Array.from({ length: Math.max(320, pCount) }, () => this.makeParticle(true));
 
-      // Initial paint wash
       const ctx = this.ctx;
       ctx.clearRect(0, 0, this.w, this.h);
       const fill = this.mixRGB(this.fillNight, this.fillDay, this.mix);
@@ -1174,12 +1115,10 @@
     step = () => {
       if (!this.running) return;
 
-      // Smooth theme blending
       this.mix = this.lerp(this.mix, this.targetMix, 0.03);
 
       const ctx = this.ctx;
 
-      // Slight fade for trails
       ctx.globalCompositeOperation = "source-over";
       const fill = this.mixRGB(this.fillNight, this.fillDay, this.mix);
       const fadeAlpha = this.lerp(0.10, 0.14, this.mix);
@@ -1188,7 +1127,6 @@
 
       this.drawStars(ctx);
 
-      // Paint strokes
       ctx.globalCompositeOperation = "lighter";
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
@@ -1257,9 +1195,7 @@
 
   const sky = new VanGoghSky($("#sky"));
 
-  /* -----------------------------
-     Skill nebula animation
-     ----------------------------- */
+  
   class SkillNebula {
     constructor() {
       this.stage = null;
@@ -1393,9 +1329,7 @@
 
   const nebula = new SkillNebula();
 
-  /* -----------------------------
-     Machines flight (scroll-driven)
-     ----------------------------- */
+  
   class MachinesFlight {
     constructor({ panelInner, scrollEl, sceneEl, nodesEl, canvasEl, hud }) {
       this.panelInner = panelInner;
@@ -1418,7 +1352,7 @@
 
       this.perspective = 1400;
       this.spacing = 520;
-      this.totalDepth = this.spacing * (this.items.length); // because first node starts at -spacing
+      this.totalDepth = this.spacing * (this.items.length);
 
       this.onScroll = this.onScroll.bind(this);
       this.onResize = this.onResize.bind(this);
@@ -1439,7 +1373,6 @@
       });
       this.sceneEl?.addEventListener("pointerleave", () => this.pointer.active = false);
 
-      // Milestone jump buttons
       const grid = $("#milestoneGrid");
       grid?.addEventListener("click", (e) => {
         const b = e.target.closest("[data-milestone]");
@@ -1448,7 +1381,6 @@
         this.scrollToIndex(idx);
       });
 
-      // Unpin
       $("#flightUnpin")?.addEventListener("click", () => {
         this.pinned = null;
         showToast("Unpinned");
@@ -1456,7 +1388,6 @@
     }
 
     seedRand(seed) {
-      // Mulberry32
       let t = seed >>> 0;
       return () => {
         t += 0x6D2B79F5;
@@ -1470,7 +1401,6 @@
       if (!this.nodesEl) return;
       this.nodesEl.innerHTML = "";
 
-      // Make the scroll path tall enough
       const vh = 180 + this.items.length * 30;
       if (this.scrollEl) this.scrollEl.style.height = `${vh}vh`;
 
@@ -1507,7 +1437,6 @@
         return { i, it, el, x, y, z };
       });
 
-      // Draw initial transforms
       for (const n of this.nodes) {
         n.el.style.transform = `translate3d(${n.x}px, ${n.y}px, ${n.z}px) translate(-50%, -50%)`;
       }
@@ -1544,7 +1473,6 @@
       const start = this.scrollEl.offsetTop;
       const end = start + this.scrollEl.offsetHeight - this.panelInner.clientHeight;
 
-      // Where along the path does this node reach the camera?
       const targetZ = this.spacing * (idx + 1);
       const progress = clamp(targetZ / this.totalDepth, 0, 1);
       const targetScroll = start + progress * (end - start);
@@ -1553,9 +1481,7 @@
     }
 
     onScroll() {
-      // Just request a frame
       if (this.running) return;
-      // We'll rely on RAF loop when motion is on, but when motion is off we still update once
       this.updateOnce();
     }
 
@@ -1569,7 +1495,6 @@
 
       const zTravel = progress * this.totalDepth;
 
-      // Parallax drift
       if (this.pointer.active) {
         const tx = (this.pointer.x / this.sceneW - 0.5);
         const ty = (this.pointer.y / this.sceneH - 0.5);
@@ -1587,7 +1512,6 @@
 
       this.nodesEl.style.transform = `translate3d(${px}px, ${py}px, ${zTravel}px) rotateZ(${rot}deg)`;
 
-      // Determine active (closest to camera plane)
       let best = 0;
       let bestAbs = Infinity;
 
@@ -1596,7 +1520,6 @@
         const a = Math.abs(ze);
         if (a < bestAbs) { bestAbs = a; best = n.i; }
 
-        // Fade nodes behind the camera
         const opacity = (ze > this.perspective - 120) ? 0 : clamp(1 - Math.max(0, ze) / 900, 0, 1);
         n.el.style.opacity = opacity.toFixed(3);
         n.el.style.pointerEvents = opacity < 0.1 ? "none" : "auto";
@@ -1606,7 +1529,6 @@
       if (active !== this.lastActiveIndex) {
         this.lastActiveIndex = active;
         this.updateHUD(active, { pinned: this.pinned != null });
-        // Update node classes
         for (const n of this.nodes) {
           n.el.classList.toggle("is-active", n.i === active);
           n.el.classList.toggle("is-pinned", this.pinned === n.i);
@@ -1632,7 +1554,6 @@
     }
 
     project(n, zTravel) {
-      // Project node position to 2D for canvas lines
       const ze = n.z + zTravel;
       const P = this.perspective;
       const denom = (P - ze);
@@ -1658,20 +1579,17 @@
       ctx.save();
       ctx.scale(dpr, dpr);
 
-      // Soft background glow
       const grad = ctx.createRadialGradient(this.sceneW * 0.6, this.sceneH * 0.35, 40, this.sceneW * 0.6, this.sceneH * 0.35, this.sceneW * 0.9);
       grad.addColorStop(0, state.theme === "provence" ? "rgba(255,220,140,.22)" : "rgba(255,212,90,.18)");
       grad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, this.sceneW, this.sceneH);
 
-      // Project nodes
       const pts = this.nodes
         .map(n => ({ n, p: this.project(n, zTravel) }))
-        .filter(o => o.p && o.p.ze < 900) // skip too close
+        .filter(o => o.p && o.p.ze < 900)
         .sort((a,b) => a.p.ze - b.p.ze);
 
-      // Lines: connect nearby indices like a constellation
       ctx.lineWidth = 2;
       ctx.lineCap = "round";
       ctx.globalCompositeOperation = "lighter";
@@ -1692,7 +1610,6 @@
         ctx.stroke();
       }
 
-      // Stars at points
       for (const o of pts) {
         const isActive = o.n.i === activeIndex;
         const r = (isActive ? 6.2 : 3.2) * clamp(o.p.scale, 0.8, 1.5);
@@ -1728,9 +1645,7 @@
 
   let machinesFlight = null;
 
-  /* -----------------------------
-     Vinyl player (YouTube)
-     ----------------------------- */
+  
   class VinylPlayer {
     constructor({ rootEl, youtubeEl, diskEl, playBtn, muteBtn, volEl, collapseBtn, titleEl, subEl, labelEl, hintEl }) {
       this.rootEl = rootEl;
@@ -1753,12 +1668,10 @@
 
       this.videoId = data.audio.youtubeId;
 
-      // UI text
       if (this.titleEl) this.titleEl.textContent = data.audio.title;
       if (this.subEl) this.subEl.textContent = `${data.audio.artist} • ${data.audio.note}`;
       if (this.labelEl) this.labelEl.textContent = data.audio.artist.split(" ")[0] || "Miles";
 
-      // collapsed state - auto-collapse on mobile
       const isMobile = window.innerWidth <= 640;
       const collapsed = isMobile ? true : this.readBool("vinylCollapsed", false);
       this.setCollapsed(collapsed, { save: false });
@@ -1771,16 +1684,13 @@
         this.setCollapsed(!this.rootEl.classList.contains("vinyl--collapsed"));
       });
 
-      // Mobile UX: tap the collapsed player to expand (hover isn't reliable on touch)
       this.rootEl?.addEventListener("click", (e) => {
         if (!this.rootEl) return;
         if (window.innerWidth > 640) return;
         if (!this.rootEl.classList.contains("vinyl--collapsed")) return;
 
-        // Ignore taps on the collapse button itself (it already toggles)
         if (e?.target?.closest?.("#vinylCollapse")) return;
 
-        // If the user somehow taps an interactive control, don't hijack it
         if (e?.target?.closest?.("button, input, a")) return;
 
         this.setCollapsed(false);
@@ -1808,16 +1718,14 @@
       this.rootEl.classList.toggle("vinyl--collapsed", !!collapsed);
       if (save) this.writeBool("vinylCollapsed", !!collapsed);
 
-      // If the user expanded, clear any scheduled auto-collapse
       if (!collapsed) this.clearAutoCollapse?.();
 
-      // Update collapse button text and aria for better affordance
       if (this.collapseBtn) {
         if (collapsed) {
-          this.collapseBtn.textContent = "▶"; // indicate expand
+          this.collapseBtn.textContent = "▶";
           this.collapseBtn.setAttribute("aria-label", "Expand music player");
         } else {
-          this.collapseBtn.textContent = "—"; // compact collapse symbol
+          this.collapseBtn.textContent = "—";
           this.collapseBtn.setAttribute("aria-label", "Collapse music player");
         }
       }
@@ -1835,18 +1743,15 @@
     initYouTube() {
       if (!data.audio.enabled) return;
 
-      // Already loaded?
       if (window.YT && window.YT.Player) {
         this.createPlayer();
         return;
       }
 
-      // Load iframe API
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
       document.head.appendChild(tag);
 
-      // YouTube calls this global
       const prev = window.onYouTubeIframeAPIReady;
       window.onYouTubeIframeAPIReady = () => {
         if (typeof prev === "function") prev();
@@ -1873,13 +1778,11 @@
         events: {
           onReady: () => {
             this.ready = true;
-            // Use saved volume if available, otherwise start at 20%
             const hasSavedVol = (() => { try { return localStorage.getItem("vinylVol") !== null; } catch { return false; } })();
             const vol = hasSavedVol ? this.readVolume() : 20;
             if (this.volEl) this.volEl.value = String(vol);
             this.player.setVolume(vol);
 
-            // First try to autoplay unmuted (some browsers may permit if volume is low).
             try {
               if (this.muted) { this.player.unMute(); this.muted = false; }
             } catch (e) {}
@@ -1887,19 +1790,16 @@
             this.player.playVideo();
             this.updateUI();
 
-            // If not playing within a short window, fallback to muted autoplay and show unmute hint
             if (this._autoplayFallbackTimer) { clearTimeout(this._autoplayFallbackTimer); this._autoplayFallbackTimer = null; }
             this._autoplayFallbackTimer = setTimeout(() => {
               if (!this.playing) {
                 try { this.player.mute(); this.muted = true; this.player.playVideo(); } catch (e) {}
                 this.updateUI();
 
-                // Show persistent unmute hint (reusing previous hint behavior)
                 try { showToast("Tap anywhere or press M to enable audio"); } catch {}
                 this._origHint = this.hintEl?.textContent;
                 if (this.hintEl) this.hintEl.textContent = "Tap anywhere or press M to enable audio";
                 this.rootEl?.classList.add("vinyl--unmute-hint");
-                // auto-hide after 8s
                 this._unmuteHintTimeout = setTimeout(() => {
                   if (this.hintEl && typeof this._origHint !== "undefined") this.hintEl.textContent = this._origHint || "Tip: press M to toggle music";
                   this.rootEl?.classList.remove("vinyl--unmute-hint");
@@ -1924,7 +1824,6 @@
               }
             }, 1200);
 
-            // Ensure a second play attempt after a short delay
             setTimeout(() => {
               if (this.ready && this.player) {
                 try { this.player.playVideo(); } catch (e) {}
@@ -1932,7 +1831,6 @@
             }, 1000);
           },
           onStateChange: (ev) => {
-            // 1 = playing, 2 = paused
             if (ev.data === window.YT.PlayerState.PLAYING) {
               this.playing = true;
               if (this._autoplayFallbackTimer) { clearTimeout(this._autoplayFallbackTimer); this._autoplayFallbackTimer = null; }
@@ -1976,7 +1874,6 @@
       if (this.muted) this.player.mute();
       else {
         this.player.unMute();
-        // Hide any unmute hint if present
         if (this.hintEl && typeof this._origHint !== "undefined") this.hintEl.textContent = this._origHint || "Tip: press M to toggle music";
         this.rootEl?.classList.remove("vinyl--unmute-hint");
         if (this._unmuteHintTimeout) { clearTimeout(this._unmuteHintTimeout); this._unmuteHintTimeout = null; }
@@ -2004,7 +1901,6 @@
       }
     }
 
-    // Schedule auto-collapse after `delay` ms (useful for mobile or navigation-driven auto-hide)
     scheduleAutoCollapse(delay = 1500) {
       try {
         if (this._autoCollapseTimer) clearTimeout(this._autoCollapseTimer);
@@ -2021,16 +1917,12 @@
 
   let vinyl = null;
 
-  /* -----------------------------
-     Boot
-     ----------------------------- */
-  // Initial theme
+  
   const savedTheme = (() => {
     try { return localStorage.getItem("theme"); } catch { return null; }
   })();
   setTheme(savedTheme || (prefersLight() ? "provence" : "night"), { save: false, announce: false });
 
-  // Render
   render();
   buildConstellationNav();
   attachActions();
@@ -2040,10 +1932,8 @@
 
 
 
-  // Mount nebula
 
 
-  // Mount machines flight
   const machinesInner = $("#panel-machines");
   const flightScroll = $("#flightScroll");
   const flightScene = $("#flightScene");
@@ -2062,7 +1952,6 @@
     });
   }
 
-  // Mount vinyl
   const vinylRoot = $("#vinyl");
   if (vinylRoot && data.audio?.enabled) {
     vinyl = new VinylPlayer({
@@ -2079,15 +1968,10 @@
       hintEl: $("#vinylHint"),
     });
 
-    // On mobile, auto-collapse after a short delay so the player doesn't obscure content
-    try {
-      if (window.innerWidth <= 520) {
-        vinyl.scheduleAutoCollapse(1600);
-      }
-    } catch (e) {}
+    // Don't auto-collapse on initial mount on mobile; user should control expand/collapse explicitly.
+    // (If desired we can add a user-setting to enable automatic collapse after some delay.)
   }
 
-  // Motion state
   setMotion(state.motionEnabled);
 
 })();
