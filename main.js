@@ -349,15 +349,15 @@
             <div class="small">${escapeHtml(t.subtitle)}</div>
           </div>
           <div class="sectionTitle__right">
-            <span class="chip chip--accent">scroll‑driven flight</span>
+            <span class="chip chip--accent">interactive timeline</span>
           </div>
         </div>
 
         <div class="flightIntro brush-card card-pad" style="margin-top:16px;">
           <div class="grid grid--2">
             <div>
-              <div class="h2" style="margin-top:0;">Fly through milestones</div>
-              <p class="p">Explore milestones along the timeline; click a node to pin details.</p>
+              <div class="h2" style="margin-top:0;">Explore the timeline</div>
+              <p class="p">Pan or drag the timeline, click a milestone for details.</p>
               <div class="row">
                 <button class="btn btn--ghost magnetic" type="button" data-action="toggleTheme"><span class="btn__icon">${escapeHtml(data.themes?.night?.emoji || "☾")}</span><span class="btn__label">Switch theme</span></button>
               </div>
@@ -377,7 +377,7 @@
 
         <div class="timelineStatic" id="timelineStatic" aria-label="Timeline">
           <div class="timelineStatic__inner brush-card" style="padding:20px; border-radius:18px;">
-            <div class="timelineStatic__lead small">Major milestones — static, styled timeline</div>
+            <div class="timelineStatic__lead small">Major milestones — interactive timeline</div>
             <div class="timelineStatic__grid" id="timelineGrid">
               ${t.items.map(it => `
                 <article class="timelineNode">
@@ -410,6 +410,152 @@
         </div>
       </div>
     `;
+
+    // -----------------------------
+    // Timeline interactivity
+    // -----------------------------
+    const grid = host.querySelector('#timelineGrid');
+    const nodeEls = Array.from(grid ? grid.querySelectorAll('.timelineNode') : []);
+    const milestoneBtns = Array.from(host.querySelectorAll('.milestone'));
+
+    // Create details panel
+    let detailsEl = host.querySelector('.machinesDetails');
+    if (!detailsEl) {
+      detailsEl = document.createElement('div');
+      detailsEl.className = 'machinesDetails';
+      detailsEl.innerHTML = `
+        <div class="machinesDetails__panel">
+          <button class="machinesDetails__close btn btn--ghost" aria-label="Close">✕</button>
+          <div class="machinesDetails__year"></div>
+          <div class="machinesDetails__title"></div>
+          <div class="machinesDetails__desc"></div>
+        </div>
+      `;
+      host.appendChild(detailsEl);
+    }
+
+    const yearEl = detailsEl.querySelector('.machinesDetails__year');
+    const titleEl = detailsEl.querySelector('.machinesDetails__title');
+    const descEl = detailsEl.querySelector('.machinesDetails__desc');
+    const closeBtn = detailsEl.querySelector('.machinesDetails__close');
+
+    function centerNode(i) {
+      const node = nodeEls[i];
+      if (!node || !grid) return;
+      const left = node.offsetLeft + node.offsetWidth / 2 - grid.clientWidth / 2;
+      grid.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+      nodeEls.forEach(n => n.classList.toggle('is-active', n === node));
+    }
+
+    let _prevFocus = null;
+    function pinNode(i) {
+      const it = t.items[i];
+      if (!it) return;
+      nodeEls.forEach((n, idx) => n.classList.toggle('is-pinned', idx === i));
+      yearEl.textContent = it.year;
+      titleEl.textContent = it.title;
+      descEl.textContent = it.desc || '';
+      detailsEl.classList.add('is-open');
+      detailsEl.setAttribute('aria-hidden', 'false');
+      // move focus to close button for keyboard users, remember previous
+      try { _prevFocus = document.activeElement; closeBtn?.focus(); } catch (e) {}
+      history.replaceState(null, '', `#machines-${it.year}`);
+      centerNode(i);
+    }
+
+    function unpin() {
+      nodeEls.forEach(n => n.classList.remove('is-pinned'));
+      detailsEl.classList.remove('is-open');
+      detailsEl.setAttribute('aria-hidden', 'true');
+      // restore focus
+      try { if (_prevFocus && typeof _prevFocus.focus === 'function') _prevFocus.focus(); } catch (e) {}
+      history.replaceState(null, '', ' ');
+    }
+
+    closeBtn?.addEventListener('click', (e) => { unpin(); e.preventDefault(); });
+
+    // Close details on Escape and restore focus
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && detailsEl.classList.contains('is-open')) {
+        unpin();
+      }
+    });
+
+    // Click outside details to close (backdrop)
+    let backdrop = detailsEl.querySelector('.machinesDetails__backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'machinesDetails__backdrop';
+      detailsEl.insertBefore(backdrop, detailsEl.firstChild);
+    }
+    backdrop.addEventListener('click', () => unpin());
+
+    // Make nodes keyboard-accessible and wire clicks
+    nodeEls.forEach((n, i) => {
+      n.setAttribute('tabindex', '0');
+      n.setAttribute('role', 'button');
+      n.dataset.idx = String(i);
+      n.addEventListener('click', () => pinNode(i));
+      n.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pinNode(i); }
+        if (e.key === 'ArrowRight') { const nx = Math.min(nodeEls.length - 1, i + 1); nodeEls[nx].focus(); centerNode(nx); }
+        if (e.key === 'ArrowLeft') { const nx = Math.max(0, i - 1); nodeEls[nx].focus(); centerNode(nx); }
+      });
+    });
+
+    // Milestone quick buttons
+    milestoneBtns.forEach(b => b.addEventListener('click', (e) => { const idx = Number(b.dataset.milestone); pinNode(idx); }));
+
+    // Pointer drag-to-scroll
+    let isDown = false; let startX = 0; let startScroll = 0;
+    grid?.addEventListener('pointerdown', (e) => {
+      isDown = true; grid.setPointerCapture(e.pointerId);
+      startX = e.clientX; startScroll = grid.scrollLeft; grid.classList.add('is-dragging');
+    });
+    grid?.addEventListener('pointermove', (e) => {
+      if (!isDown) return;
+      const dx = e.clientX - startX;
+      grid.scrollLeft = startScroll - dx;
+    });
+    grid?.addEventListener('pointerup', (e) => { isDown = false; try { grid.releasePointerCapture(e.pointerId); } catch{} grid.classList.remove('is-dragging'); });
+    grid?.addEventListener('pointercancel', () => { isDown = false; grid.classList.remove('is-dragging'); });
+
+    // Wheel to pan horizontally (and update center on scroll end)
+    let _scrollTimer = null;
+    grid?.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
+        e.preventDefault();
+        grid.scrollLeft += e.deltaY;
+      }
+      if (_scrollTimer) clearTimeout(_scrollTimer);
+      _scrollTimer = setTimeout(() => {
+        // find the node nearest to center and set it active
+        const center = grid.scrollLeft + grid.clientWidth / 2;
+        let best = -1; let bestDist = Infinity;
+        nodeEls.forEach((n, idx) => {
+          const nodeCenter = n.offsetLeft + n.offsetWidth / 2;
+          const d = Math.abs(nodeCenter - center);
+          if (d < bestDist) { bestDist = d; best = idx; }
+        });
+        if (best >= 0) nodeEls.forEach((n, idx) => n.classList.toggle('is-active', idx === best));
+      }, 140);
+    }, { passive: false });
+
+    // Deep link handler
+    (function openFromHash() {
+      const h = location.hash;
+      if (!h) return;
+      const m = h.match(/^#machines-(\d{3,4})$/);
+      if (m) {
+        const year = Number(m[1]);
+        const idx = t.items.findIndex(x => x.year === year);
+        if (idx >= 0) {
+          // open after a short timeout so grid has measured
+          setTimeout(() => { pinNode(idx); }, 220);
+        }
+      }
+    })();
+
   }
 
 
