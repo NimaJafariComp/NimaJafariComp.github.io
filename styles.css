@@ -1746,7 +1746,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   left: 14px;
   bottom: 86px; /* above constellation nav */
   z-index: 20;
-  width: min(420px, calc(100vw - 28px));
+  /* Give a bit more headroom so metadata can display when expanded */
+  width: min(520px, calc(100vw - 28px));
   transition: width .34s var(--ease), left .34s var(--ease), bottom .34s var(--ease), transform .34s var(--ease), box-shadow .34s var(--ease);
   will-change: transform, width, left, bottom;
 }
@@ -1810,9 +1811,27 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   to{ transform: rotate(360deg); }
 }
 
-.vinyl__meta{ min-width: 0; }
-.vinyl__title{ font-weight: 800; letter-spacing:.2px; }
-.vinyl__sub{ margin-top: 2px; color: var(--muted); font-size: 12.5px; }
+.vinyl__meta{ 
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  overflow: hidden;
+}
+.vinyl__title{ font-weight: 800; letter-spacing:.2px; font-size: clamp(14px, 2vw, 18px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vinyl__sub{ margin-top: 2px; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Ensure meta has a sensible minimum width when expanded */
+.vinyl--collapsed:hover .vinyl__meta{ min-width: 220px; }
+.vinyl--collapsed:hover .vinyl__title{ font-size: clamp(15px, 2.4vw, 18px); }
+
+@media (max-width: 640px){
+  .vinyl--collapsed:hover .vinyl__meta{ min-width: 180px; }
+}
+@media (max-width: 520px){
+  .vinyl--collapsed:hover .vinyl__meta{ min-width: 160px; }
+} 
 
 /* Allow the vinyl player to overflow its brush-card so it can expand cleanly */
 .vinyl{ overflow: visible; z-index: 9999; }
@@ -1868,12 +1887,15 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 /* Hover/peek reveal: expand horizontally and reveal meta */
 .vinyl--collapsed:hover{
   transform: translateX(0) translateY(0) !important;
-  width: 220px !important;
-  height: 64px !important;
+  width: 320px !important; /* increased width */
+  height: 80px !important; /* increased height for balanced look */
   border-radius: 999px; /* Maintain pill shape */
 }
-.vinyl--collapsed:hover .vinyl__meta{ display:block; }
+.vinyl--collapsed:hover .vinyl__meta{ display:flex; }
 .vinyl--collapsed:hover .vinyl__disk{ width:64px; height:64px; transform: translateX(0); }
+.vinyl--collapsed:hover .vinyl__meta{ align-items: flex-start; }
+.vinyl--collapsed:hover .vinyl__title{ max-width: calc(100% - 110px); }
+.vinyl--collapsed:hover .vinyl__sub{ max-width: calc(100% - 110px); }
 
 .yt{
   position:absolute;
@@ -1919,15 +1941,15 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     height: 38px; 
   }
   .vinyl--collapsed:hover{
-    width: 200px !important;
-    height: 58px !important;
+    width: 260px !important; /* increased on mobile */
+    height: 74px !important;
     border-radius: 999px; /* Maintain pill shape */
     transform: translateY(-50%) translateX(-8px) !important;
     right: 8px !important;
   }
   .vinyl--collapsed:hover .vinyl__disk{ 
-    width: 50px; 
-    height: 50px; 
+    width: 56px; 
+    height: 56px; 
   }
 }
 
