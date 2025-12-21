@@ -691,18 +691,13 @@
     svg.innerHTML = "";
 
     const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    // Pick colors based on current theme: bright/white for night, darker/ink for Provence
-    const isProvence = (state?.theme === "provence" || document.documentElement.dataset.theme === "provence");
-    const gradStops = isProvence ? `
-      <stop offset="0" stop-color="rgba(0,0,0,0)"/>
-      <stop offset=".20" stop-color="rgba(0,0,0,.60)"/>
-      <stop offset=".65" stop-color="rgba(0,0,0,.48)"/>
-      <stop offset="1" stop-color="rgba(0,0,0,0)"/>
-    ` : `
-      <stop offset="0" stop-color="rgba(255,255,255,0)"/>
-      <stop offset=".25" stop-color="rgba(255,255,255,.80)"/>
-      <stop offset=".6" stop-color="rgba(255,255,255,.58)"/>
-      <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+    // Use site accent color (yellowish hue) for the connecting lines for consistent look
+    // Fallbacks ensure graceful degradation if var() isn't available in some contexts
+    const gradStops = `
+      <stop offset="0" style="stop-color: var(--accent); stop-opacity: 0;"/>
+      <stop offset=".20" style="stop-color: var(--accent); stop-opacity: .80;"/>
+      <stop offset=".65" style="stop-color: var(--accent); stop-opacity: .58;"/>
+      <stop offset="1" style="stop-color: var(--accent); stop-opacity: 0;"/>
     `;
     defs.innerHTML = `<linearGradient id="lineGrad" x1="0" y1="0" x2="${navRect.width}" y2="0" gradientUnits="userSpaceOnUse">${gradStops}</linearGradient>`;
     svg.appendChild(defs);

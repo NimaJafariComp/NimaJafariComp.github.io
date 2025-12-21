@@ -77,14 +77,14 @@
   --ultramarine:#2b3c7a;
   --cobalt:#2f63b6;
   --azure:#4aa3d9;
-  --moon:#f6c44f; /* sun */
+  --moon:#f6c44f; /* sun (yellowish hue) */
   --ochre:#d79a2a;
-  --cypress:#2f6b3f; /* green accent */
+  --cypress:#2f6b3f;
   --ember:#e86b3a;
 
-  /* Make accents green/organic for the Provence palette */
-  --accent: var(--cypress);
-  --accent2: #7fbf90; /* softer green for subtle highlights */
+  /* Force yellowish accent across themes */
+  --accent: var(--moon);
+  --accent2: color-mix(in srgb, var(--moon) 36%, white);
 
   /* Light, slightly tinted card backgrounds so text is dark and legible */
   --card: rgba(255,255,255,.96);
