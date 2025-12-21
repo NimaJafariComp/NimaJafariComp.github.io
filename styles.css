@@ -1987,11 +1987,21 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     gap: 10px;
   }
   .vinyl--expanded .vinyl__disk{ width:64px; height:64px; margin: 0 auto; }
-  .vinyl--expanded .vinyl__meta{ width: 100%; max-height: calc(72vh - 160px); overflow:auto; }
-  .vinyl--expanded .vinyl__controls{ width: 100%; justify-content: flex-start; }
+  .vinyl--expanded .vinyl__meta{ width: 100%; max-height: calc(72vh - 160px); overflow:auto; padding: 6px 8px; }
+  .vinyl--expanded .vinyl__controls{ width: 100%; justify-content: flex-start; gap: 8px; }
   .vinyl--expanded .vinyl__vol{ width: 100%; }
-  .vinyl--expanded .vinyl__title{ font-size: clamp(13px, 3.6vw, 16px); }
-  .vinyl--expanded .vinyl__sub{ font-size: clamp(11px, 3vw, 13px); }
+  .vinyl--expanded .vinyl__title{ font-size: clamp(12px, 3.2vw, 14px); }
+  .vinyl--expanded .vinyl__sub{ font-size: clamp(10px, 2.8vw, 11px); }
+  .vinyl--expanded .vinyl__btn{ width: 28px; height: 28px; font-size: 12px; }
+  .vinyl--expanded .vinyl__shell{ padding-top: 10px; padding-bottom: 14px; }
+  .vinyl--expanded .brush-card{ overflow: visible; border-radius: 14px; }
+  .vinyl--expanded .vinyl__collapse{ top: 10px; right: 12px; width: 32px; height: 32px; }
+  /* Ensure the disk doesn't overflow the sheet on very small screens */
+  @media (max-width: 420px){
+    .vinyl--expanded .vinyl__disk{ width: 52px; height: 52px; }
+    .vinyl--expanded .vinyl__btn{ width: 24px; height: 24px; font-size: 11px; }
+    .vinyl--expanded .vinyl__title{ font-size: 13px; }
+  }
 
   
   .vinyl--collapsed{
