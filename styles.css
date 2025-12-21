@@ -42,7 +42,7 @@
 
   /* Constellation positioning and safe spacing (used to avoid collisions) */
   --constellation-top: 120px; /* default */
-  --nav-safe-top: 120px; /* Increased — content sits clearly below nav + labels */
+  --nav-safe-top: 220px; /* Fixed safe distance — content won't scroll under nav */
 }
 
 :root[data-theme="provence"]{
@@ -417,8 +417,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .panel__inner{
   height:100%;
   overflow:auto;
-  /* Add top padding to scroll container so content can't scroll past navbar zone */
-  padding: var(--nav-safe-top, 400px) 2px 22px;
+  /* Add top padding and scroll-padding so content can't scroll past navbar zone */
+  padding-top: var(--nav-safe-top, 220px);
+  padding-right: 2px;
+  padding-bottom: 22px;
+  padding-left: 2px;
+  scroll-padding-top: var(--nav-safe-top, 220px);
 }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
