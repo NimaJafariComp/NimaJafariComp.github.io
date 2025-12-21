@@ -47,7 +47,7 @@ window.PORTFOLIO = {
     highlightStats: [
       { label: "CS @ CSUN", value: "2026" },
       { label: "GPA", value: "3.98 / 4.00" },
-      { label: "Focus", value: "RL + Full‑Stack" },
+      { label: "Focus", value: "ML + Full‑Stack" },
     ],
     quote: {
       text: "",
