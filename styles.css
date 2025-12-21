@@ -1737,6 +1737,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 #panel-contact .contactList{ display:flex; flex-direction:column; gap:16px; }
 #panel-contact .contactRow{ display:flex; gap:12px; align-items:stretch; }
+#panel-contact .contactRow--solo{ gap:0; }
+#panel-contact .contactRow--solo .contactRow__main{ border-radius:24px; }
 #panel-contact .item--contact{ gap:16px; align-items:center; }
 #panel-contact .item--contact .item__body{ flex:1; }
 

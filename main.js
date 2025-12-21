@@ -584,8 +584,13 @@
                 const href = escapeHtml(s.href);
                 const label = escapeHtml(s.label);
                 const hint = escapeHtml(s.hint || "Opens in new tab");
+                const rawLabel = (s.label || "").toLowerCase();
+                const isEmail = rawLabel.includes("email") || /^mailto:/i.test(s.href || "");
+                const isCV = rawLabel.includes("cv");
+                const showCopy = !(isCV);
+                const rowClass = `contactRow${showCopy ? "" : " contactRow--solo"}`;
                 return `
-                <div class="contactRow">
+                <div class="${rowClass}">
                   <a class="item item--contact contactRow__main magnetic" href="${href}" target="_blank" rel="noopener" aria-label="Open ${label}">
                     <div class="linkIcon" aria-hidden="true">${icon}</div>
                     <div class="item__body">
@@ -594,9 +599,11 @@
                     </div>
                     <span class="contactRow__open" aria-hidden="true">↗</span>
                   </a>
-                  <button class="btn btn--ghost contactRow__copy magnetic" type="button" data-action="copyLink" data-url="${href}" data-label="${label}">
-                    <span class="btn__label">Copy link</span>
-                  </button>
+                  ${showCopy ? `
+                    <button class="btn btn--ghost contactRow__copy magnetic" type="button" data-action="copyLink" data-url="${href}" data-label="${label}">
+                      <span class="btn__label">Copy link</span>
+                    </button>
+                  ` : ""}
                 </div>
                 `;
               }).join("")}
