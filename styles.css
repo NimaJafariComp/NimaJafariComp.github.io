@@ -1226,6 +1226,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .item__title{ margin:0; font-weight:650; }
 .item__sub{ margin:4px 0 0; color: var(--muted); line-height: 1.55; }
+.item__sub .btn{ margin-left: 0; justify-content: flex-start; }
 
 
 .stack{ display:flex; flex-direction:column; gap:16px; }
@@ -1861,18 +1862,25 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .vinyl__content {
   display: none;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
 .vinyl--expanded .vinyl__content {
   display: flex;
-  width: 100%;
 }
 
 .vinyl__meta {
-  flex: 1;
+  width: 100%;
   min-width: 0;
+}
+
+.vinyl__title,
+.vinyl__subtitle {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
 .vinyl__title {
@@ -1882,18 +1890,34 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   color: var(--ink);
   margin-bottom: 1px;
   line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .vinyl__subtitle {
   font-size: 10px;
   color: var(--muted);
   line-height: 1.2;
+}
+
+.vinyl__title span,
+.vinyl__subtitle span {
+  display: inline-block;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  animation: marquee 12s linear infinite;
+  padding-right: 40px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.vinyl__title span:hover,
+.vinyl__subtitle span:hover {
+  animation-play-state: paused;
 }
 
 .vinyl__controls {

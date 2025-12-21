@@ -1776,13 +1776,33 @@
             this.player.setVolume(vol);
             this.writeVolume(vol);
             
+            // Try to play with sound
             this.player.playVideo();
             this.updateUI();
 
-            // Handle autoplay restrictions - try again if not playing
+            // Handle autoplay restrictions - browsers may block autoplay with sound
             setTimeout(() => {
               if (!this.playing) {
+                // If not playing, mute and try again (browsers allow muted autoplay)
+                this.player.mute();
+                this.muted = true;
                 this.player.playVideo();
+                this.updateUI();
+                
+                // On first user interaction, unmute to 20% volume
+                const enableAudio = () => {
+                  if (this.muted) {
+                    this.player.unMute();
+                    this.muted = false;
+                    this.player.setVolume(20);
+                    this.updateUI();
+                  }
+                  document.removeEventListener("pointerdown", enableAudio);
+                  document.removeEventListener("keydown", enableAudio);
+                };
+                
+                document.addEventListener("pointerdown", enableAudio, { once: true });
+                document.addEventListener("keydown", enableAudio, { once: true });
               }
             }, 1200);
           },
