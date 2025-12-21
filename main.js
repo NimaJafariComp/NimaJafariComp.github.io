@@ -588,15 +588,18 @@
             <div class="h2" style="margin:0;">Links</div>
             <hr class="sep"/>
             <div class="list">
-              ${c.socials.map(s => `
-                <div class="item">
-                  <div class="item__dot"></div>
+              ${c.socials.map((s) => {
+                const icon = s.icon || `<span class="linkIcon__fallback">↗</span>`;
+                return `
+                <div class="item item--contact">
+                  <div class="linkIcon" aria-hidden="true">${icon}</div>
                   <div class="item__body">
                     <p class="item__title">${escapeHtml(s.label)}</p>
                     <p class="item__sub"><a href="${escapeHtml(s.href)}" target="_blank" rel="noopener">${escapeHtml(s.href)}</a></p>
                   </div>
                 </div>
-              `).join("")}
+                `;
+              }).join("")}
             </div>
 
             <hr class="sep"/>

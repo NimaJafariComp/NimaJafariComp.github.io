@@ -1735,6 +1735,38 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 #panel-contact .h1{ font-size: clamp(24px, 6.2vw, 44px); }
 
+#panel-contact .item--contact{ gap: 16px; align-items: center; }
+#panel-contact .item--contact .item__body{ flex: 1; }
+
+#panel-contact .linkIcon{
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--card) 90%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  box-shadow: 0 10px 24px color-mix(in srgb, var(--ink) 8%, transparent);
+  color: var(--ink);
+  flex-shrink: 0;
+  transition: background 300ms var(--ease), border-color 300ms var(--ease), transform 200ms var(--ease);
+}
+
+#panel-contact .linkIcon svg{
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+#panel-contact .linkIcon__fallback{ font-size: 18px; }
+
+#panel-contact .item--contact:hover .linkIcon{
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 50%, transparent);
+  box-shadow: 0 18px 34px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
 
 @media (max-width: 520px){
   #panel-contact .h1{ font-size: 22px; }
