@@ -1831,10 +1831,18 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 /* Scale down meta and buttons in expanded state for better fit */
 .vinyl:not(.vinyl--collapsed) .vinyl__meta{ gap: 2px; }
-.vinyl:not(.vinyl--collapsed) .vinyl__title{ font-size: 14px; }
+.vinyl:not(.vinyl--collapsed) .vinyl__title{ font-size: 13px; }
 .vinyl:not(.vinyl--collapsed) .vinyl__sub{ font-size: 10px; margin-top: 1px; }
-.vinyl:not(.vinyl--collapsed) .vinyl__controls{ margin-top: 8px; }
-.vinyl:not(.vinyl--collapsed) .vinyl__btn{ width: 28px; height: 28px; }
+.vinyl:not(.vinyl--collapsed) .vinyl__controls{ margin-top: 6px; gap: 8px; }
+.vinyl:not(.vinyl--collapsed) .vinyl__btn{ width: 26px; height: 26px; font-size: 12px; }
+.vinyl:not(.vinyl--collapsed) .vinyl__vol{ width: 124px; }
+
+/* Scale down internals specifically for the expanded (hover) pill when starting collapsed */
+.vinyl--collapsed:hover .vinyl__title{ font-size: 13px; }
+.vinyl--collapsed:hover .vinyl__sub{ font-size: 10px; margin-top: 1px; }
+.vinyl--collapsed:hover .vinyl__controls{ margin-top: 6px; gap: 8px; }
+.vinyl--collapsed:hover .vinyl__btn{ width: 26px; height: 26px; font-size: 12px; }
+.vinyl--collapsed:hover .vinyl__vol{ width: 118px; }
 
 /* Ensure meta has a sensible minimum width when expanded */
 .vinyl--collapsed:hover .vinyl__meta{ min-width: 220px; }
@@ -1956,11 +1964,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
   .vinyl--collapsed:hover{
     width: 260px !important; /* increased on mobile */
-    height: 74px !important;
+    height: 110px !important; /* taller when expanded */
     border-radius: 999px; /* Maintain pill shape */
     transform: translateY(-50%) translateX(-8px) !important;
     right: 8px !important;
   }
+  .vinyl--collapsed:hover .vinyl__shell{ padding: 12px 14px; }
   .vinyl--collapsed:hover .vinyl__disk{ 
     width: 56px; 
     height: 56px; 
@@ -1991,11 +2000,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
   .vinyl--collapsed:hover{
     width: 180px !important;
-    height: 56px !important;
+    height: 148px !important; /* taller when expanded */
     border-radius: 999px; /* Maintain pill shape */
     transform: translateY(-50%) translateX(-6px) !important;
     right: 6px !important;
   }
+  .vinyl--collapsed:hover .vinyl__shell{ padding: 12px 14px; }
   .vinyl__shell{
     flex-direction: column;
     align-items: flex-start;
