@@ -998,6 +998,21 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 98%, white), color-mix(in srgb, var(--accent) 20%, transparent) 55%, transparent 70%);
   filter:url(#softGlow);
 }
+
+/* Bullet lists used in Work / Honors */
+.bullets{
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+}
+.bullets li{
+  margin: 10px 0; /* more vertical breathing room */
+  line-height: 1.7; /* increase readability */
+}
+.bullets li::marker{ color: color-mix(in srgb, var(--ink) 18%, transparent); font-weight:700; }
+@media (max-width: 520px){
+  .bullets li{ margin: 8px 0; }
+}
 .item__title{ margin:0; font-weight:650; }
 .item__sub{ margin:4px 0 0; color: var(--muted); line-height: 1.55; }
 
