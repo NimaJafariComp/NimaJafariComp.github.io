@@ -983,7 +983,10 @@
     function isOpen() { return open; }
 
     backdrop?.addEventListener("click", close);
-    closeBtn?.addEventListener("click", close);
+    closeBtn?.addEventListener("click", (e) => {
+      close();
+      e.preventDefault();
+    });
     window.addEventListener("keydown", (e) => {
       if (!open) return;
       if (e.key === "Escape") return close();
@@ -994,6 +997,7 @@
 
     input?.addEventListener("input", () => filter(input.value));
 
+    // Ensure the palette closes on Escape key
     input?.addEventListener("keydown", (e) => {
       if (e.key === "Escape") {
         close();
@@ -1777,7 +1781,7 @@
       this.hintEl = hintEl;
 
       this.player = null;
-      this.ready = false;
+                     this.ready = false;
       this.playing = false;
       this.muted = false;
       this.visualsEnabled = true;
@@ -1876,6 +1880,13 @@
             this.player.setVolume(vol);
             this.player.playVideo();
             this.updateUI();
+
+            // Attempt to auto-play music programmatically
+            setTimeout(() => {
+              if (this.ready && this.player) {
+                this.player.playVideo();
+              }
+            }, 1000);
           },
           onStateChange: (ev) => {
             // 1 = playing, 2 = paused
