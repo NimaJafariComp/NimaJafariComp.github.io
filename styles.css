@@ -230,22 +230,24 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 /* --- Top bar --- */
 .topbar{
   position:fixed;
-  top:14px;
+  /* keep the nav below any device notch / status area */
+  top: calc(env(safe-area-inset-top, 0px) + 14px);
   left:14px;
   right:14px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:14px;
-  z-index:10;
-  padding:12px 14px;
+  z-index:1000; /* ensure on top */
+  /* add safe-area padding to avoid visual overlap with device UI */
+  padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 12px 14px;
   border:1px solid var(--border);
   background: linear-gradient(180deg, color-mix(in srgb, var(--card) 85%, transparent), color-mix(in srgb, var(--card2) 55%, transparent));
   backdrop-filter: blur(12px);
   border-radius: 999px;
   box-shadow: var(--shadow);
   transition: background 700ms var(--ease2), border-color 700ms var(--ease2);
-}
+} 
 
 .brand{
   display:flex;
@@ -365,15 +367,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   min-height:100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  padding: 86px 18px 22px;
+  /* Add extra top padding so fixed header + constellation never overlap titles. Includes safe-area inset. */
+  padding: calc(env(safe-area-inset-top, 0px) + 120px) 18px 22px;
   position:relative;
-}
+} 
 @media (min-width: 720px){
-  .panel{ padding: 132px 28px 28px; }
-}
+  .panel{ padding: calc(env(safe-area-inset-top, 0px) + 168px) 28px 28px; }
+} 
 @media (min-width: 1024px){
-  .panel{ padding: 134px 48px 34px; }
-}
+  .panel{ padding: calc(env(safe-area-inset-top, 0px) + 172px) 48px 34px; }
+} 
 
 .panel__inner{
   height:100%;
@@ -400,14 +403,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .timelineStatic__lead{ font-weight:700; color:var(--muted); margin-bottom:8px; }
 .timelineStatic__grid{ display:flex; gap:18px; align-items:stretch; overflow:auto; scroll-snap-type:x mandatory; padding-bottom:8px; cursor: grab; }
 .timelineStatic__grid.is-dragging{ cursor: grabbing; }
-.timelineNode{ flex: 0 0 260px; scroll-snap-align:center; min-height:120px; display:flex; flex-direction:column; gap:8px; border-radius:12px; padding:14px; background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, transparent), color-mix(in srgb, var(--card2) 70%, transparent)); border:1px solid var(--border); transition: transform .28s var(--ease), box-shadow .28s var(--ease); }
+.timelineNode{ flex: 0 0 260px; scroll-snap-align:center; min-height:120px; display:flex; flex-direction:column; gap:8px; border-radius:12px; padding:14px; background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, rgba(255,255,255,.02)), color-mix(in srgb, var(--card2) 78%, rgba(255,255,255,.02))); border:1px solid color-mix(in srgb, var(--ink) 8%, transparent); transition: transform .28s var(--ease), box-shadow .28s var(--ease); backdrop-filter: blur(6px) saturate(1.05); }
 .timelineNode__year{ font-weight:800; color:var(--muted); }
 .timelineNode__title{ font-size:16px; font-weight:700; color:color-mix(in srgb, var(--ink) 92%, transparent); }
 .timelineNode__sub{ color:var(--muted); }
 .timelineNode__desc{ margin-top:6px; color:var(--muted); line-height:1.45; }
-..timelineNode:focus-within, .timelineNode:hover{ transform: translateY(-6px); box-shadow: 0 18px 48px rgba(0,0,0,.18); }
+.timelineNode:focus-within, .timelineNode:hover{ transform: translateY(-6px); box-shadow: 0 18px 48px rgba(0,0,0,.18); }
 .timelineNode.is-active{ transform: translateY(-8px); border-color: color-mix(in srgb, var(--accent) 40%, transparent); box-shadow: 0 22px 56px rgba(0,0,0,.22); }
-.timelineNode.is-pinned{ border-color: color-mix(in srgb, var(--accent2) 46%, transparent); box-shadow: 0 26px 64px rgba(0,0,0,.28); }
+.timelineNode.is-pinned{ transform: scale(1.02); border-color: color-mix(in srgb, var(--accent2) 46%, transparent); box-shadow: 0 26px 64px rgba(0,0,0,.28), 0 0 30px color-mix(in srgb, var(--accent2) 18%, transparent); position:relative; }
+.timelineNode.is-pinned::after{ content:""; position:absolute; inset:-8px; border-radius:inherit; pointer-events:none; box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent2) 16%, transparent); opacity:0; animation: pinPulse .9s ease forwards; }
+@keyframes pinPulse{ 0%{ opacity:1; transform: scale(.96); } 100%{ opacity:0; transform: scale(1.06); } }
 
 .milestoneList{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
 .milestone{ border:1px solid var(--border); background: color-mix(in srgb, var(--card) 92%, transparent); padding:10px 12px; border-radius:10px; cursor:pointer; display:flex; gap:10px; align-items:center; }
@@ -486,10 +491,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   position:relative;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, var(--card), var(--card2));
-  box-shadow: var(--shadow);
+  /* stronger translucent backdrop + blur to keep the painting visible but maintain legibility */
+  background: linear-gradient(180deg, color-mix(in srgb, var(--card) 88%, rgba(255,255,255,.02)), color-mix(in srgb, var(--card2) 76%, rgba(255,255,255,.02)));
+  box-shadow: 0 18px 70px rgba(0,0,0,.38);
   overflow:hidden;
-  transition: background 700ms var(--ease2), border-color 700ms var(--ease2);
+  transition: background 700ms var(--ease2), border-color 700ms var(--ease2), box-shadow 320ms var(--ease);
+  backdrop-filter: blur(8px) saturate(1.06);
 }
 .brush-card::before{
   content:"";
@@ -510,12 +517,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   content:"";
   position:absolute;
   inset:0;
-  background: linear-gradient(180deg, color-mix(in srgb, white 12%, transparent), transparent);
-  opacity:.22;
-  pointer-events:none;
-}
-
-.card-pad{ padding: 16px 18px; }
+  /* slightly stronger highlight to lift cards off the background */
+  background: linear-gradient(180deg, color-mix(in srgb, white 14%, transparent), transparent);
+  opacity:.32;
 
 .sep{
   border:0;
@@ -733,7 +737,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .timelineStatic { margin-top: 14px; }
 .timelineStatic__inner { border-radius: var(--radius); border:1px solid var(--border); background: linear-gradient(180deg, var(--card), var(--card2)); box-shadow: var(--shadow); padding: 18px; }
 .timelineStatic__grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 14px; margin-top: 12px; align-items:start; }
-.timelineNode { padding: 14px; border-radius: 14px; border:1px solid color-mix(in srgb, var(--ink) 8%, transparent); background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, transparent), color-mix(in srgb, var(--card2) 78%, transparent)); box-shadow: 0 10px 30px rgba(0,0,0,.12); transition: transform .24s var(--ease), box-shadow .24s var(--ease); cursor: default; }
+.timelineNode { padding: 14px; border-radius: 14px; border:1px solid color-mix(in srgb, var(--ink) 8%, transparent); background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, rgba(255,255,255,.02)), color-mix(in srgb, var(--card2) 78%, rgba(255,255,255,.02))); box-shadow: 0 10px 30px rgba(0,0,0,.12); transition: transform .24s var(--ease), box-shadow .24s var(--ease); cursor: default; backdrop-filter: blur(6px) saturate(1.05); }
 .timelineNode:hover { transform: translateY(-6px); box-shadow: 0 22px 60px rgba(0,0,0,.18); border-color: color-mix(in srgb, var(--accent) 28%, transparent); }
 .timelineNode__year { font-weight:800; color: var(--muted); font-size:13px; }
 .timelineNode__title { font-family:var(--font-title); font-size:18px; margin-top:6px; font-weight:700; }
@@ -859,9 +863,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .constellation{
   position:fixed;
   left:50%;
-  top: 120px; /* moved further down to avoid colliding with content */
+  /* place it below the topbar and respect device safe-area */
+  top: calc(env(safe-area-inset-top, 0px) + 120px);
   transform: translateX(-50%);
-  z-index: 10;
+  z-index: 900;
   width: min(720px, calc(100vw - 40px));
   pointer-events:none;
 }
