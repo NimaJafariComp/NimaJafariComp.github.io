@@ -896,6 +896,9 @@
      Magnetic buttons
      ----------------------------- */
   function attachMagnetic() {
+    // Disable magnetic effect on small screens for better performance
+    if (window.innerWidth <= 640) return;
+    
     const strength = 0.22;
     const elems = $$(".magnetic");
 
