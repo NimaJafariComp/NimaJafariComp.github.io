@@ -399,27 +399,26 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   min-height:100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  /* Increased top padding so top navigation (constellation) doesn't overlap page content */
-  padding: 140px 18px 22px;
+  /* Reverted top padding to original values — spacing is enforced via --nav-safe-top for scrolling content */
+  padding: 86px 18px 22px;
   position:relative;
-}
+} 
 @media (min-width: 720px){
-  /* On medium screens, provide more vertical space for nav + labels */
-  .panel{ padding: 220px 28px 28px; }
-  /* Mid screens: lift the constellation further down to increase safe spacing */
-  :root{ --constellation-top: 150px; }
+  /* On medium screens: use original paddings and keep constellation top fixed */
+  .panel{ padding: 132px 28px 28px; }
+  :root{ --constellation-top: 120px; }
 }
 @media (min-width: 1024px){
-  /* Desktop gets the most top spacing to comfortably sit below the nav */
-  .panel{ padding: 260px 48px 34px; }
-  :root{ --constellation-top: 190px; }
-}
+  /* Desktop paddings restored */
+  .panel{ padding: 134px 48px 34px; }
+  :root{ --constellation-top: 120px; }
+} 
 
 .panel__inner{
   height:100%;
   overflow:auto;
-  /* Add top-safe padding so scrollable content doesn't slide beneath the fixed constellation nav */
-  padding: calc(var(--nav-safe-top, 76px) + 6px) 2px 22px;
+  /* Enforce fixed top-safe padding so scrollable content keeps the same distance from the top nav */
+  padding: var(--nav-safe-top, 76px) 2px 22px;
 }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
