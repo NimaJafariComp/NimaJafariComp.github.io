@@ -45,7 +45,9 @@
   --radius2: 16px;
 
   --constellation-top: 132px;
-  --constellation-h: 52px; 
+  --constellation-h-base: 52px;
+  --constellation-extra: 28px; /* extra vertical padding to account for downward arc and labels */
+  --constellation-h: calc(var(--constellation-h-base) + var(--constellation-extra)); 
 
   
   --topbar-top: 14px;
@@ -68,6 +70,7 @@
     --constellation-top: 104px;
     --topbar-h: 54px; 
     --safe-gap: 16px;
+    --constellation-extra: 18px; /* slightly less extra space on small screens */
   }
 }
 
@@ -1965,24 +1968,30 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl__shell{ padding: 14px 14px 12px; gap: 10px; }
 
   
-  .vinyl:not(.vinyl--collapsed){
-    width: min(380px, 92vw) !important;
-    min-height: 220px !important;
-    border-radius: 20px;
+  /* Expanded on mobile becomes a full-width slide-up sheet */
+  .vinyl--expanded{
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: calc(100% - (max(12px, env(safe-area-inset-left)) + max(12px, env(safe-area-inset-right)))) !important;
+    max-width: none !important;
+    max-height: 72vh !important;
+    border-radius: 14px 14px 0 0 !important;
+    padding-bottom: env(safe-area-inset-bottom);
+    transform: translateY(0) !important;
   }
-  .vinyl:not(.vinyl--collapsed) .vinyl__shell{
+  .vinyl--expanded .vinyl__shell{
     flex-direction: column;
     align-items: stretch;
-    padding: 14px;
-    gap: 8px;
+    padding: 12px 16px 18px;
+    gap: 10px;
   }
-  .vinyl:not(.vinyl--collapsed) .vinyl__disk{ width: 64px; height: 64px; }
-  .vinyl:not(.vinyl--collapsed) .vinyl__meta{ width: 100%; max-height: 110px; overflow:auto; }
-  .vinyl:not(.vinyl--collapsed) .vinyl__controls{ width: 100%; justify-content: flex-start; }
-  .vinyl:not(.vinyl--collapsed) .vinyl__vol{ width: 100%; }
-  .vinyl:not(.vinyl--collapsed) .vinyl__title{ font-size: clamp(12px, 3.2vw, 14px); }
-  .vinyl:not(.vinyl--collapsed) .vinyl__sub{ font-size: clamp(10px, 2.8vw, 11px); }
-  .vinyl:not(.vinyl--collapsed) .vinyl__btn{ width: 24px; height: 24px; font-size: 11px; }
+  .vinyl--expanded .vinyl__disk{ width:64px; height:64px; margin: 0 auto; }
+  .vinyl--expanded .vinyl__meta{ width: 100%; max-height: calc(72vh - 160px); overflow:auto; }
+  .vinyl--expanded .vinyl__controls{ width: 100%; justify-content: flex-start; }
+  .vinyl--expanded .vinyl__vol{ width: 100%; }
+  .vinyl--expanded .vinyl__title{ font-size: clamp(13px, 3.6vw, 16px); }
+  .vinyl--expanded .vinyl__sub{ font-size: clamp(11px, 3vw, 13px); }
 
   
   .vinyl--collapsed{
