@@ -1770,38 +1770,19 @@
           onReady: () => {
             this.ready = true;
             
-            // Restore volume
-            const vol = this.readVolume();
+            // Set volume to 20% by default
+            const vol = 20;
             if (this.volEl) this.volEl.value = String(vol);
             this.player.setVolume(vol);
+            this.writeVolume(vol);
             
             this.player.playVideo();
             this.updateUI();
 
-            // Handle autoplay restrictions
+            // Handle autoplay restrictions - try again if not playing
             setTimeout(() => {
               if (!this.playing) {
-                this.player.mute();
-                this.muted = true;
                 this.player.playVideo();
-                this.updateUI();
-                
-                showToast("Tap anywhere to enable audio");
-                
-                // Enable audio on first user interaction
-                const enableAudio = () => {
-                  if (this.muted) {
-                    this.player.unMute();
-                    this.muted = false;
-                    this.updateUI();
-                    showToast("Audio enabled");
-                  }
-                  document.removeEventListener("pointerdown", enableAudio);
-                  document.removeEventListener("keydown", enableAudio);
-                };
-                
-                document.addEventListener("pointerdown", enableAudio, { once: true });
-                document.addEventListener("keydown", enableAudio, { once: true });
               }
             }, 1200);
           },
@@ -1816,9 +1797,9 @@
     readVolume() {
       try {
         const v = Number(localStorage.getItem("vinylVol"));
-        return Number.isFinite(v) ? clamp(v, 0, 100) : 65;
+        return Number.isFinite(v) ? clamp(v, 0, 100) : 20;
       } catch {
-        return 65;
+        return 20;
       }
     }
 

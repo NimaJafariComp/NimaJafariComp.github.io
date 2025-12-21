@@ -1769,9 +1769,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 .vinyl--expanded {
-  width: 380px;
+  width: 320px;
   height: auto;
-  min-height: 200px;
   cursor: default;
 }
 
@@ -1782,8 +1781,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   backdrop-filter: blur(20px) saturate(120%);
   background: color-mix(in srgb, var(--bg) 85%, transparent);
   border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
-  border-radius: 24px;
-  padding: 20px;
+  border-radius: 20px;
+  padding: 16px;
   box-shadow: 
     0 24px 48px rgba(0, 0, 0, 0.15),
     0 8px 24px rgba(0, 0, 0, 0.08),
@@ -1820,6 +1819,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   flex-shrink: 0;
 }
 
+.vinyl--expanded .vinyl__disk {
+  width: 48px;
+  height: 48px;
+}
+
 .vinyl--collapsed .vinyl__disk {
   width: 56px;
   height: 56px;
@@ -1851,7 +1855,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .vinyl__content {
   display: none;
-  gap: 16px;
+  gap: 12px;
   align-items: flex-start;
 }
 
@@ -1866,25 +1870,25 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .vinyl__title {
   font-family: var(--font-title);
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   color: var(--ink);
-  margin-bottom: 4px;
-  line-height: 1.3;
+  margin-bottom: 2px;
+  line-height: 1.2;
 }
 
 .vinyl__subtitle {
-  font-size: 14px;
+  font-size: 12px;
   color: var(--muted);
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 .vinyl__controls {
   display: none;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
-  margin-top: 16px;
-  padding-top: 16px;
+  margin-top: 12px;
+  padding-top: 12px;
   border-top: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
 }
 
@@ -1893,9 +1897,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 .vinyl__btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
   border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
   background: color-mix(in srgb, var(--bg) 80%, transparent);
   color: var(--ink);
@@ -1903,7 +1907,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 12px;
   transition: all 0.2s ease;
   backdrop-filter: blur(10px);
 }
@@ -1920,13 +1924,13 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .vinyl__volume {
   flex: 1;
-  height: 40px;
+  height: 32px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   background: color-mix(in srgb, var(--bg) 60%, transparent);
-  border-radius: 20px;
-  padding: 0 16px;
+  border-radius: 16px;
+  padding: 0 12px;
   border: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
   backdrop-filter: blur(10px);
 }
@@ -1982,15 +1986,15 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 @media (max-width: 480px) {
   .vinyl--expanded {
     width: calc(100vw - 32px);
-    max-width: 360px;
+    max-width: 300px;
   }
   
   .vinyl__title {
-    font-size: 16px;
+    font-size: 14px;
   }
   
   .vinyl__subtitle {
-    font-size: 13px;
+    font-size: 11px;
   }
 }
 
