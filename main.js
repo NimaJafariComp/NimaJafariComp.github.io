@@ -587,18 +587,26 @@
           <div class="brush-card card-pad">
             <div class="h2" style="margin:0;">Links</div>
             <hr class="sep"/>
-            <div class="list">
+            <div class="list contactList">
               ${c.socials.map((s) => {
                 const icon = s.icon || `<span class="linkIcon__fallback">↗</span>`;
                 const href = escapeHtml(s.href);
+                const label = escapeHtml(s.label);
+                const hint = escapeHtml(s.hint || "Opens in new tab");
                 return `
-                <a class="item item--contact contactLink" href="${href}" target="_blank" rel="noopener">
-                  <div class="linkIcon" aria-hidden="true">${icon}</div>
-                  <div class="item__body">
-                    <p class="item__title">${escapeHtml(s.label)}</p>
-                    <p class="item__sub mono">${href}</p>
-                  </div>
-                </a>
+                <div class="contactRow">
+                  <a class="item item--contact contactRow__main magnetic" href="${href}" target="_blank" rel="noopener" aria-label="Open ${label}">
+                    <div class="linkIcon" aria-hidden="true">${icon}</div>
+                    <div class="item__body">
+                      <p class="item__title">${label}</p>
+                      <p class="item__sub">${hint}</p>
+                    </div>
+                    <span class="contactRow__open" aria-hidden="true">↗</span>
+                  </a>
+                  <button class="btn btn--ghost contactRow__copy magnetic" type="button" data-action="copyLink" data-url="${href}" data-label="${label}">
+                    <span class="btn__label">Copy link</span>
+                  </button>
+                </div>
                 `;
               }).join("")}
             </div>
@@ -805,6 +813,17 @@
     }
   }
 
+  async function copyLink(url, label = "Link") {
+    if (!url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      const name = label.trim() || "Link";
+      showToast(`${name} copied`);
+    } catch {
+      showToast(url);
+    }
+  }
+
   function toggleVangogh() {
     state.vangoghBoost = !state.vangoghBoost;
     const disp = document.querySelector("#brush feDisplacementMap");
@@ -820,6 +839,7 @@
 
       if (act === "copyEmail") return copyEmail();
       if (act === "copySkill") return copySkill(btn.dataset.skill || (btn.textContent || "").trim());
+      if (act === "copyLink") return copyLink(btn.dataset.url, btn.dataset.label);
       if (act === "toggleMotion") return setMotion(!state.motionEnabled);
       if (act === "toggleVangogh") return toggleVangogh();
       if (act === "toggleTheme") return toggleTheme();
