@@ -47,8 +47,8 @@
   --radius: 22px;
   --radius2: 16px;
 
-  --constellation-top: 120px;
-  --constellation-h: 52px;
+  --constellation-top: 132px;
+  --constellation-h: 52px; 
 
   /* topbar sizing (approx) */
   --topbar-top: 14px;
@@ -68,7 +68,7 @@
 
 @media (max-width: 520px){
   :root{
-    --constellation-top: 92px;
+    --constellation-top: 104px;
     --topbar-h: 58px;
     --safe-gap: 16px;
   }
