@@ -417,12 +417,18 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .panel__inner{
   height:100%;
   overflow:auto;
-  /* Add top padding and scroll-padding so content can't scroll past navbar zone */
-  padding-top: var(--nav-safe-top, 220px);
-  padding-right: 2px;
-  padding-bottom: 22px;
-  padding-left: 2px;
+  /* Use a sticky spacer so content cannot scroll beneath the fixed nav */
+  padding: 0 2px 22px;
   scroll-padding-top: var(--nav-safe-top, 220px);
+}
+.panel__inner::before{
+  content: "";
+  display:block;
+  height: var(--nav-safe-top, 220px);
+  position: sticky;
+  top: 0;
+  pointer-events: none;
+  z-index: 2;
 }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
