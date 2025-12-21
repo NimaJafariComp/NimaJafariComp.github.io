@@ -574,15 +574,6 @@
           <h2 class="h1" style="font-size:clamp(34px,4.4vw,54px);">${escapeHtml(c.title)}</h2>
           <p class="kicker">${escapeHtml(c.note)}</p>
 
-          <div class="brush-card card-pad" style="margin-top:16px;">
-            <div class="h2" style="margin:0;">Shortcut</div>
-            <hr class="sep"/>
-            <div class="row">
-              <button class="btn btn--primary magnetic" type="button" data-action="copyEmail"><span class="btn__icon">✉</span><span class="btn__label">Copy email</span></button>
-            </div>
-          </div>
-        </div>
-
         <div>
           <div class="brush-card card-pad">
             <div class="h2" style="margin:0;">Links</div>
