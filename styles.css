@@ -418,7 +418,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height:100%;
   overflow:auto;
   /* Add top padding to scroll container so content can't scroll past navbar zone */
-  padding: var(--nav-safe-top, 200px) 2px 22px;
+  padding: var(--nav-safe-top, 400px) 2px 22px;
 }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
