@@ -1226,7 +1226,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .item__title{ margin:0; font-weight:650; }
 .item__sub{ margin:4px 0 0; color: var(--muted); line-height: 1.55; }
-.item__sub .btn{ margin-left: 0; justify-content: flex-start; }
+.item__sub .btn{ margin-left: 0; justify-content: flex-start; padding-left: 8px; }
 
 
 .stack{ display:flex; flex-direction:column; gap:16px; }
