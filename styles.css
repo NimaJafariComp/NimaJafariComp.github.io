@@ -46,7 +46,7 @@
 
   --constellation-top: 132px;
   --constellation-h-base: 52px;
-  --constellation-extra: 28px; /* extra vertical padding to account for downward arc and labels */
+  --constellation-extra: 28px;
   --constellation-h: calc(var(--constellation-h-base) + var(--constellation-extra)); 
 
   
