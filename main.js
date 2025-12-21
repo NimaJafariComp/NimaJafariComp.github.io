@@ -994,6 +994,13 @@
 
     input?.addEventListener("input", () => filter(input.value));
 
+    input?.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        close();
+        e.preventDefault();
+      }
+    });
+
     list?.addEventListener("click", (e) => {
       const li = e.target.closest("[data-idx]");
       if (!li) return;
@@ -1853,7 +1860,7 @@
         width: "1",
         videoId: this.videoId,
         playerVars: {
-          autoplay: 0,
+          autoplay: 1,
           controls: 0,
           disablekb: 1,
           fs: 0,
@@ -1867,7 +1874,7 @@
             const vol = this.readVolume();
             if (this.volEl) this.volEl.value = String(vol);
             this.player.setVolume(vol);
-            this.player.cueVideoById({ videoId: this.videoId, startSeconds: 0 });
+            this.player.playVideo();
             this.updateUI();
           },
           onStateChange: (ev) => {
