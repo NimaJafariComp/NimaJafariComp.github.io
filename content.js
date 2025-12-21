@@ -49,10 +49,6 @@ window.PORTFOLIO = {
       { label: "GPA", value: "3.98 / 4.00" },
       { label: "Focus", value: "RL + Full‑Stack" },
     ],
-    quote: {
-      text: "",
-      note: "",
-    },
     ctas: [
       { label: "Email", icon: "✉", action: "copyEmail" },
       { label: "Machines Timeline", icon: "✶", action: "jumpMachines" },
