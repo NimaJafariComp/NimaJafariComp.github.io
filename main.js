@@ -1675,6 +1675,8 @@
       const isMobile = window.innerWidth <= 640;
       const collapsed = isMobile ? true : this.readBool("vinylCollapsed", false);
       this.setCollapsed(collapsed, { save: false });
+      // Ensure expanded class is consistent with collapsed state
+      this.rootEl.classList.toggle('vinyl--expanded', !collapsed);
 
       this.playBtn?.addEventListener("click", () => this.togglePlay());
       this.muteBtn?.addEventListener("click", () => this.toggleMute());
@@ -1684,9 +1686,9 @@
         this.setCollapsed(!this.rootEl.classList.contains("vinyl--collapsed"));
       });
 
+      // clicking the root toggles expansion when collapsed (works on mobile & desktop)
       this.rootEl?.addEventListener("click", (e) => {
         if (!this.rootEl) return;
-        if (window.innerWidth > 640) return;
         if (!this.rootEl.classList.contains("vinyl--collapsed")) return;
 
         if (e?.target?.closest?.("#vinylCollapse")) return;

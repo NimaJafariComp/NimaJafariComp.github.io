@@ -1845,17 +1845,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 
 .vinyl--expanded{
-  position: fixed; 
-  left: 50%;
-  right: auto;
-  transform: translateX(-50%);
-  bottom: 12px;
-  width: min(720px, 96vw);
-  max-width: 720px;
-  max-height: 50vh;
-  border-radius: 14px;
-  box-shadow: 0 24px 60px rgba(0,0,0,.36);
+  position: fixed;
+  left: auto;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: calc(max(12px, env(safe-area-inset-bottom)) + 80px);
+  width: min(380px, 88vw);
+  max-width: 380px;
+  max-height: 54vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 48px rgba(0,0,0,.36);
   z-index: 49;
+  transform: none;
 }
 .vinyl--expanded .vinyl__shell{ transform: translateY(0); }
 
@@ -1933,17 +1933,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl--collapsed .vinyl__disk{ width:44px; height:44px; transform: translateX(0); box-shadow: 0 10px 20px rgba(0,0,0,.22); }
 
 
-.vinyl--collapsed:hover{
-  transform: translateX(0) translateY(0) !important;
-  width: 360px !important; 
-  height: 100px !important; 
-  border-radius: 999px; 
-}
-.vinyl--collapsed:hover .vinyl__meta{ display:flex; }
-.vinyl--collapsed:hover .vinyl__disk{ width:64px; height:64px; transform: translateX(0); }
-.vinyl--collapsed:hover .vinyl__meta{ align-items: flex-start; }
-.vinyl--collapsed:hover .vinyl__title{ max-width: calc(100% - 110px); }
-.vinyl--collapsed:hover .vinyl__sub{ max-width: calc(100% - 110px); }
+
+  .vinyl--collapsed:hover{
+    transform: none !important;
+  }
+  .vinyl--collapsed:hover .vinyl__meta{ display:none; }
+  .vinyl--collapsed:hover .vinyl__disk{ width:44px; height:44px; }
+  .vinyl--collapsed:hover .vinyl__title{ max-width: none; }
+  .vinyl--collapsed:hover .vinyl__sub{ max-width: none; }
 
 .yt{
   position:absolute;
@@ -1968,7 +1965,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl__shell{ padding: 14px 14px 12px; gap: 10px; }
 
   
-  /* Expanded on mobile becomes a full-width slide-up sheet */
+  
   .vinyl--expanded{
     left: 0 !important;
     right: 0 !important;
