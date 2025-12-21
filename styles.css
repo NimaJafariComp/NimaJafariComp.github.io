@@ -1768,6 +1768,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   padding: 18px 18px; /* Increased padding for more vertical space on desktop */
   position: relative;
   border-radius: 999px; /* Pill shape */
+  transition: transform .22s var(--ease);
 }
 
 .vinyl__collapse{
@@ -1832,15 +1833,41 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl__title{ font-weight: 800; letter-spacing:.2px; font-size: clamp(14px, 2vw, 18px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .vinyl__sub{ margin-top: 2px; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Scale down meta and buttons in expanded state for better fit */
-.vinyl:not(.vinyl--collapsed) .vinyl__meta{ gap: 2px; }
-.vinyl:not(.vinyl--collapsed) .vinyl__title{ font-size: 13px; }
-.vinyl:not(.vinyl--collapsed) .vinyl__sub{ font-size: 10px; margin-top: 1px; }
-.vinyl:not(.vinyl--collapsed) .vinyl__controls{ margin-top: 6px; gap: 8px; }
-.vinyl:not(.vinyl--collapsed) .vinyl__btn{ width: 26px; height: 26px; font-size: 12px; }
-.vinyl:not(.vinyl--collapsed) .vinyl__vol{ width: 124px; }
+/* Backdrop for mobile expanded sheet */
+.vinyl__backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.36);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s var(--ease);
+  z-index: 48;
+}
+.vinyl__backdrop.vinyl__backdrop--show{
+  opacity: 1;
+  pointer-events: auto;
+}
 
-/* Scale down internals specifically for the expanded (hover) pill when starting collapsed */
+/* Expanded bottom-sheet variant (mobile) */
+.vinyl--expanded{
+  position: fixed; /* ensure we can move it to center-bottom */
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  bottom: 12px;
+  width: min(720px, 96vw);
+  max-width: 720px;
+  max-height: 50vh;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.36);
+  z-index: 49;
+}
+.vinyl--expanded .vinyl__shell{ transform: translateY(0); }
+
+/* small drag handle indicator */
+.vinyl--expanded .vinyl__handle{
+  width: 36px; height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--ink) 12%, transparent); margin: 6px auto 0; opacity: .85;
+}
 .vinyl--collapsed:hover .vinyl__title{ font-size: 13px; }
 .vinyl--collapsed:hover .vinyl__sub{ font-size: 10px; margin-top: 1px; }
 .vinyl--collapsed:hover .vinyl__controls{ margin-top: 6px; gap: 8px; }

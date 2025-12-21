@@ -1697,6 +1697,72 @@
       });
 
       this.initYouTube();
+
+      // Create and insert backdrop element (used for mobile bottom-sheet)
+      try {
+        this.backdropEl = document.createElement('div');
+        this.backdropEl.className = 'vinyl__backdrop';
+        // insert backdrop just before root so it's behind the sheet but above other content
+        document.body.insertBefore(this.backdropEl, this.rootEl);
+        this.backdropEl.addEventListener('click', () => this.setCollapsed(true));
+      } catch (e) {}
+
+      // lightweight focus trap helper (tab trapping)
+      this._trapTab = (ev) => {
+        const focusable = Array.from(this.rootEl.querySelectorAll('a,button,input,select,textarea,[tabindex]:not([tabindex="-1"])')).filter(el => !el.hasAttribute('disabled'));
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (ev.shiftKey && document.activeElement === first) {
+          ev.preventDefault(); last.focus();
+        } else if (!ev.shiftKey && document.activeElement === last) {
+          ev.preventDefault(); first.focus();
+        }
+      };
+
+      // Drag-to-dismiss on the shell (mobile only)
+      try {
+        this._onPointerDown = (ev) => {
+          if (window.innerWidth > 640) return;
+          if (!this.rootEl.classList.contains('vinyl--expanded')) return;
+          this._dragStartY = ev.clientY || (ev.touches && ev.touches[0] && ev.touches[0].clientY) || 0;
+          this._dragLastY = this._dragStartY;
+          this._dragging = true;
+          this._shellEl?.setPointerCapture?.(ev.pointerId);
+          this._shellEl?.addEventListener('pointermove', this._onPointerMove);
+          this._shellEl?.addEventListener('pointerup', this._onPointerUp);
+          this._shellEl?.addEventListener('pointercancel', this._onPointerUp);
+        };
+        this._onPointerMove = (ev) => {
+          if (!this._dragging) return;
+          this._dragLastY = ev.clientY || (ev.touches && ev.touches[0] && ev.touches[0].clientY) || this._dragLastY;
+          const dy = Math.max(0, this._dragLastY - this._dragStartY);
+          this._shellEl.style.transform = `translateY(${dy}px)`;
+          this.rootEl.style.boxShadow = `0 ${24 - Math.min(20, dy/6)}px ${60 - Math.min(40, dy/4)}px rgba(0,0,0,${0.36 - Math.min(.28, dy/300)})`;
+        };
+        this._onPointerUp = (ev) => {
+          if (!this._dragging) return;
+          this._dragging = false;
+          const endY = ev.clientY || (ev.changedTouches && ev.changedTouches[0] && ev.changedTouches[0].clientY) || this._dragLastY;
+          const dy = Math.max(0, endY - this._dragStartY);
+          this._shellEl.style.transform = '';
+          this.rootEl.style.boxShadow = '';
+          this._shellEl?.removeEventListener('pointermove', this._onPointerMove);
+          this._shellEl?.removeEventListener('pointerup', this._onPointerUp);
+          this._shellEl?.removeEventListener('pointercancel', this._onPointerUp);
+          // threshold to dismiss
+          if (dy > 80) this.setCollapsed(true);
+        };
+        this._shellEl = this.rootEl.querySelector('.vinyl__shell');
+        if (this._shellEl) {
+          // insert visual drag handle at top (if not present)
+          if (!this._shellEl.querySelector('.vinyl__handle')){
+            const h = document.createElement('div'); h.className = 'vinyl__handle';
+            this._shellEl.insertAdjacentElement('afterbegin', h);
+          }
+          this._shellEl.addEventListener('pointerdown', this._onPointerDown);
+        }
+      } catch (e) {}
     }
 
     readBool(key, fallback) {
@@ -1715,19 +1781,44 @@
 
     setCollapsed(collapsed, { save = true } = {}) {
       if (!this.rootEl) return;
-      this.rootEl.classList.toggle("vinyl--collapsed", !!collapsed);
-      if (save) this.writeBool("vinylCollapsed", !!collapsed);
+      const isCollapsed = !!collapsed;
+      this.rootEl.classList.toggle("vinyl--collapsed", isCollapsed);
+      // On small screens, show an expanded bottom-sheet when not collapsed
+      if (window.innerWidth <= 640) this.rootEl.classList.toggle("vinyl--expanded", !isCollapsed);
+      if (save) this.writeBool("vinylCollapsed", isCollapsed);
 
-      if (!collapsed) this.clearAutoCollapse?.();
+      // If the user expanded, clear any scheduled auto-collapse
+      if (!isCollapsed) this.clearAutoCollapse?.();
 
+      // Update collapse button text and aria for better affordance
       if (this.collapseBtn) {
-        if (collapsed) {
+        if (isCollapsed) {
           this.collapseBtn.textContent = "▶";
           this.collapseBtn.setAttribute("aria-label", "Expand music player");
         } else {
           this.collapseBtn.textContent = "—";
           this.collapseBtn.setAttribute("aria-label", "Collapse music player");
         }
+      }
+
+      // Accessibility & focus handling for expanded sheet
+      this.rootEl.setAttribute('aria-expanded', (!isCollapsed).toString());
+      if (!isCollapsed) {
+        try { this.backdropEl && this.backdropEl.classList.add('vinyl__backdrop--show'); } catch (e) {}
+        this._prevFocus = document.activeElement;
+        try { this.playBtn?.focus(); } catch (e) {}
+        this._onKey = (ev) => {
+          if (ev.key === 'Escape') this.setCollapsed(true);
+          if (ev.key === 'Tab') this._trapTab(ev);
+        };
+        document.addEventListener('keydown', this._onKey);
+        // accessibility attributes
+        try { this.rootEl.setAttribute('role', 'dialog'); this.rootEl.setAttribute('aria-modal', 'true'); } catch (e) {}
+      } else {
+        try { this.backdropEl && this.backdropEl.classList.remove('vinyl__backdrop--show'); } catch (e) {}
+        try { if (this._onKey) document.removeEventListener('keydown', this._onKey); } catch (e) {}
+        try { this._prevFocus?.focus?.(); } catch (e) {}
+        try { this.rootEl.removeAttribute('role'); this.rootEl.removeAttribute('aria-modal'); } catch (e) {}
       }
     }
 
