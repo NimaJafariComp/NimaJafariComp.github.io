@@ -72,6 +72,16 @@
     --topbar-h: 58px;
     --safe-gap: 16px;
   }
+}
+
+/* Landscape mobile adjustments */
+@media (max-height: 500px) and (orientation: landscape){
+  :root{
+    --constellation-top: 90px;
+    --topbar-top: 10px;
+    --topbar-h: 52px;
+    --safe-gap: 12px;
+  }
 } 
 
 :root[data-theme="provence"]{
@@ -147,7 +157,11 @@
 }
 
 *{ box-sizing:border-box; }
-html,body{ height:100%; }
+html,body{ 
+  height:100%; 
+  /* Support for safe areas on notched devices */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
 body{
   margin:0;
   color:var(--ink);
@@ -352,6 +366,31 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   display:flex;
   gap:10px;
   align-items:center;
+  flex-wrap:wrap;
+}
+
+/* Improve mobile topbar: hide button labels on very small screens */
+@media (max-width: 520px){
+  .topbar{
+    padding: 10px 12px;
+  }
+  .topbar__actions{
+    gap: 8px;
+  }
+  .btn__label{
+    display: none;
+  }
+  .btn{
+    padding: 10px;
+    min-width: 40px;
+    justify-content: center;
+  }
+  .btn__icon{
+    margin: 0;
+  }
+  .brand__text{
+    font-size: 15px;
+  }
 }
 
 /* --- Buttons --- */
@@ -367,6 +406,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   gap:9px;
   align-items:center;
   user-select:none;
+  /* Minimum touch target size for accessibility */
+  min-width: 44px;
+  min-height: 44px;
 
   /* Magnetic + micro-interactions (driven by CSS variables) */
   --magx: 0px;
@@ -377,6 +419,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: translate3d(var(--magx), var(--magy), 0) translateY(var(--lift)) scale(var(--press));
   transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease), color 700ms var(--ease2);
   box-shadow: 0 10px 40px rgba(0,0,0,.25);
+  /* Prevent double-tap zoom on mobile */
+  touch-action: manipulation;
 }
 
 .btn--primary{
@@ -423,10 +467,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   scroll-snap-type:x mandatory;
   scroll-behavior:smooth;
   -webkit-overflow-scrolling: touch;
+  /* Prevent momentum scrolling issues */
+  overscroll-behavior-x: contain;
 }
 .deck::-webkit-scrollbar{ height: 10px; }
 .deck::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
 .deck::-webkit-scrollbar-track{ background: color-mix(in srgb, var(--ink) 4%, transparent); }
+
+@media (max-width: 520px){
+  .deck::-webkit-scrollbar{ height: 6px; }
+}
 
 .panel{
   width:100vw;
@@ -452,6 +502,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   bottom: 0;
 
   overflow:auto;
+  -webkit-overflow-scrolling: touch;
 
   /* layout padding lives here */
   padding: 0 18px 22px;
@@ -461,6 +512,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
 .panel__inner::-webkit-scrollbar-track{ background: color-mix(in srgb, var(--ink) 4%, transparent); }
+
+@media (max-width: 520px){
+  .panel__inner{
+    padding: 0 16px 100px; /* Extra bottom padding for vinyl player */
+  }
+  .panel__inner::-webkit-scrollbar{ width: 6px; }
+}
+
+@media (min-width: 521px) and (max-width: 719px){
+  .panel__inner{ padding: 0 20px 24px; }
+}
 
 @media (min-width: 720px){
   .panel__inner{ padding: 0 28px 28px; }
@@ -479,6 +541,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 @media (min-width: 900px){
   .grid--2{ grid-template-columns: 1.12fr .88fr; }
   .grid--3{ grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 899px) and (min-width: 640px){
+  .grid--2{ grid-template-columns: 1fr; }
+  .grid--3{ grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 639px){
+  .grid{ gap: 14px; }
+  .grid--2,
+  .grid--3{ grid-template-columns: 1fr; }
 }
 
 /* -----------------------------
@@ -789,7 +862,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   color: color-mix(in srgb, var(--ink) 80%, transparent);
 }
 
-/* Mobile responsive */
+/* Tablet responsive - adjust layout */
+@media (max-width: 900px) and (min-width: 769px){
+  .timelineNode{
+    width: calc(50% - 30px);
+  }
+  .timelineStatic__grid::before{
+    left: 50%;
+  }
+}
+
+/* Mobile responsive - single column */
 @media (max-width: 768px){
   .timelineStatic__inner{ padding: 20px 16px 24px; }
   
@@ -817,6 +900,20 @@ a:focus-visible, button:focus-visible, input:focus-visible{
       color-mix(in srgb, var(--accent) 5%, transparent)
     ) !important;
   }
+  
+  .timelineStatic__title{
+    font-size: 28px;
+  }
+  
+  .timelineFilters{
+    gap: 6px;
+    margin: 20px 0 28px;
+  }
+  
+  .filterPill{
+    padding: 7px 14px;
+    font-size: 12px;
+  }
 }
 
 /* Legacy styles for details panel */
@@ -840,8 +937,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .h1{
   font-family: var(--font-title);
-  font-size: clamp(40px, 6vw, 72px);
-  line-height: .95;
+  font-size: clamp(32px, 6vw, 72px);
+  line-height: 1.05;
   letter-spacing: .2px;
   margin: 0;
   filter: url(#softGlow);
@@ -852,8 +949,18 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .h2{
   font-family: var(--font-title);
-  font-size: clamp(24px, 3.2vw, 34px);
+  font-size: clamp(20px, 3.2vw, 34px);
   margin: 0;
+  line-height: 1.2;
+}
+
+@media (max-width: 520px){
+  .h1{
+    line-height: 1.1;
+  }
+  .h2{
+    line-height: 1.25;
+  }
 }
 
 .kicker{
@@ -868,6 +975,20 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .p{ margin: 0; color: var(--muted); line-height: 1.7; }
 .small{ font-size: 12.5px; color: var(--muted); }
 .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+@media (max-width: 520px){
+  .kicker{
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .p{
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .small{
+    font-size: 12px;
+  }
+}
 
 .row{
   display:flex;
@@ -887,6 +1008,18 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   background: linear-gradient(180deg, color-mix(in srgb, white 7%, transparent), color-mix(in srgb, white 2%, transparent));
   color: color-mix(in srgb, var(--ink) 86%, transparent);
   font-size: 13px;
+}
+
+@media (max-width: 520px){
+  .chip{
+    padding: 8px 10px;
+    font-size: 12px;
+    gap: 6px;
+  }
+  .tag{
+    padding: 5px 8px;
+    font-size: 11px;
+  }
 }
 .chip--accent{
   border-color: color-mix(in srgb, var(--accent) 28%, transparent);
@@ -910,6 +1043,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   overflow:hidden;
   transition: background 400ms var(--ease2), border-color 400ms var(--ease2), box-shadow 400ms var(--ease2);
   backdrop-filter: blur(8px) saturate(1.06);
+}
+
+@media (max-width: 640px){
+  .brush-card{
+    border-radius: 18px;
+  }
 }
 .brush-card::before{
   content:"";
@@ -975,6 +1114,15 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   isolation: isolate;
   box-shadow: 0 18px 60px rgba(0,0,0,.30);
   background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--accent) 25%, transparent), transparent 58%);
+}
+
+@media (max-width: 520px){
+  .portrait{
+    padding: 12px;
+  }
+  .portrait__img{
+    width: min(280px, 70vw);
+  }
 }
 .portrait__img img{
   width:100%;
@@ -1095,6 +1243,15 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   box-shadow: 0 22px 70px rgba(0,0,0,.28);
   overflow:hidden;
   backdrop-filter: blur(6px) saturate(1.06);
+}
+
+@media (max-width: 520px){
+  .card{
+    padding: 14px;
+  }
+  .brush-card{
+    padding: 16px;
+  }
 }
 .card__top{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .badge{
@@ -1313,7 +1470,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   top: var(--constellation-top); /* moved further down to avoid colliding with content */
   transform: translateX(-50%);
   z-index: 10;
-  width: min(720px, calc(100vw - 40px));
+  width: min(720px, calc(100vw - 28px));
   pointer-events:none;
 }
 .constellation__lines{
@@ -1347,6 +1504,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   place-items:center;
   cursor:pointer;
   transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+  /* Larger touch target */
+  min-width: 44px;
+  min-height: 44px;
 }
 .constellation__dot::before{
   content:"";
@@ -1378,13 +1538,38 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   padding: 6px 9px;
   border-radius: 999px;
   white-space: nowrap;
-  opacity:1; /* labels visible by default */
+  opacity:0; /* hide labels by default to reduce clutter */
   pointer-events:none;
   transition: opacity .2s var(--ease), transform .2s var(--ease), background 700ms var(--ease2);
+  backdrop-filter: blur(8px);
 }
-.constellation__dot:hover .constellation__label{
+.constellation__dot:hover .constellation__label,
+.constellation__dot[aria-current="true"] .constellation__label{
   opacity:1;
   transform: translateX(-50%) translateY(-2px);
+}
+
+/* Mobile constellation: reduce gaps, ensure labels work */
+@media (max-width: 640px){
+  .constellation{
+    width: calc(100vw - 20px);
+  }
+  .constellation__dots{
+    gap: 4px;
+  }
+  .constellation__dot{
+    width: 32px;
+    height: 32px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  .constellation__label{
+    font-size: 11px;
+    padding: 5px 8px;
+    max-width: 90vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 /* Palette removed */
@@ -1538,9 +1723,43 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   top:-9999px;
 }
 
-@media (max-width: 520px){
-  .vinyl{ bottom: 76px; }
+@media (max-width: 640px){
+  .vinyl{ 
+    bottom: 80px;
+    left: 8px;
+    width: min(380px, calc(100vw - 16px));
+  }
   .vinyl__vol{ width: 110px; }
+  .vinyl__shell{
+    padding: 12px;
+    gap: 12px;
+  }
   /* On mobile, move the collapsed vinyl to the right corner so it doesn't overlap content */
-  .vinyl--collapsed{ left: auto !important; right: 8px !important; }
+  .vinyl--collapsed{ 
+    left: auto !important; 
+    right: 8px !important;
+    bottom: 8px !important;
+    width: 88px !important;
+  }
+  .vinyl--collapsed:hover{
+    width: 200px !important;
+  }
+}
+
+@media (max-width: 520px){
+  .vinyl{ 
+    bottom: 76px; 
+    width: calc(100vw - 16px);
+  }
+  .vinyl__shell{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .vinyl__controls{
+    width: 100%;
+  }
+  .vinyl__vol{
+    flex: 1;
+    width: 100%;
+  }
 }

@@ -553,7 +553,6 @@
         <div class="brush-card card-pad" style="margin-top:16px;">
           <div class="small">Embedded PDF</div>
           <iframe class="pdfFrame" src="${escapeHtml(m.resumeUrl)}#view=FitH" title="Nima Jafari CV (PDF)"></iframe>
-          <div class="small" style="margin-top:10px;">Public version has the phone number removed. If you want a different redaction, update the PDF in <span class="mono">assets/</span>.</div>
         </div>
       </div>
     `;
