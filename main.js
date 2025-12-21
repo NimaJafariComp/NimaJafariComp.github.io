@@ -90,6 +90,11 @@
     // Inform background
     sky?.setTheme?.(t);
 
+    // Refresh constellation SVG lines (update colors) after theme change
+    try { drawLines(); } catch(e){}
+    // Small deferred redraw to account for any layout changes
+    setTimeout(() => { try { drawLines(); } catch(e){} }, 80);
+
     if (announce) {
       showToast(meta ? meta.label : (t === "provence" ? "Light" : "Dark"));
     }
@@ -696,8 +701,8 @@
       <stop offset="1" stop-color="rgba(0,0,0,0)"/>
     ` : `
       <stop offset="0" stop-color="rgba(255,255,255,0)"/>
-      <stop offset=".25" stop-color="rgba(255,255,255,.95)"/>
-      <stop offset=".6" stop-color="rgba(255,255,255,.85)"/>
+      <stop offset=".25" stop-color="rgba(255,255,255,.80)"/>
+      <stop offset=".6" stop-color="rgba(255,255,255,.58)"/>
       <stop offset="1" stop-color="rgba(255,255,255,0)"/>
     `;
     defs.innerHTML = `<linearGradient id="lineGrad" x1="0" y1="0" x2="${navRect.width}" y2="0" gradientUnits="userSpaceOnUse">${gradStops}</linearGradient>`;
