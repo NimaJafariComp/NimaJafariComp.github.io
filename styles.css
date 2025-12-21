@@ -122,7 +122,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   width:100%;
   height:100%;
   z-index:-3;
+  /* Make the animated sky partially transparent so the static artwork below shows through */
+  opacity: 0.78;
+  mix-blend-mode: normal;
+  transition: opacity .6s var(--ease2);
 }
+:root[data-theme="provence"] #sky{ opacity: 0.72; }
 
 #grain-overlay{
   position:fixed;
