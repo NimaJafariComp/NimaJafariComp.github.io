@@ -112,7 +112,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   background-size:cover;
   background-repeat:no-repeat;
   pointer-events:none;
-  filter: contrast(0.95) saturate(1.04);
+  /* Make the static artwork slightly more vivid so it reads through the animation */
+  filter: contrast(1.12) saturate(1.12);
   transition: opacity .6s var(--ease2), filter .6s var(--ease2);
 }
 
@@ -123,11 +124,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height:100%;
   z-index:-3;
   /* Make the animated sky partially transparent so the static artwork below shows through */
-  opacity: 0.78;
+  opacity: 0.70; /* lowered to reveal static artwork */
   mix-blend-mode: normal;
   transition: opacity .6s var(--ease2);
 }
-:root[data-theme="provence"] #sky{ opacity: 0.72; }
+:root[data-theme="provence"] #sky{ opacity: 0.67; }
 
 #grain-overlay{
   position:fixed;
@@ -217,12 +218,13 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   position:absolute;
   inset:0;
   pointer-events:none;
-  background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.45));
+  /* Lighter overlay to allow the painting to show more while preserving legibility */
+  background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.30));
   mix-blend-mode: multiply;
   transition: background .6s var(--ease2), opacity .6s var(--ease2);
 }
 :root[data-theme="provence"] #staticBg::after{
-  background: linear-gradient(180deg, rgba(255,250,230,.08), rgba(255,250,230,.38));
+  background: linear-gradient(180deg, rgba(255,250,230,.04), rgba(255,250,230,.28));
 }
 
 /* --- Top bar --- */
@@ -1012,25 +1014,32 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl__vol{ width: 140px; }
 .vinyl__hint{ margin-top: 8px; font-size: 12px; color: var(--muted); }
 
-/* Collapsed behavior: tuck into corner with a bit of the disk peeking out */
+/* Collapsed behavior: tuck into corner as a compact horizontal bar */
 .vinyl--collapsed{
   width: 96px !important;
+  height: 56px !important;
   left: 8px !important;
   bottom: 8px !important;
-  border-radius: 16px;
+  border-radius: 999px;
   box-shadow: 0 10px 24px rgba(0,0,0,.22);
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  padding: 0;
 }
-.vinyl--collapsed .vinyl__shell{ padding: 8px; gap: 8px; }
+.vinyl--collapsed .vinyl__shell{ padding: 6px; gap: 8px; align-items: center; }
 .vinyl--collapsed .vinyl__meta{ display:none; }
-.vinyl--collapsed .vinyl__collapse{ right: 8px; top: 8px; opacity:.95; }
-.vinyl--collapsed .vinyl__disk{ transform: translateX(-12px); box-shadow: 0 20px 48px rgba(0,0,0,.28); }
+.vinyl--collapsed .vinyl__collapse{ right: 8px; top: 8px; opacity:.95; transform: none; }
+.vinyl--collapsed .vinyl__disk{ width:44px; height:44px; transform: translateX(0); box-shadow: 0 10px 20px rgba(0,0,0,.22); }
 
-/* Hover/peek reveal: when user hovers the collapsed vinyl it slides out slightly */
+/* Hover/peek reveal: expand horizontally and reveal meta */
 .vinyl--collapsed:hover{
-  transform: translateX(8px) translateY(-6px);
-  width: 190px !important;
+  transform: translateX(8px) translateY(0);
+  width: 220px !important;
+  height: 64px !important;
 }
 .vinyl--collapsed:hover .vinyl__meta{ display:block; }
+.vinyl--collapsed:hover .vinyl__disk{ width:64px; height:64px; transform: translateX(0); }
 
 .yt{
   position:absolute;
