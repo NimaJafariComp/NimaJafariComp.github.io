@@ -296,8 +296,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .panel{
   width:100vw;
+  min-width:100vw;
+  flex: 0 0 100vw;
   height:100vh;
+  min-height:100vh;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
   padding: 86px 18px 22px;
   position:relative;
 }
@@ -805,56 +809,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: translateX(-50%) translateY(-2px);
 }
 
-/* Palette overlay */
-.palette[hidden]{ display:none; }
-.palette{
-  position:fixed;
-  inset:0;
-  z-index: 40;
-  display:grid;
-  place-items:center;
-}
-.palette__backdrop{
-  position:absolute;
-  inset:0;
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(4px);
-}
-.palette__panel{
-  width: min(720px, calc(100vw - 26px));
-  border-radius: 22px;
-}
-.palette__header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding: 12px 14px;
-}
-.palette__hint{ font-size: 12px; color: var(--muted); }
-.palette__close{ padding: 8px 10px; }
-.palette__input{
-  width: calc(100% - 28px);
-  margin: 0 14px 12px;
-  padding: 12px 12px;
-  border-radius: 14px;
-  border:1px solid var(--border);
-  background: color-mix(in srgb, white 7%, transparent);
-  color: var(--ink);
-  font-size: 14px;
-}
-.palette__list{ list-style:none; margin:0; padding: 0 10px 12px; }
-.palette__item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap: 12px;
-  padding: 12px 12px;
-  border-radius: 14px;
-  cursor:pointer;
-  border: 1px solid transparent;
-}
-.palette__item[aria-selected="true"]{ border-color: color-mix(in srgb, var(--accent) 28%, transparent); background: color-mix(in srgb, white 6%, transparent); }
-.palette__kbd{ font-size: 12px; color: var(--muted); }
+/* Palette removed */
 
 /* Toast */
 .toast{
@@ -881,6 +836,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   bottom: 86px; /* above constellation nav */
   z-index: 20;
   width: min(420px, calc(100vw - 28px));
+  transition: width .34s var(--ease), left .34s var(--ease), bottom .34s var(--ease), transform .34s var(--ease), box-shadow .34s var(--ease);
+  will-change: transform, width, left, bottom;
 }
 
 .vinyl__shell{
@@ -902,6 +859,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   background: color-mix(in srgb, white 6%, transparent);
   color: var(--ink);
   cursor:pointer;
+  transition: transform .2s var(--ease), opacity .2s var(--ease);
 }
 
 .vinyl__disk{
@@ -917,6 +875,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
   position:relative;
   flex: 0 0 auto;
+  transition: transform .34s var(--ease), box-shadow .34s var(--ease);
 }
 
 .vinyl__label{
@@ -960,11 +919,25 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl__vol{ width: 140px; }
 .vinyl__hint{ margin-top: 8px; font-size: 12px; color: var(--muted); }
 
-.vinyl--collapsed{ width: auto; }
-.vinyl--collapsed .vinyl__shell{ padding: 12px; gap: 10px; }
+/* Collapsed behavior: tuck into corner with a bit of the disk peeking out */
+.vinyl--collapsed{
+  width: 96px !important;
+  left: 8px !important;
+  bottom: 8px !important;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.22);
+}
+.vinyl--collapsed .vinyl__shell{ padding: 8px; gap: 8px; }
 .vinyl--collapsed .vinyl__meta{ display:none; }
-.vinyl--collapsed .vinyl__collapse{ right: 8px; top: 8px; opacity:.85; }
+.vinyl--collapsed .vinyl__collapse{ right: 8px; top: 8px; opacity:.95; }
+.vinyl--collapsed .vinyl__disk{ transform: translateX(-12px); box-shadow: 0 20px 48px rgba(0,0,0,.28); }
 
+/* Hover/peek reveal: when user hovers the collapsed vinyl it slides out slightly */
+.vinyl--collapsed:hover{
+  transform: translateX(8px) translateY(-6px);
+  width: 190px !important;
+}
+.vinyl--collapsed:hover .vinyl__meta{ display:block; }
 
 .yt{
   position:absolute;
@@ -978,4 +951,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 @media (max-width: 520px){
   .vinyl{ bottom: 76px; }
   .vinyl__vol{ width: 110px; }
+  /* On mobile, move the collapsed vinyl to the right corner so it doesn't overlap content */
+  .vinyl--collapsed{ left: auto !important; right: 8px !important; }
 }

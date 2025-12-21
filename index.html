@@ -64,12 +64,7 @@
 
       <button class="btn btn--ghost magnetic" id="btnTheme" type="button" title="Toggle theme (T)">
         <span class="btn__icon" aria-hidden="true">☾</span>
-        <span class="btn__label">Palette</span>
-      </button>
-
-      <button class="btn btn--ghost magnetic" id="btnPalette" type="button" title="Command palette (K)">
-        <span class="btn__icon" aria-hidden="true">⌘</span>
-        <span class="btn__label">Command</span>
+        <span class="btn__label">Theme</span>
       </button>
 
       <button class="btn btn--ghost magnetic" id="btnMotion" type="button" title="Toggle motion">
@@ -101,20 +96,7 @@
     <section class="panel" data-section="contact" data-label="Links"><div class="panel__inner" id="panel-contact"></div></section>
   </main>
 
-  <!-- Command palette -->
-  <div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Command palette" hidden>
-    <div class="palette__backdrop" id="paletteBackdrop"></div>
-    <div class="palette__panel brush-card" role="document">
-      <div class="palette__header">
-        <div class="palette__hint">Type to search • Enter to run • Esc to close</div>
-        <button class="palette__close btn btn--ghost magnetic" id="paletteClose" type="button" aria-label="Close">
-          ✕
-        </button>
-      </div>
-      <input class="palette__input" id="paletteInput" placeholder="Jump, theme, music, copy email…" autocomplete="off" />
-      <ul class="palette__list" id="paletteList" role="listbox" aria-label="Commands"></ul>
-    </div>
-  </div>
+
 
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 

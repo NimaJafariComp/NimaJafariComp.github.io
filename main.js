@@ -182,7 +182,7 @@
             <div class="sectionTitle">
               <div>
                 <div class="h2" style="margin:0;">Portrait</div>
-                <div class="small">Monochrome portrait — palette tint follows the sky.</div>
+                <div class="small">Monochrome portrait — theme tint follows the sky.</div>
               </div>
               <button class="btn btn--ghost magnetic" type="button" data-action="toggleVangogh" title="Boost brush strokes (V)">
                 <span class="btn__icon">🖌</span><span class="btn__label">Brush</span>
@@ -364,7 +364,7 @@
               <p class="p">Nodes are “constellations” in the paint sky. Scroll to move forward. Click a node to pin the details.</p>
               <p class="small">${escapeHtml(t.tip)}</p>
               <div class="row">
-                <button class="btn btn--ghost magnetic" type="button" data-action="toggleTheme"><span class="btn__icon">${escapeHtml(data.themes?.night?.emoji || "☾")}</span><span class="btn__label">Switch palette</span></button>
+                <button class="btn btn--ghost magnetic" type="button" data-action="toggleTheme"><span class="btn__icon">${escapeHtml(data.themes?.night?.emoji || "☾")}</span><span class="btn__label">Switch theme</span></button>
                 <button class="btn btn--ghost magnetic" type="button" data-action="toggleMotion"><span class="btn__icon">⟲</span><span class="btn__label">Toggle motion</span></button>
               </div>
             </div>
@@ -606,7 +606,6 @@
             <hr class="sep"/>
             <div class="row">
               <button class="btn btn--primary magnetic" type="button" data-action="copyEmail"><span class="btn__icon">✉</span><span class="btn__label">Copy email</span></button>
-              <button class="btn btn--ghost magnetic" type="button" data-action="openPalette"><span class="btn__icon">⌘</span><span class="btn__label">Command palette</span></button>
             </div>
           </div>
         </div>
@@ -630,7 +629,7 @@
             <hr class="sep"/>
 
             <div class="small">
-              Keys: <span class="mono">K</span> command • <span class="mono">M</span> music • <span class="mono">T</span> theme • <span class="mono">V</span> brush
+              Keys: <span class="mono">M</span> music • <span class="mono">T</span> theme • <span class="mono">V</span> brush
             </div>
           </div>
         </div>
@@ -712,8 +711,12 @@
   function jumpTo(sectionId) {
     const idx = sections.findIndex(s => s.id === sectionId);
     if (idx < 0) return;
-    const left = idx * window.innerWidth;
+    const target = sections[idx].el;
+    const left = target ? target.offsetLeft : idx * window.innerWidth;
     deck.scrollTo({ left, behavior: "smooth" });
+
+    // Auto-collapse the vinyl player a short time after navigation (helps keep content visible)
+    try { vinyl?.scheduleAutoCollapse?.(900); } catch (e) {}
   }
 
   function jumpRelative(delta) {
@@ -724,7 +727,7 @@
 
   function getActiveIndex() {
     const left = deck.scrollLeft;
-    return Math.round(left / window.innerWidth);
+    return Math.round(left / deck.clientWidth);
   }
 
   // Wheel = vertical inside panel, but drift horizontally when at edges
@@ -795,7 +798,6 @@
       if (act === "copyEmail") return copyEmail();
       if (act === "toggleMotion") return setMotion(!state.motionEnabled);
       if (act === "toggleVangogh") return toggleVangogh();
-      if (act === "openPalette") return palette.open();
       if (act === "toggleTheme") return toggleTheme();
       if (act === "toggleMusic") return vinyl?.togglePlay?.();
       if (act === "jumpMachines") return jumpTo("machines");
@@ -804,7 +806,6 @@
     });
 
     $("#btnMotion")?.addEventListener("click", () => setMotion(!state.motionEnabled));
-    $("#btnPalette")?.addEventListener("click", () => palette.open());
     $("#btnTheme")?.addEventListener("click", toggleTheme);
     $("#btnCV")?.addEventListener("click", () => jumpTo("cv"));
     $("#btnMusic")?.addEventListener("click", () => vinyl?.togglePlay?.());
@@ -812,13 +813,10 @@
 
   // Keyboard navigation + shortcuts
   window.addEventListener("keydown", (e) => {
-    if (palette.isOpen()) return;
-
     if (e.key === "ArrowRight") return jumpRelative(1);
     if (e.key === "ArrowLeft") return jumpRelative(-1);
 
     const k = e.key.toLowerCase();
-    if (k === "k") return palette.open();
     if (k === "v") return toggleVangogh();
     if (k === "t") return toggleTheme();
     if (k === "m") return vinyl?.togglePlay?.();
@@ -908,116 +906,7 @@
     }
   }
 
-  /* -----------------------------
-     Command palette
-     ----------------------------- */
-  const palette = (() => {
-    const el = $("#palette");
-    const backdrop = $("#paletteBackdrop");
-    const closeBtn = $("#paletteClose");
-    const input = $("#paletteInput");
-    const list = $("#paletteList");
-
-    const commands = [
-      { name: "Jump: Home", keywords: "home start", kbd: "→", run: () => jumpTo("home") },
-      { name: "Jump: About", keywords: "about bio", kbd: "→", run: () => jumpTo("about") },
-      { name: "Jump: Work", keywords: "work research experience", kbd: "→", run: () => jumpTo("work") },
-      { name: "Jump: Machines", keywords: "machines timeline technology", kbd: "→", run: () => jumpTo("machines") },
-      { name: "Jump: Projects", keywords: "projects portfolio", kbd: "→", run: () => jumpTo("projects") },
-      { name: "Jump: Skills", keywords: "skills stack tech", kbd: "→", run: () => jumpTo("skills") },
-      { name: "Jump: CV", keywords: "cv resume pdf", kbd: "→", run: () => jumpTo("cv") },
-      { name: "Jump: Honors", keywords: "honors leadership awards", kbd: "→", run: () => jumpTo("honors") },
-      { name: "Jump: Links", keywords: "contact links", kbd: "→", run: () => jumpTo("contact") },
-      { name: "Copy email", keywords: "email copy", kbd: "C", run: copyEmail },
-      { name: "Toggle motion", keywords: "motion reduce animation", kbd: "M0", run: () => setMotion(!state.motionEnabled) },
-      { name: "Toggle theme", keywords: "theme palette dark light", kbd: "T", run: toggleTheme },
-      { name: "Play / Pause music", keywords: "music audio jazz", kbd: "M", run: () => vinyl?.togglePlay?.() },
-      { name: "Boost brush strokes", keywords: "vangogh brush boost", kbd: "V", run: toggleVangogh },
-      { name: "Shuffle skill nebula", keywords: "nebula shuffle", kbd: "S", run: () => nebula?.shuffle?.() },
-      { name: "Open GitHub", keywords: "github profile", kbd: "G", run: () => window.open(`https://github.com/${data.meta.githubUser}`, "_blank", "noopener") },
-      { name: "Open arXiv", keywords: "paper preprint", kbd: "A", run: () => window.open("https://arxiv.org/abs/2511.20138", "_blank", "noopener") },
-    ];
-
-    let open = false;
-    let filtered = commands;
-    let idx = 0;
-
-    function renderList() {
-      list.innerHTML = filtered.map((c, i) => `
-        <li class="palette__item" role="option" aria-selected="${i === idx ? "true" : "false"}" data-idx="${i}">
-          <strong>${escapeHtml(c.name)}</strong>
-          <span class="palette__kbd">${escapeHtml(c.kbd || "")}</span>
-        </li>
-      `).join("");
-    }
-
-    function filter(q) {
-      const query = q.trim().toLowerCase();
-      filtered = commands.filter(c =>
-        c.name.toLowerCase().includes(query) || (c.keywords || "").toLowerCase().includes(query)
-      );
-      idx = 0;
-      renderList();
-    }
-
-    function runSelected() {
-      if (!filtered[idx]) return;
-      filtered[idx].run();
-      close();
-    }
-
-    function openPalette() {
-      if (open) return;
-      open = true;
-      // Ensure the element is visible — set both the boolean hidden and an inline display to be resilient
-      el.hidden = false;
-      try { el.style.display = "grid"; } catch (e) {}
-      input.value = "";
-      filter("");
-      setTimeout(() => input.focus(), 0);
-    }
-
-    function close() {
-      open = false;
-      el.hidden = true;
-      // Also enforce hiding via inline style in case CSS is overridden elsewhere
-      try { el.style.display = "none"; } catch (e) {}
-    }
-
-    function isOpen() { return !el.hidden; }
-
-    backdrop?.addEventListener("click", close);
-    closeBtn?.addEventListener("click", (e) => {
-      close();
-      e.preventDefault();
-    });
-    window.addEventListener("keydown", (e) => {
-      if (!open) return;
-      if (e.key === "Escape") return close();
-      if (e.key === "Enter") return runSelected();
-      if (e.key === "ArrowDown") { idx = Math.min(filtered.length - 1, idx + 1); renderList(); e.preventDefault(); }
-      if (e.key === "ArrowUp") { idx = Math.max(0, idx - 1); renderList(); e.preventDefault(); }
-    });
-
-    input?.addEventListener("input", () => filter(input.value));
-
-    // Ensure the palette closes on Escape key
-    input?.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        close();
-        e.preventDefault();
-      }
-    });
-
-    list?.addEventListener("click", (e) => {
-      const li = e.target.closest("[data-idx]");
-      if (!li) return;
-      idx = Number(li.dataset.idx);
-      runSelected();
-    });
-
-    return { open: openPalette, close, isOpen };
-  })();
+  /* Command palette removed */
 
   /* -----------------------------
      Van Gogh background (canvas)
@@ -1827,6 +1716,20 @@
       if (!this.rootEl) return;
       this.rootEl.classList.toggle("vinyl--collapsed", !!collapsed);
       if (save) this.writeBool("vinylCollapsed", !!collapsed);
+
+      // If the user expanded, clear any scheduled auto-collapse
+      if (!collapsed) this.clearAutoCollapse?.();
+
+      // Update collapse button text and aria for better affordance
+      if (this.collapseBtn) {
+        if (collapsed) {
+          this.collapseBtn.textContent = "▶"; // indicate expand
+          this.collapseBtn.setAttribute("aria-label", "Expand music player");
+        } else {
+          this.collapseBtn.textContent = "—"; // compact collapse symbol
+          this.collapseBtn.setAttribute("aria-label", "Collapse music player");
+        }
+      }
     }
 
     setVisualsEnabled(enabled) {
@@ -1879,37 +1782,58 @@
         events: {
           onReady: () => {
             this.ready = true;
-            const vol = this.readVolume();
+            // Use saved volume if available, otherwise start at 20%
+            const hasSavedVol = (() => { try { return localStorage.getItem("vinylVol") !== null; } catch { return false; } })();
+            const vol = hasSavedVol ? this.readVolume() : 20;
             if (this.volEl) this.volEl.value = String(vol);
             this.player.setVolume(vol);
 
-            // Try to start playback muted (autoplay policies allow muted autoplay).
+            // First try to autoplay unmuted (some browsers may permit if volume is low).
             try {
-              this.player.mute();
-              this.muted = true;
+              if (this.muted) { this.player.unMute(); this.muted = false; }
             } catch (e) {}
 
             this.player.playVideo();
             this.updateUI();
 
-            // Unmute on first user gesture (pointerdown/keydown)
-            const onFirstGesture = () => {
-              try {
-                if (this.muted) {
-                  this.player.unMute();
-                  this.muted = false;
-                  this.updateUI();
-                }
-                // also ensure it is playing
-                this.player.playVideo();
-              } catch (e) {}
-              document.removeEventListener("pointerdown", onFirstGesture);
-              document.removeEventListener("keydown", onFirstGesture);
-            };
-            document.addEventListener("pointerdown", onFirstGesture, { once: true });
-            document.addEventListener("keydown", onFirstGesture, { once: true });
+            // If not playing within a short window, fallback to muted autoplay and show unmute hint
+            if (this._autoplayFallbackTimer) { clearTimeout(this._autoplayFallbackTimer); this._autoplayFallbackTimer = null; }
+            this._autoplayFallbackTimer = setTimeout(() => {
+              if (!this.playing) {
+                try { this.player.mute(); this.muted = true; this.player.playVideo(); } catch (e) {}
+                this.updateUI();
 
-            // Attempt to auto-play again after a short delay
+                // Show persistent unmute hint (reusing previous hint behavior)
+                try { showToast("Tap anywhere or press M to enable audio"); } catch {}
+                this._origHint = this.hintEl?.textContent;
+                if (this.hintEl) this.hintEl.textContent = "Tap anywhere or press M to enable audio";
+                this.rootEl?.classList.add("vinyl--unmute-hint");
+                // auto-hide after 8s
+                this._unmuteHintTimeout = setTimeout(() => {
+                  if (this.hintEl && typeof this._origHint !== "undefined") this.hintEl.textContent = this._origHint || "Tip: press M to toggle music";
+                  this.rootEl?.classList.remove("vinyl--unmute-hint");
+                  this._unmuteHintTimeout = null;
+                }, 8000);
+
+                const onFirstGesture = () => {
+                  try {
+                    if (this.muted) { this.player.unMute(); this.muted = false; this.updateUI(); }
+                    this.player.playVideo();
+                    try { showToast("Audio enabled"); } catch {}
+                  } catch (e) {}
+                  if (this.hintEl && typeof this._origHint !== "undefined") this.hintEl.textContent = this._origHint || "Tip: press M to toggle music";
+                  this.rootEl?.classList.remove("vinyl--unmute-hint");
+                  if (this._unmuteHintTimeout) { clearTimeout(this._unmuteHintTimeout); this._unmuteHintTimeout = null; }
+
+                  document.removeEventListener("pointerdown", onFirstGesture);
+                  document.removeEventListener("keydown", onFirstGesture);
+                };
+                document.addEventListener("pointerdown", onFirstGesture, { once: true });
+                document.addEventListener("keydown", onFirstGesture, { once: true });
+              }
+            }, 1200);
+
+            // Ensure a second play attempt after a short delay
             setTimeout(() => {
               if (this.ready && this.player) {
                 try { this.player.playVideo(); } catch (e) {}
@@ -1920,6 +1844,7 @@
             // 1 = playing, 2 = paused
             if (ev.data === window.YT.PlayerState.PLAYING) {
               this.playing = true;
+              if (this._autoplayFallbackTimer) { clearTimeout(this._autoplayFallbackTimer); this._autoplayFallbackTimer = null; }
             } else if (ev.data === window.YT.PlayerState.PAUSED || ev.data === window.YT.PlayerState.ENDED) {
               this.playing = false;
             }
@@ -1987,6 +1912,20 @@
         this.rootEl?.classList.toggle("is-playing", this.playing);
       }
     }
+
+    // Schedule auto-collapse after `delay` ms (useful for mobile or navigation-driven auto-hide)
+    scheduleAutoCollapse(delay = 1500) {
+      try {
+        if (this._autoCollapseTimer) clearTimeout(this._autoCollapseTimer);
+        this._autoCollapseTimer = setTimeout(() => {
+          this.setCollapsed(true);
+        }, delay);
+      } catch (e) {}
+    }
+
+    clearAutoCollapse() {
+      if (this._autoCollapseTimer) { clearTimeout(this._autoCollapseTimer); this._autoCollapseTimer = null; }
+    }
   }
 
   let vinyl = null;
@@ -2008,8 +1947,7 @@
   attachTilt();
   loadGitHubStats();
 
-  // Defensive: ensure the command palette is closed on boot (some browsers / dev tools may remove the boolean hidden)
-  try { palette?.close?.(); } catch (e) {}
+
 
   // Mount nebula
   const nebulaStage = $("#nebulaStage");
@@ -2050,6 +1988,13 @@
       labelEl: $("#vinylLabel"),
       hintEl: $("#vinylHint"),
     });
+
+    // On mobile, auto-collapse after a short delay so the player doesn't obscure content
+    try {
+      if (window.innerWidth <= 520) {
+        vinyl.scheduleAutoCollapse(1600);
+      }
+    } catch (e) {}
   }
 
   // Motion state
