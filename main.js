@@ -218,7 +218,7 @@
                 <div class="item__body">
                   <p class="item__title">Email</p>
                   <p class="item__sub">
-                    <button class="btn btn--ghost magnetic" type="button" data-action="copyEmail">
+                    <button class="btn btn--ghost btn--email magnetic" type="button" data-action="copyEmail">
                       <span class="btn__icon">✉</span>
                       <span class="btn__label">${escapeHtml(m.email)}</span>
                     </button>
@@ -228,8 +228,8 @@
             </div>
 
             <div class="row" style="margin-top:14px;">
-              <a class="btn btn--ghost magnetic" href="https://github.com/${escapeHtml(m.githubUser)}" target="_blank" rel="noopener"><span class="btn__icon">↗</span><span class="btn__label">Open GitHub</span></a>
-              <button class="btn btn--ghost magnetic" type="button" data-action="jumpCV"><span class="btn__icon">⇩</span><span class="btn__label">Open CV</span></button>
+              <a class="btn btn--ghost btn--github magnetic" href="https://github.com/${escapeHtml(m.githubUser)}" target="_blank" rel="noopener"><span class="btn__icon">↗</span><span class="btn__label">Open GitHub</span></a>
+              <button class="btn btn--ghost btn--cv magnetic" type="button" data-action="jumpCV"><span class="btn__icon">⇩</span><span class="btn__label">Open CV</span></button>
             </div>
           </div>
         </div>

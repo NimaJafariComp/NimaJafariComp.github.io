@@ -1226,7 +1226,42 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .item__title{ margin:0; font-weight:650; }
 .item__sub{ margin:4px 0 0; color: var(--muted); line-height: 1.55; }
-.item__sub .btn{ margin-left: 0; justify-content: flex-start; padding-left: 8px; }
+.item__sub .btn{ 
+  margin-left: 0; 
+  justify-content: flex-start; 
+  padding-left: 8px;
+  transform: none !important;
+}
+
+.btn--email {
+  border-color: color-mix(in srgb, #60a5fa 40%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, #60a5fa 12%, transparent), color-mix(in srgb, #60a5fa 5%, transparent));
+}
+
+.btn--email:hover {
+  border-color: color-mix(in srgb, #60a5fa 55%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, #60a5fa 18%, transparent), color-mix(in srgb, #60a5fa 8%, transparent));
+}
+
+.btn--github {
+  border-color: color-mix(in srgb, #9ca3af 40%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, #9ca3af 12%, transparent), color-mix(in srgb, #9ca3af 5%, transparent));
+}
+
+.btn--github:hover {
+  border-color: color-mix(in srgb, #9ca3af 55%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, #9ca3af 18%, transparent), color-mix(in srgb, #9ca3af 8%, transparent));
+}
+
+.btn--cv {
+  border-color: color-mix(in srgb, #fbbf24 40%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, #fbbf24 12%, transparent), color-mix(in srgb, #fbbf24 5%, transparent));
+}
+
+.btn--cv:hover {
+  border-color: color-mix(in srgb, #fbbf24 55%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, #fbbf24 18%, transparent), color-mix(in srgb, #fbbf24 8%, transparent));
+}
 
 
 .stack{ display:flex; flex-direction:column; gap:16px; }
