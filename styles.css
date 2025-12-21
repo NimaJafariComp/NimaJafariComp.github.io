@@ -1018,6 +1018,23 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   filter:url(#softGlow);
 }
 
+/* Theme-specific dot accents for better visibility over backgrounds */
+:root[data-theme="night"] .item__dot{
+  /* bright, warm yellow over Starry Night */
+  background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--tone-sun) 98%, white), color-mix(in srgb, var(--tone-sun) 32%, transparent) 56%, transparent 72%);
+  border: 1px solid color-mix(in srgb, var(--tone-sun) 36%, transparent);
+  box-shadow: 0 8px 30px color-mix(in srgb, var(--tone-sun) 28%, transparent);
+  filter:url(#softGlow);
+}
+
+:root[data-theme="provence"] .item__dot{
+  /* deeper green for Provence so dots contrast over Sunflowers */
+  background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--tone-cypress) 98%, white), color-mix(in srgb, var(--tone-cypress) 28%, transparent) 56%, transparent 72%);
+  border: 1px solid color-mix(in srgb, var(--tone-cypress) 36%, transparent);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-cypress) 22%, transparent);
+  filter:url(#softGlow);
+}
+
 /* Bullet lists used in Work / Honors */
 .bullets{
   margin: 0;
