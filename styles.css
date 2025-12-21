@@ -374,34 +374,42 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .topbar{
     padding: 8px 10px;
     gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  .topbar::-webkit-scrollbar{
+    display: none; /* Chrome/Safari */
   }
   .topbar__actions{
     gap: 6px;
     flex-shrink: 0;
   }
   .btn__label{
-    display: none;
+    display: inline; /* Keep labels visible */
+    font-size: 11px; /* Smaller text */
+    white-space: nowrap;
   }
   .btn{
-    padding: 8px;
-    min-width: 38px;
+    padding: 7px 10px;
+    min-width: auto;
     min-height: 38px;
-    justify-content: center;
+    gap: 6px;
   }
   .btn__icon{
     margin: 0;
+    font-size: 13px;
   }
   .brand{
     gap: 8px;
     padding-left: 4px;
     min-width: 0;
-    flex-shrink: 1;
+    flex-shrink: 0;
   }
   .brand__text{
     font-size: 14px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
   .brand__mark{
     width: 28px;
