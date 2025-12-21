@@ -1874,6 +1874,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl__meta {
   width: 100%;
   min-width: 0;
+  display: none;
+}
+
+.vinyl--expanded .vinyl__meta {
+  display: block;
 }
 
 .vinyl__title,
