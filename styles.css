@@ -82,15 +82,15 @@
   --cypress:#2f6b3f;
   --ember:#e86b3a;
 
-  /* Force yellowish accent across themes */
-  --accent: var(--moon);
-  --accent2: color-mix(in srgb, var(--moon) 36%, white);
+  /* Provence: prefer green + blue accents */
+  --accent: var(--cypress);
+  --accent2: var(--cobalt);
 
-  /* Tone palette (default: Starry Night — yellow + green) */
-  --tone-sun: #ffd45a; /* yellow */
-  --tone-cobalt: #1d6fe0; /* blue */
-  --tone-cypress: #0b6b4f; /* green */
-  --tone-ember: #ff7d4a; /* orange */
+  /* Tone palette for Provence (green / blue centric) */
+  --tone-sun: #7fbf90; /* soft green */
+  --tone-cobalt: #2f63b6; /* cobalt blue */
+  --tone-cypress: #2f6b3f; /* deep green */
+  --tone-ember: #d79a2a; /* ochre */
   --tone-azure: #4aa3d9; /* light blue */
 
   /* Light, slightly tinted card backgrounds so text is dark and legible */
