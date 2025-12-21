@@ -432,59 +432,6 @@
     });
   }
 
-    // Pointer drag-to-scroll
-    let isDown = false; let startX = 0; let startScroll = 0;
-    grid?.addEventListener('pointerdown', (e) => {
-      isDown = true; grid.setPointerCapture(e.pointerId);
-      startX = e.clientX; startScroll = grid.scrollLeft; grid.classList.add('is-dragging');
-    });
-    grid?.addEventListener('pointermove', (e) => {
-      if (!isDown) return;
-      const dx = e.clientX - startX;
-      grid.scrollLeft = startScroll - dx;
-    });
-    grid?.addEventListener('pointerup', (e) => { isDown = false; try { grid.releasePointerCapture(e.pointerId); } catch{} grid.classList.remove('is-dragging'); });
-    grid?.addEventListener('pointercancel', () => { isDown = false; grid.classList.remove('is-dragging'); });
-
-    // Wheel to pan horizontally (and update center on scroll end)
-    let _scrollTimer = null;
-    grid?.addEventListener('wheel', (e) => {
-      if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
-        e.preventDefault();
-        grid.scrollLeft += e.deltaY;
-      }
-      if (_scrollTimer) clearTimeout(_scrollTimer);
-      _scrollTimer = setTimeout(() => {
-        // find the node nearest to center and set it active
-        const center = grid.scrollLeft + grid.clientWidth / 2;
-        let best = -1; let bestDist = Infinity;
-        nodeEls.forEach((n, idx) => {
-          const nodeCenter = n.offsetLeft + n.offsetWidth / 2;
-          const d = Math.abs(nodeCenter - center);
-          if (d < bestDist) { bestDist = d; best = idx; }
-        });
-        if (best >= 0) nodeEls.forEach((n, idx) => n.classList.toggle('is-active', idx === best));
-      }, 140);
-    }, { passive: false });
-
-    // Deep link handler
-    (function openFromHash() {
-      const h = location.hash;
-      if (!h) return;
-      const m = h.match(/^#machines-(\d{3,4})$/);
-      if (m) {
-        const year = Number(m[1]);
-        const idx = t.items.findIndex(x => x.year === year);
-        if (idx >= 0) {
-          // open after a short timeout so grid has measured
-          setTimeout(() => { pinNode(idx); }, 220);
-        }
-      }
-    })();
-
-  }
-
-
   function renderProjects(host) {
     if (!host) return;
     const p = data.projects;

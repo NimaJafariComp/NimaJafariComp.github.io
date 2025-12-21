@@ -1139,24 +1139,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .machineNode.is-active .machineNode__star{ transform: scale(1.15); }
 .machineNode.is-pinned .machineNode__card{ border-color: color-mix(in srgb, var(--accent2) 36%, transparent); }
 
-/* --- Static timeline (styled) --- */
-.timelineStatic { margin-top: 14px; }
-.timelineStatic__inner { border-radius: var(--radius); border:1px solid color-mix(in srgb, var(--ink) 12%, transparent); background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, rgba(0,0,0,.04)), color-mix(in srgb, var(--card2) 86%, rgba(0,0,0,.02))); box-shadow: 0 26px 80px rgba(0,0,0,.32); padding: 18px; backdrop-filter: blur(6px) saturate(1.06); }
-.timelineStatic__grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 14px; margin-top: 12px; align-items:start; }
-.timelineNode { padding: 14px; border-radius: 14px; border:1px solid color-mix(in srgb, var(--ink) 8%, transparent); background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, transparent), color-mix(in srgb, var(--card2) 78%, transparent)); box-shadow: 0 10px 30px rgba(0,0,0,.12); transition: transform .24s var(--ease), box-shadow .24s var(--ease); cursor: default; }
-.timelineNode:hover { transform: translateY(-6px); box-shadow: 0 22px 60px rgba(0,0,0,.18); border-color: color-mix(in srgb, var(--accent) 28%, transparent); }
-.timelineNode__year { font-weight:800; color: var(--muted); font-size:13px; }
-.timelineNode__title { font-family:var(--font-title); font-size:18px; margin-top:6px; font-weight:700; }
-.timelineNode__sub { margin-top:6px; color:var(--muted); font-size:13px; line-height:1.4; }
-.timelineNode__desc { margin-top:8px; color: color-mix(in srgb, var(--ink) 72%, transparent); font-size:13px; line-height:1.5; }
-
-@media (min-width:900px){
-  .timelineStatic__grid{ grid-template-columns: repeat(3, 1fr); position:relative; }
-  .timelineStatic__grid::before{ content:""; position:absolute; top:10px; bottom:10px; left:50%; width:2px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent2) 40%, transparent), color-mix(in srgb, var(--accent) 40%, transparent)); transform:translateX(-50%); border-radius:2px; opacity:.6; pointer-events:none; }
-  .timelineNode{ transform-origin: center; }
-  .timelineNode:nth-child(odd){ transform: translateY(8px); }
-}
-
 .flightHUD{
   position:absolute;
   left: 14px;
