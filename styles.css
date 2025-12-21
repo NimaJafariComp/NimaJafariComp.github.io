@@ -1713,7 +1713,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   gap:14px;
   align-items:center;
   padding: 14px 14px;
-  border-radius: 22px;
+  border-radius: 999px; /* Pill shape */
 }
 
 .vinyl__collapse{
@@ -1798,14 +1798,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height: 56px !important;
   left: 8px !important;
   bottom: 8px !important;
-  border-radius: 32px; /* Rounder corners */
+  border-radius: 999px; /* Full pill shape */
   box-shadow: 0 10px 24px rgba(0,0,0,.22);
   overflow: visible;
   display: flex;
   align-items: center;
   padding: 0;
 }
-.vinyl--collapsed .vinyl__shell{ padding: 6px; gap: 8px; align-items: center; border-radius: 32px; }
+.vinyl--collapsed .vinyl__shell{ padding: 6px; gap: 8px; align-items: center; border-radius: 999px; }
 .vinyl--collapsed .vinyl__meta{ display:none; }
 .vinyl--collapsed .vinyl__collapse{ right: 8px; top: 8px; opacity:.95; transform: none; }
 .vinyl--collapsed .vinyl__disk{ width:44px; height:44px; transform: translateX(0); box-shadow: 0 10px 20px rgba(0,0,0,.22); }
@@ -1815,7 +1815,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: translateX(8px) translateY(0);
   width: 220px !important;
   height: 64px !important;
-  border-radius: 32px;
+  border-radius: 999px; /* Maintain pill shape */
 }
 .vinyl--collapsed:hover .vinyl__meta{ display:block; }
 .vinyl--collapsed:hover .vinyl__disk{ width:64px; height:64px; transform: translateX(0); }
@@ -1843,6 +1843,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl__shell{
     padding: 12px;
     gap: 12px;
+    border-radius: 999px;
   }
   /* On mobile, collapsed state at vertically centered right */
   .vinyl--collapsed{ 
@@ -1853,10 +1854,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     transform: translateY(-50%) !important;
     width: 70px !important;
     height: 50px !important;
-    border-radius: 28px; /* Rounder on mobile */
+    border-radius: 999px; /* Full pill shape */
   }
   .vinyl--collapsed .vinyl__shell{
-    border-radius: 28px;
+    border-radius: 999px;
   }
   .vinyl--collapsed .vinyl__disk{ 
     width: 38px; 
@@ -1865,7 +1866,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl--collapsed:hover{
     width: 200px !important;
     height: 58px !important;
-    border-radius: 28px;
+    border-radius: 999px; /* Maintain pill shape */
     transform: translateY(-50%) translateX(-4px) !important;
   }
   .vinyl--collapsed:hover .vinyl__disk{ 
@@ -1887,10 +1888,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     transform: translateY(-50%) !important;
     width: 68px !important;
     height: 48px !important;
-    border-radius: 26px;
+    border-radius: 999px; /* Full pill shape */
   }
   .vinyl--collapsed .vinyl__shell{
-    border-radius: 26px;
+    border-radius: 999px;
   }
   .vinyl--collapsed .vinyl__disk{ 
     width: 36px; 
@@ -1899,7 +1900,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl--collapsed:hover{
     width: 180px !important;
     height: 56px !important;
-    border-radius: 26px;
+    border-radius: 999px; /* Maintain pill shape */
     transform: translateY(-50%) translateX(-4px) !important;
   }
   .vinyl__shell{
