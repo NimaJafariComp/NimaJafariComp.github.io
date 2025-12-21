@@ -182,7 +182,6 @@
             <div class="sectionTitle">
               <div>
                 <div class="h2" style="margin:0;">Portrait</div>
-                <div class="small">Monochrome portrait — theme tint follows the sky.</div>
               </div>
               <button class="btn btn--ghost magnetic" type="button" data-action="toggleVangogh" title="Boost brush strokes (V)">
                 <span class="btn__icon">🖌</span><span class="btn__label">Brush</span>

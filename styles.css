@@ -42,8 +42,9 @@
 
   /* Constellation positioning and safe spacing (used to avoid collisions) */
   --constellation-top: 120px; /* default */
-  --nav-safe-top: 220px; /* Fixed safe distance — content won't scroll under nav */
-}
+  /* Keep the safe top space tied to constellation position (dots height + buffer) */
+  --nav-safe-top: calc(var(--constellation-top, 120px) + 70px);
+} 
 
 :root[data-theme="provence"]{
   /* --- Light theme: Farmhouse in Provence (light + legible) --- */
@@ -417,19 +418,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .panel__inner{
   height:100%;
   overflow:auto;
-  /* Use a sticky spacer so content cannot scroll beneath the fixed nav */
-  padding: 0 2px 22px;
+
+  /* reserve real space for the fixed top nav (constellation + topbar) */
+  padding: var(--nav-safe-top, 220px) 2px 22px;
+
+  /* helps scrollIntoView land below fixed UI */
   scroll-padding-top: var(--nav-safe-top, 220px);
 }
-.panel__inner::before{
-  content: "";
-  display:block;
-  height: var(--nav-safe-top, 220px);
-  position: sticky;
-  top: 0;
-  pointer-events: none;
-  z-index: 2;
-}
+.panel__inner::before{ content: none; }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
 .panel__inner::-webkit-scrollbar-track{ background: color-mix(in srgb, var(--ink) 4%, transparent); }
