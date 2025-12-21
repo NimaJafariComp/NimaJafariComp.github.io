@@ -1539,19 +1539,19 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 /* Create downward arc - middle dots are lower */
-.constellation__dot:nth-child(4),
-.constellation__dot:nth-child(5),
-.constellation__dot:nth-child(6){
+.constellation__dots > li:nth-child(4) .constellation__dot,
+.constellation__dots > li:nth-child(5) .constellation__dot,
+.constellation__dots > li:nth-child(6) .constellation__dot{
   transform: translateY(12px);
 }
 
-.constellation__dot:nth-child(3),
-.constellation__dot:nth-child(7){
+.constellation__dots > li:nth-child(3) .constellation__dot,
+.constellation__dots > li:nth-child(7) .constellation__dot{
   transform: translateY(8px);
 }
 
-.constellation__dot:nth-child(2),
-.constellation__dot:nth-child(8){
+.constellation__dots > li:nth-child(2) .constellation__dot,
+.constellation__dots > li:nth-child(8) .constellation__dot{
   transform: translateY(3px);
 }
 .constellation__dot::before{
@@ -1572,26 +1572,26 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 /* Maintain curve on hover/active for middle dots */
-.constellation__dot:nth-child(4):hover,
-.constellation__dot:nth-child(5):hover,
-.constellation__dot:nth-child(6):hover,
-.constellation__dot:nth-child(4)[aria-current="true"],
-.constellation__dot:nth-child(5)[aria-current="true"],
-.constellation__dot:nth-child(6)[aria-current="true"]{
+.constellation__dots > li:nth-child(4) .constellation__dot:hover,
+.constellation__dots > li:nth-child(5) .constellation__dot:hover,
+.constellation__dots > li:nth-child(6) .constellation__dot:hover,
+.constellation__dots > li:nth-child(4) .constellation__dot[aria-current="true"],
+.constellation__dots > li:nth-child(5) .constellation__dot[aria-current="true"],
+.constellation__dots > li:nth-child(6) .constellation__dot[aria-current="true"]{
   transform: translateY(13px);
 }
 
-.constellation__dot:nth-child(3):hover,
-.constellation__dot:nth-child(7):hover,
-.constellation__dot:nth-child(3)[aria-current="true"],
-.constellation__dot:nth-child(7)[aria-current="true"]{
+.constellation__dots > li:nth-child(3) .constellation__dot:hover,
+.constellation__dots > li:nth-child(7) .constellation__dot:hover,
+.constellation__dots > li:nth-child(3) .constellation__dot[aria-current="true"],
+.constellation__dots > li:nth-child(7) .constellation__dot[aria-current="true"]{
   transform: translateY(9px);
 }
 
-.constellation__dot:nth-child(2):hover,
-.constellation__dot:nth-child(8):hover,
-.constellation__dot:nth-child(2)[aria-current="true"],
-.constellation__dot:nth-child(8)[aria-current="true"]{
+.constellation__dots > li:nth-child(2) .constellation__dot:hover,
+.constellation__dots > li:nth-child(8) .constellation__dot:hover,
+.constellation__dots > li:nth-child(2) .constellation__dot[aria-current="true"],
+.constellation__dots > li:nth-child(8) .constellation__dot[aria-current="true"]{
   transform: translateY(4px);
 }
 .constellation__label{
@@ -1657,43 +1657,43 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
   
   /* Adjust curve for mobile - slightly less pronounced */
-  .constellation__dot:nth-child(4),
-  .constellation__dot:nth-child(5),
-  .constellation__dot:nth-child(6){
-    transform: translateY(-10px);
+  .constellation__dots > li:nth-child(4) .constellation__dot,
+  .constellation__dots > li:nth-child(5) .constellation__dot,
+  .constellation__dots > li:nth-child(6) .constellation__dot{
+    transform: translateY(10px);
   }
   
-  .constellation__dot:nth-child(3),
-  .constellation__dot:nth-child(7){
-    transform: translateY(-6px);
+  .constellation__dots > li:nth-child(3) .constellation__dot,
+  .constellation__dots > li:nth-child(7) .constellation__dot{
+    transform: translateY(6px);
   }
   
-  .constellation__dot:nth-child(2),
-  .constellation__dot:nth-child(8){
-    transform: translateY(-2px);
+  .constellation__dots > li:nth-child(2) .constellation__dot,
+  .constellation__dots > li:nth-child(8) .constellation__dot{
+    transform: translateY(2px);
   }
   
-  .constellation__dot:nth-child(4):hover,
-  .constellation__dot:nth-child(5):hover,
-  .constellation__dot:nth-child(6):hover,
-  .constellation__dot:nth-child(4)[aria-current="true"],
-  .constellation__dot:nth-child(5)[aria-current="true"],
-  .constellation__dot:nth-child(6)[aria-current="true"]{
-    transform: translateY(-11px);
+  .constellation__dots > li:nth-child(4) .constellation__dot:hover,
+  .constellation__dots > li:nth-child(5) .constellation__dot:hover,
+  .constellation__dots > li:nth-child(6) .constellation__dot:hover,
+  .constellation__dots > li:nth-child(4) .constellation__dot[aria-current="true"],
+  .constellation__dots > li:nth-child(5) .constellation__dot[aria-current="true"],
+  .constellation__dots > li:nth-child(6) .constellation__dot[aria-current="true"]{
+    transform: translateY(11px);
   }
   
-  .constellation__dot:nth-child(3):hover,
-  .constellation__dot:nth-child(7):hover,
-  .constellation__dot:nth-child(3)[aria-current="true"],
-  .constellation__dot:nth-child(7)[aria-current="true"]{
-    transform: translateY(-7px);
+  .constellation__dots > li:nth-child(3) .constellation__dot:hover,
+  .constellation__dots > li:nth-child(7) .constellation__dot:hover,
+  .constellation__dots > li:nth-child(3) .constellation__dot[aria-current="true"],
+  .constellation__dots > li:nth-child(7) .constellation__dot[aria-current="true"]{
+    transform: translateY(7px);
   }
   
-  .constellation__dot:nth-child(2):hover,
-  .constellation__dot:nth-child(8):hover,
-  .constellation__dot:nth-child(2)[aria-current="true"],
-  .constellation__dot:nth-child(8)[aria-current="true"]{
-    transform: translateY(-3px);
+  .constellation__dots > li:nth-child(2) .constellation__dot:hover,
+  .constellation__dots > li:nth-child(8) .constellation__dot:hover,
+  .constellation__dots > li:nth-child(2) .constellation__dot[aria-current="true"],
+  .constellation__dots > li:nth-child(8) .constellation__dot[aria-current="true"]{
+    transform: translateY(3px);
   }
 }
 
@@ -1829,9 +1829,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl__title{ font-weight: 800; letter-spacing:.2px; font-size: clamp(14px, 2vw, 18px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .vinyl__sub{ margin-top: 2px; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+/* Scale down meta and buttons in expanded state for better fit */
+.vinyl:not(.vinyl--collapsed) .vinyl__meta{ gap: 2px; }
+.vinyl:not(.vinyl--collapsed) .vinyl__title{ font-size: 14px; }
+.vinyl:not(.vinyl--collapsed) .vinyl__sub{ font-size: 10px; margin-top: 1px; }
+.vinyl:not(.vinyl--collapsed) .vinyl__controls{ margin-top: 8px; }
+.vinyl:not(.vinyl--collapsed) .vinyl__btn{ width: 28px; height: 28px; }
+
 /* Ensure meta has a sensible minimum width when expanded */
 .vinyl--collapsed:hover .vinyl__meta{ min-width: 220px; }
-.vinyl--collapsed:hover .vinyl__title{ font-size: clamp(15px, 2.4vw, 18px); }
+.vinyl--collapsed:hover .vinyl__title{ font-size: 14px; }
 
 @media (max-width: 640px){
   .vinyl--collapsed:hover .vinyl__meta{ min-width: 180px; }
