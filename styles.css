@@ -1728,14 +1728,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height: 56px !important;
   left: 8px !important;
   bottom: 8px !important;
-  border-radius: 999px;
+  border-radius: 32px; /* Rounder corners */
   box-shadow: 0 10px 24px rgba(0,0,0,.22);
   overflow: visible;
   display: flex;
   align-items: center;
   padding: 0;
 }
-.vinyl--collapsed .vinyl__shell{ padding: 6px; gap: 8px; align-items: center; }
+.vinyl--collapsed .vinyl__shell{ padding: 6px; gap: 8px; align-items: center; border-radius: 32px; }
 .vinyl--collapsed .vinyl__meta{ display:none; }
 .vinyl--collapsed .vinyl__collapse{ right: 8px; top: 8px; opacity:.95; transform: none; }
 .vinyl--collapsed .vinyl__disk{ width:44px; height:44px; transform: translateX(0); box-shadow: 0 10px 20px rgba(0,0,0,.22); }
@@ -1745,6 +1745,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: translateX(8px) translateY(0);
   width: 220px !important;
   height: 64px !important;
+  border-radius: 32px;
 }
 .vinyl--collapsed:hover .vinyl__meta{ display:block; }
 .vinyl--collapsed:hover .vinyl__disk{ width:64px; height:64px; transform: translateX(0); }
@@ -1760,11 +1761,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 @media (max-width: 640px){
   .vinyl{ 
-    /* Position at top center when collapsed on mobile */
-    top: 90px;
-    left: 50%;
+    /* Position vertically centered on right side */
+    top: 50%;
+    left: auto;
+    right: 8px;
     bottom: auto;
-    transform: translateX(-50%);
+    transform: translateY(-50%);
     width: 70px;
   }
   .vinyl__vol{ width: 110px; }
@@ -1772,15 +1774,19 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     padding: 12px;
     gap: 12px;
   }
-  /* On mobile, auto-collapsed state at top center */
+  /* On mobile, collapsed state at vertically centered right */
   .vinyl--collapsed{ 
-    top: 90px !important;
-    left: 50% !important;
-    right: auto !important;
+    top: 50% !important;
+    left: auto !important;
+    right: 8px !important;
     bottom: auto !important;
-    transform: translateX(-50%) !important;
+    transform: translateY(-50%) !important;
     width: 70px !important;
     height: 50px !important;
+    border-radius: 28px; /* Rounder on mobile */
+  }
+  .vinyl--collapsed .vinyl__shell{
+    border-radius: 28px;
   }
   .vinyl--collapsed .vinyl__disk{ 
     width: 38px; 
@@ -1789,6 +1795,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl--collapsed:hover{
     width: 200px !important;
     height: 58px !important;
+    border-radius: 28px;
+    transform: translateY(-50%) translateX(-4px) !important;
   }
   .vinyl--collapsed:hover .vinyl__disk{ 
     width: 50px; 
@@ -1798,13 +1806,21 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 @media (max-width: 520px){
   .vinyl{ 
-    top: 85px;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
     width: 68px;
   }
   .vinyl--collapsed{
-    top: 85px !important;
+    top: 50% !important;
+    right: 6px !important;
+    transform: translateY(-50%) !important;
     width: 68px !important;
     height: 48px !important;
+    border-radius: 26px;
+  }
+  .vinyl--collapsed .vinyl__shell{
+    border-radius: 26px;
   }
   .vinyl--collapsed .vinyl__disk{ 
     width: 36px; 
@@ -1813,6 +1829,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl--collapsed:hover{
     width: 180px !important;
     height: 56px !important;
+    border-radius: 26px;
+    transform: translateY(-50%) translateX(-4px) !important;
   }
   .vinyl__shell{
     flex-direction: column;
