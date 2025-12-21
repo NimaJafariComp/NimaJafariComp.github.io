@@ -32,6 +32,13 @@
   --accent: var(--moon);
   --accent2: var(--azure);
 
+  /* Tone palette (Starry Night defaults: yellow + green) */
+  --tone-sun: #ffd45a; /* yellow */
+  --tone-cobalt: #1d6fe0; /* blue */
+  --tone-cypress: #0b6b4f; /* green */
+  --tone-ember: #ff7d4a; /* orange */
+  --tone-azure: #4aa3d9; /* light blue */
+
   --card: rgba(10, 14, 30, .62);
   --card2: rgba(10, 14, 30, .42);
   --border: rgba(255,255,255,.12);
