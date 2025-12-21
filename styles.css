@@ -1031,12 +1031,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 :root[data-theme="provence"] .item__dot{
-  /* deeper green for Provence so dots contrast over Sunflowers */
-  background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--tone-cypress) 98%, white), color-mix(in srgb, var(--tone-cypress) 28%, transparent) 56%, transparent 72%);
-  border: 1px solid color-mix(in srgb, var(--tone-cypress) 36%, transparent);
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-cypress) 22%, transparent);
+  /* blue accents for Provence (blue bullets) */
+  background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--tone-cobalt) 98%, white), color-mix(in srgb, var(--tone-cobalt) 28%, transparent) 56%, transparent 72%);
+  border: 1px solid color-mix(in srgb, var(--tone-cobalt) 36%, transparent);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-cobalt) 22%, transparent);
   filter:url(#softGlow);
-}
+} 
 
 /* Bullet lists used in Work / Honors */
 .bullets{
@@ -1049,6 +1049,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   line-height: 1.7; /* increase readability */
 }
 .bullets li::marker{ color: color-mix(in srgb, var(--ink) 18%, transparent); font-weight:700; }
+
+/* Theme-specific bullet color for ul.bullets list markers */
+:root[data-theme="night"] .bullets li::marker{ color: var(--tone-sun); }
+:root[data-theme="provence"] .bullets li::marker{ color: var(--tone-cobalt); }
 @media (max-width: 520px){
   .bullets li{ margin: 8px 0; }
 }
