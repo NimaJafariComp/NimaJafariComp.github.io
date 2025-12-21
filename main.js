@@ -324,7 +324,6 @@
             <h2 class="h1" style="font-size:clamp(34px,4.4vw,54px); margin:0;">${escapeHtml(w.title)}</h2>
             <div class="small">Research, building, shipping.</div>
           </div>
-          <div class="sectionTitle__right small">Scroll → to drift to the next constellation</div>
         </div>
 
         <div class="stack" style="margin-top:16px;">
