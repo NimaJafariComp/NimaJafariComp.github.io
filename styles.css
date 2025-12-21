@@ -1932,39 +1932,66 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 @media (max-width: 640px){
-  /* Mobile redesign: bottom-right floating button; tap to expand */
+  /* Mobile redesign: expanded pill is larger + centered; collapsed stays as a small floating button */
   .vinyl{
     top: auto;
-    left: auto;
-    right: max(10px, env(safe-area-inset-right));
-    bottom: max(10px, env(safe-area-inset-bottom));
-    transform: none;
-    width: min(420px, calc(100vw - (max(10px, env(safe-area-inset-left)) + max(10px, env(safe-area-inset-right)))));
+    left: 50%;
+    right: auto;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    width: min(520px, calc(100vw - 16px));
   }
 
-  .vinyl__shell{ padding: 14px 14px 12px; gap: 10px; }
-
-  /* Expanded (not collapsed): taller pill + vertical layout so everything fits */
+  /* Expanded (not collapsed): bigger + wrap text/controls so nothing clips */
   .vinyl:not(.vinyl--collapsed){
-    min-height: 148px;
+    min-height: 200px;
   }
+
   .vinyl:not(.vinyl--collapsed) .vinyl__shell{
+    padding: 16px 16px 14px;
+    gap: 10px;
     flex-direction: column;
     align-items: stretch;
   }
-  .vinyl:not(.vinyl--collapsed) .vinyl__disk{ width: 64px; height: 64px; }
-  .vinyl:not(.vinyl--collapsed) .vinyl__meta{ width: 100%; }
-  .vinyl:not(.vinyl--collapsed) .vinyl__controls{ width: 100%; }
-  .vinyl:not(.vinyl--collapsed) .vinyl__vol{ width: 100%; }
+
+  .vinyl:not(.vinyl--collapsed) .vinyl__disk{ width: 72px; height: 72px; }
+
+  .vinyl:not(.vinyl--collapsed) .vinyl__meta{
+    width: 100%;
+    overflow: visible;
+    gap: 6px;
+  }
+
+  .vinyl:not(.vinyl--collapsed) .vinyl__title,
+  .vinyl:not(.vinyl--collapsed) .vinyl__sub{
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  .vinyl:not(.vinyl--collapsed) .vinyl__title{ font-size: 15px; line-height: 1.15; }
+  .vinyl:not(.vinyl--collapsed) .vinyl__sub{ font-size: 12px; line-height: 1.25; margin-top: 0; }
+
+  .vinyl:not(.vinyl--collapsed) .vinyl__controls{
+    width: 100%;
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .vinyl:not(.vinyl--collapsed) .vinyl__btn{ width: 34px; height: 34px; font-size: 14px; }
+  .vinyl:not(.vinyl--collapsed) .vinyl__vol{ flex: 1 1 100%; width: 100%; min-width: 0; }
+
+  /* Hide the hint on mobile expanded to keep everything inside the pill */
+  .vinyl:not(.vinyl--collapsed) .vinyl__hint{ display: none; }
 
   /* Collapsed: compact circular button (no hover-peek on touch screens) */
   .vinyl--collapsed{
     width: 64px !important;
     height: 64px !important;
+    left: auto !important;
     right: max(10px, env(safe-area-inset-right)) !important;
     bottom: max(10px, env(safe-area-inset-bottom)) !important;
-    left: auto !important;
-    top: auto !important;
     transform: none !important;
     border-radius: 999px;
     box-shadow: 0 12px 26px rgba(0,0,0,.22);
@@ -1983,8 +2010,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 @media (max-width: 520px){
   /* Phone: keep collapsed button compact; make expanded pill taller */
-  .vinyl{ right: max(8px, env(safe-area-inset-right)); bottom: max(8px, env(safe-area-inset-bottom)); }
-  .vinyl:not(.vinyl--collapsed){ min-height: 176px; }
+  .vinyl{ width: min(520px, calc(100vw - 14px)); bottom: max(10px, env(safe-area-inset-bottom)); }
+  .vinyl:not(.vinyl--collapsed){ min-height: 224px; }
   .vinyl--collapsed{ width: 60px !important; height: 60px !important; }
   .vinyl--collapsed .vinyl__disk{ width: 52px; height: 52px; }
   .vinyl--collapsed .vinyl__collapse{ top: -8px; right: -8px; width: 28px; height: 28px; }
