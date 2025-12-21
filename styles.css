@@ -1738,6 +1738,25 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 #panel-contact .item--contact{ gap: 16px; align-items: center; }
 #panel-contact .item--contact .item__body{ flex: 1; }
 
+#panel-contact .contactLink{
+  padding: 10px 12px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 240ms var(--ease), box-shadow 240ms var(--ease);
+}
+
+#panel-contact .contactLink:hover,
+#panel-contact .contactLink:focus-visible{
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+#panel-contact .contactLink:focus-visible{
+  outline: 2px solid color-mix(in srgb, var(--accent) 60%, transparent);
+  outline-offset: 3px;
+}
+
 #panel-contact .linkIcon{
   width: 46px;
   height: 46px;

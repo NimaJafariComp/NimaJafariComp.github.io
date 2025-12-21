@@ -590,14 +590,15 @@
             <div class="list">
               ${c.socials.map((s) => {
                 const icon = s.icon || `<span class="linkIcon__fallback">↗</span>`;
+                const href = escapeHtml(s.href);
                 return `
-                <div class="item item--contact">
+                <a class="item item--contact contactLink" href="${href}" target="_blank" rel="noopener">
                   <div class="linkIcon" aria-hidden="true">${icon}</div>
                   <div class="item__body">
                     <p class="item__title">${escapeHtml(s.label)}</p>
-                    <p class="item__sub"><a href="${escapeHtml(s.href)}" target="_blank" rel="noopener">${escapeHtml(s.href)}</a></p>
+                    <p class="item__sub mono">${href}</p>
                   </div>
-                </div>
+                </a>
                 `;
               }).join("")}
             </div>
