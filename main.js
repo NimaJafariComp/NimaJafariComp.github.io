@@ -715,6 +715,10 @@
   }
 
   // Wheel = vertical inside panel, but drift horizontally when at edges
+  // To avoid accidental tab switches when the user reaches the bottom/top of a panel,
+  // require a small accumulated extra scroll (threshold) before initiating horizontal drift
+  const _wheelState = { el: null, acc: 0, dir: 0, threshold: 80 };
+
   deck.addEventListener("wheel", (e) => {
     const inner = e.target.closest(".panel__inner");
     if (!inner) {
@@ -729,11 +733,54 @@
     const goingDown = e.deltaY > 0;
 
     const wantHorizontal = e.shiftKey || !canScroll || (goingDown && atBottom) || (!goingDown && atTop);
-    if (wantHorizontal) {
-      e.preventDefault();
-      deck.scrollBy({ left: e.deltaY, behavior: "smooth" });
+
+    if (!wantHorizontal) {
+      // If the user is scrolling inside the content area, reset any accumulated state
+      if (_wheelState.el === inner) { _wheelState.acc = 0; _wheelState.el = null; _wheelState.dir = 0; }
+      return; // let inner scroll normally
     }
+
+    // Candidate for horizontal drift
+    e.preventDefault();
+
+    // If the inner can't scroll at all, immediately drift horizontally
+    if (!canScroll) {
+      deck.scrollBy({ left: e.deltaY, behavior: "smooth" });
+      return;
+    }
+
+    // If we are at the edge and the panel CAN scroll, require extra gesture (accumulation)
+    const dir = goingDown ? 1 : -1;
+    if (_wheelState.el !== inner || _wheelState.dir !== dir) {
+      _wheelState.el = inner;
+      _wheelState.dir = dir;
+      _wheelState.acc = 0;
+    }
+
+    _wheelState.acc += Math.abs(e.deltaY);
+
+    // If the accumulated delta is below the threshold, don't drift yet (but prevent default)
+    if (_wheelState.acc < _wheelState.threshold) {
+      // optional: small subtle hint could be shown here
+      return;
+    }
+
+    // Otherwise perform a smooth horizontal drift and reset accumulator
+    deck.scrollBy({ left: dir * Math.max(160, _wheelState.acc), behavior: "smooth" });
+    _wheelState.acc = 0;
+    _wheelState.el = null;
+    _wheelState.dir = 0;
+
   }, { passive: false });
+
+  // Reset accumulator if user scrolls the inner panel (we don't want stale accumulation)
+  $$(".panel__inner").forEach(inner => {
+    inner.addEventListener("scroll", () => {
+      if (_wheelState.el === inner) {
+        _wheelState.acc = 0; _wheelState.el = null; _wheelState.dir = 0;
+      }
+    });
+  });
 
   // Highlight current nav dot
   const obs = new IntersectionObserver((entries) => {

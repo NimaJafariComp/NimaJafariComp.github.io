@@ -819,14 +819,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   border:0;
 }
 
-/* Constellation nav */
+/* Constellation nav (moved to top) */
 .constellation{
   position:fixed;
   left:50%;
-  bottom: 18px;
+  top: 76px; /* below topbar */
   transform: translateX(-50%);
   z-index: 10;
-  width: min(620px, calc(100vw - 40px));
+  width: min(720px, calc(100vw - 40px));
   pointer-events:none;
 }
 .constellation__lines{
@@ -869,18 +869,19 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 98%, white), color-mix(in srgb, var(--accent) 25%, transparent) 55%, transparent 70%);
   filter:url(#softGlow);
 }
+/* Move interactions downward so labels appear below dots when at top */
 .constellation__dot:hover{
-  transform: translate3d(0,-1px,0);
+  transform: translate3d(0,1px,0);
   border-color: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 .constellation__dot[aria-current="true"]{
   background: color-mix(in srgb, white 10%, transparent);
   border-color: color-mix(in srgb, var(--accent) 42%, transparent);
-  transform: translate3d(0,-2px,0);
+  transform: translate3d(0,2px,0);
 }
 .constellation__label{
   position:absolute;
-  top: -34px;
+  top: 42px; /* label shows under dot when nav is at top */
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
@@ -896,7 +897,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .constellation__dot:hover .constellation__label{
   opacity:1;
-  transform: translateX(-50%) translateY(-2px);
+  transform: translateX(-50%) translateY(2px);
 }
 
 /* Palette removed */
@@ -905,7 +906,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .toast{
   position:fixed;
   left:50%;
-  top: 76px;
+  top: 140px; /* moved below topbar + nav */
   transform: translateX(-50%);
   z-index: 50;
   background: color-mix(in srgb, var(--card) 92%, transparent);
