@@ -217,12 +217,7 @@
                 <div class="item__dot"></div>
                 <div class="item__body">
                   <p class="item__title">Email</p>
-                  <p class="item__sub">
-                    <button class="btn btn--ghost btn--email magnetic" type="button" data-action="copyEmail">
-                      <span class="btn__icon">✉</span>
-                      <span class="btn__label">${escapeHtml(m.email)}</span>
-                    </button>
-                  </p>
+                  <p class="item__sub"><button class="btn btn--ghost btn--email magnetic" type="button" data-action="copyEmail"><span class="btn__icon">✉</span><span class="btn__label">${escapeHtml(m.email)}</span></button></p>
                 </div>
               </div>
             </div>
