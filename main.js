@@ -1122,7 +1122,8 @@
 
       this.drawStars(ctx);
 
-      ctx.globalCompositeOperation = "lighter";
+      const blendMode = this.mix > 0.65 ? "source-over" : "lighter"; // Provence needs straight color instead of additive white
+      ctx.globalCompositeOperation = blendMode;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
 
@@ -1153,8 +1154,10 @@
         }
 
         const c = this.color(p.hue);
-        const alpha = this.lerp(0.06, 0.10, this.mix) + p.depth * 0.10;
-        const lw = (0.7 + p.depth * this.lerp(2.4, 3.0, this.mix)) * this.dpr;
+        const alphaBase = this.lerp(0.06, 0.18, this.mix);
+        const depthGain = this.lerp(0.10, 0.26, this.mix);
+        const alpha = alphaBase + p.depth * depthGain;
+        const lw = (0.7 + p.depth * this.lerp(2.4, 3.2, this.mix)) * this.dpr;
 
         ctx.strokeStyle = `rgba(${c[0]},${c[1]},${c[2]},${alpha})`;
         ctx.lineWidth = lw;
