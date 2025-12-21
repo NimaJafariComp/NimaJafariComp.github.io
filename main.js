@@ -763,7 +763,9 @@
     const atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 1;
     const goingDown = e.deltaY > 0;
 
-    const wantHorizontal = e.shiftKey || !canScroll || (goingDown && atBottom) || (!goingDown && atTop);
+    // Only drift horizontally when user explicitly requests it (Shift) or the inner can't scroll.
+    // This prevents accidental tab switches when the user reaches the top/bottom of a panel.
+    const wantHorizontal = e.shiftKey || !canScroll;
 
     if (!wantHorizontal) {
       // If the user is scrolling inside the content area, reset any accumulated state
