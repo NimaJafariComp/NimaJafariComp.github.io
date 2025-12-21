@@ -1786,9 +1786,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 /* Allow the vinyl player to overflow its brush-card so it can expand cleanly */
 .vinyl{ overflow: visible; z-index: 9999; }
 .vinyl__shell{ overflow: visible; }
-.vinyl .brush-card{ 
-  overflow: visible; 
-  border-radius: 999px; /* Match pill shape */
+
+/* Ensure inner brush-card matches pill shape and clips its blurred pseudo-element */
+.vinyl .brush-card{
+  overflow: hidden; /* clip pseudo-element */
+  border-radius: 999px; /* pill shape */
+  background-clip: padding-box;
+}
+.vinyl .brush-card::before{
+  border-radius: inherit; /* ensure the decorative pseudo-element follows the pill shape */
+  clip-path: inset(0 round 999px);
 }
 
 .vinyl__controls{ margin-top: 10px; display:flex; gap:10px; align-items:center; }
