@@ -186,11 +186,9 @@
           <div class="brush-card card-pad">
             <div class="sectionTitle">
               <div>
-                <div class="h2" style="margin:0;">Portrait</div>
+                <div class="h2" style="margin:0;"></div>
               </div>
-              <button class="btn btn--ghost magnetic" type="button" data-action="toggleVangogh" title="Boost brush strokes (V)">
-                <span class="btn__icon">🖌</span><span class="btn__label">Brush</span>
-              </button>
+    
             </div>
 
             <div class="portrait">
