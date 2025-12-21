@@ -42,7 +42,7 @@
 
   /* Constellation positioning and safe spacing (used to avoid collisions) */
   --constellation-top: 120px; /* default */
-  --nav-safe-top: 140px; /* Fixed safe distance — content won't scroll under nav */
+  --nav-safe-top: 200px; /* Increased — content sits clearly below nav + labels */
 }
 
 :root[data-theme="provence"]{
