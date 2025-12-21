@@ -38,7 +38,10 @@
 
     <filter id="grain">
       <feTurbulence type="turbulence" baseFrequency="0.8" numOctaves="2" seed="8" result="noise"/>
-      <feColorMatrix type="saturate" values="0" />
+  </svg>
+
+  <!-- Static theme-backed canvas: starry night (dark) / sunflowers (light) -->
+  <div id="staticBg" aria-hidden="true"></div>      <feColorMatrix type="saturate" values="0" />
       <feComponentTransfer>
         <feFuncA type="table" tableValues="0 0.35" />
       </feComponentTransfer>

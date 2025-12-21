@@ -65,6 +65,13 @@
   --shadow: 0 18px 55px rgba(0,0,0,.18);
 }
 
+/* Per-theme static artwork variables (place images in assets/)
+   night  -> assets/starry-night.jpg
+   provence -> assets/sunflowers.jpg
+*/
+:root[data-theme="night"]{ --static-bg: url('assets/starry-night.jpg'); }
+:root[data-theme="provence"]{ --static-bg: url('assets/sunflowers.jpg'); }
+
 @media (prefers-reduced-motion: reduce){
   :root{ --motion: 0; }
 }
@@ -76,10 +83,15 @@ body{
   color:var(--ink);
   font-family:var(--font-body);
   overflow:hidden; /* the deck scrolls horizontally */
-  background:
+  /* background layers: gradients on top, static artwork at the bottom (set per-theme variable) */
+  background-image:
     radial-gradient(900px 700px at 72% 18%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 62%),
     radial-gradient(900px 700px at 25% 85%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 62%),
-    linear-gradient(160deg, var(--bg0), var(--bg1));
+    linear-gradient(160deg, var(--bg0), var(--bg1)),
+    var(--static-bg, none);
+  background-size: auto, auto, auto, cover;
+  background-position: 72% 18%, 25% 85%, center, center;
+  background-repeat: no-repeat;
   transition: background 700ms var(--ease2), color 700ms var(--ease2);
 }
 
@@ -92,6 +104,18 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 /* --- Background layers --- */
+#staticBg{
+  position:fixed;
+  inset:0;
+  z-index:-4; /* beneath animated sky layers */
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+  pointer-events:none;
+  filter: contrast(0.95) saturate(1.04);
+  transition: opacity .6s var(--ease2), filter .6s var(--ease2);
+}
+
 #sky{
   position:fixed;
   inset:0;
@@ -162,6 +186,38 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     radial-gradient(980px 380px at 88% 76%, rgba(168,123,64,.40), transparent 76%),
     linear-gradient(180deg, transparent, rgba(246,240,210,.0) 42%, rgba(246,240,210,.82) 100%);
   opacity:.78;
+}
+
+/* Theme-backed static imagery (place static Van Gogh pieces under animated sky) */
+:root[data-theme="night"] #staticBg{
+  /* Put your starry night image at assets/starry-night.jpg (recommended: 2400px wide) */
+  background-image: url('assets/starry-night.jpg');
+  opacity: 1;
+}
+
+:root[data-theme="provence"] #staticBg{
+  /* Put your sunflower image at assets/sunflowers.jpg (recommended: 2400px wide) */
+  background-image: url('assets/sunflowers.jpg');
+  opacity: 1;
+}
+
+/* If images are missing, fall back to subtle gradients */
+#staticBg:not([style]){
+  background-image: linear-gradient(180deg, rgba(10,12,20,.85), rgba(10,12,20,.96));
+}
+
+/* Overlay tint for readability */
+#staticBg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background: linear-gradient(180deg, rgba(0,0,0,.18), rgba(0,0,0,.45));
+  mix-blend-mode: multiply;
+  transition: background .6s var(--ease2), opacity .6s var(--ease2);
+}
+:root[data-theme="provence"] #staticBg::after{
+  background: linear-gradient(180deg, rgba(255,250,230,.08), rgba(255,250,230,.38));
 }
 
 /* --- Top bar --- */
