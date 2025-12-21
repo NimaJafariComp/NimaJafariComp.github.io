@@ -42,7 +42,7 @@
 
   /* Constellation positioning and safe spacing (used to avoid collisions) */
   --constellation-top: 120px; /* default */
-  --nav-safe-top: 200px; /* Increased — content sits clearly below nav + labels */
+  --nav-safe-top: 120px; /* Increased — content sits clearly below nav + labels */
 }
 
 :root[data-theme="provence"]{
@@ -417,8 +417,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .panel__inner{
   height:100%;
   overflow:auto;
-  /* Removed padding here — content margin will handle the safe distance */
-  padding: 0 2px 22px;
+  /* Add top padding to scroll container so content can't scroll past navbar zone */
+  padding: var(--nav-safe-top, 200px) 2px 22px;
 }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
@@ -428,8 +428,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .container{ 
   max-width: 1100px; 
   margin: 0 auto; 
-  /* Add top margin to push content below the fixed constellation nav */
-  padding-top: var(--nav-safe-top, 160px);
+  /* Remove extra padding since scroll container now handles the safe zone */
 }
 .grid{ display:grid; gap:16px; }
 @media (min-width: 900px){
