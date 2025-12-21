@@ -59,10 +59,34 @@
   --accent: var(--ochre);
   --accent2: var(--cobalt);
 
-  --card: rgba(255,255,255,.65);
-  --card2: rgba(255,255,255,.38);
-  --border: rgba(20,32,51,.16);
-  --shadow: 0 18px 55px rgba(0,0,0,.18);
+  /* Darker overlay colors for cards and panels to improve contrast over light artwork */
+  --card: rgba(10, 14, 30, .78);
+  --card2: rgba(10, 14, 30, .62);
+  --border: rgba(255,255,255,.08);
+  --shadow: 0 18px 55px rgba(0,0,0,.22);
+
+  /* Card text color overrides (light text on darkened overlays) */
+  --card-text: rgba(255,255,255,.96);
+  --muted-on-card: rgba(255,255,255,.78);
+}
+
+/* Light-theme card text overrides for improved legibility over sunflowers */
+:root[data-theme="provence"] .brush-card,
+:root[data-theme="provence"] .card,
+:root[data-theme="provence"] .timelineStatic__inner,
+:root[data-theme="provence"] .timelineNode,
+:root[data-theme="provence"] .machineNode__card,
+:root[data-theme="provence"] .machinesDetails__panel {
+  color: var(--card-text);
+}
+
+:root[data-theme="provence"] .brush-card .small,
+:root[data-theme="provence"] .card__desc,
+:root[data-theme="provence"] .timelineNode .small,
+:root[data-theme="provence"] .card__tags,
+:root[data-theme="provence"] .card__links,
+:root[data-theme="provence"] .machinesDetails__panel .small {
+  color: var(--muted-on-card);
 }
 
 /* Per-theme static artwork variables (place images in assets/)
@@ -124,11 +148,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height:100%;
   z-index:-3;
   /* Make the animated sky partially transparent so the static artwork below shows through */
-  opacity: 0.65; /* lowered to reveal static artwork */
+  opacity: 0.72; /* lowered to reveal static artwork */
   mix-blend-mode: normal;
   transition: opacity .6s var(--ease2);
 }
-:root[data-theme="provence"] #sky{ opacity: 0.60; }
+:root[data-theme="provence"] #sky{ opacity: 0.7; }
 
 #grain-overlay{
   position:fixed;
@@ -405,7 +429,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .timelineNode__title{ font-size:16px; font-weight:700; color:color-mix(in srgb, var(--ink) 92%, transparent); }
 .timelineNode__sub{ color:var(--muted); }
 .timelineNode__desc{ margin-top:6px; color:var(--muted); line-height:1.45; }
-..timelineNode:focus-within, .timelineNode:hover{ transform: translateY(-6px); box-shadow: 0 18px 48px rgba(0,0,0,.18); }
+.timelineNode:focus-within, .timelineNode:hover{ transform: translateY(-6px); box-shadow: 0 18px 48px rgba(0,0,0,.18); }
 .timelineNode.is-active{ transform: translateY(-8px); border-color: color-mix(in srgb, var(--accent) 40%, transparent); box-shadow: 0 22px 56px rgba(0,0,0,.22); }
 .timelineNode.is-pinned{ border-color: color-mix(in srgb, var(--accent2) 46%, transparent); box-shadow: 0 26px 64px rgba(0,0,0,.28); }
 
