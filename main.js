@@ -1757,8 +1757,9 @@
       if (this.subEl) this.subEl.textContent = `${data.audio.artist} • ${data.audio.note}`;
       if (this.labelEl) this.labelEl.textContent = data.audio.artist.split(" ")[0] || "Miles";
 
-      // collapsed state
-      const collapsed = this.readBool("vinylCollapsed", false);
+      // collapsed state - auto-collapse on mobile
+      const isMobile = window.innerWidth <= 640;
+      const collapsed = isMobile ? true : this.readBool("vinylCollapsed", false);
       this.setCollapsed(collapsed, { save: false });
 
       this.playBtn?.addEventListener("click", () => this.togglePlay());

@@ -69,7 +69,7 @@
 @media (max-width: 520px){
   :root{
     --constellation-top: 104px;
-    --topbar-h: 58px;
+    --topbar-h: 54px; /* reduced from 58px */
     --safe-gap: 16px;
   }
 }
@@ -366,30 +366,47 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   display:flex;
   gap:10px;
   align-items:center;
-  flex-wrap:wrap;
+  flex-wrap:nowrap; /* Prevent wrapping */
 }
 
 /* Improve mobile topbar: hide button labels on very small screens */
 @media (max-width: 520px){
   .topbar{
-    padding: 10px 12px;
+    padding: 8px 10px;
+    gap: 8px;
   }
   .topbar__actions{
-    gap: 8px;
+    gap: 6px;
+    flex-shrink: 0;
   }
   .btn__label{
     display: none;
   }
   .btn{
-    padding: 10px;
-    min-width: 40px;
+    padding: 8px;
+    min-width: 38px;
+    min-height: 38px;
     justify-content: center;
   }
   .btn__icon{
     margin: 0;
   }
+  .brand{
+    gap: 8px;
+    padding-left: 4px;
+    min-width: 0;
+    flex-shrink: 1;
+  }
   .brand__text{
-    font-size: 15px;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .brand__mark{
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
   }
 }
 
@@ -1725,31 +1742,59 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 @media (max-width: 640px){
   .vinyl{ 
-    bottom: 80px;
-    left: 8px;
-    width: min(380px, calc(100vw - 16px));
+    /* Position at top center when collapsed on mobile */
+    top: 90px;
+    left: 50%;
+    bottom: auto;
+    transform: translateX(-50%);
+    width: 70px;
   }
   .vinyl__vol{ width: 110px; }
   .vinyl__shell{
     padding: 12px;
     gap: 12px;
   }
-  /* On mobile, move the collapsed vinyl to the right corner so it doesn't overlap content */
+  /* On mobile, auto-collapsed state at top center */
   .vinyl--collapsed{ 
-    left: auto !important; 
-    right: 8px !important;
-    bottom: 8px !important;
-    width: 88px !important;
+    top: 90px !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translateX(-50%) !important;
+    width: 70px !important;
+    height: 50px !important;
+  }
+  .vinyl--collapsed .vinyl__disk{ 
+    width: 38px; 
+    height: 38px; 
   }
   .vinyl--collapsed:hover{
     width: 200px !important;
+    height: 58px !important;
+  }
+  .vinyl--collapsed:hover .vinyl__disk{ 
+    width: 50px; 
+    height: 50px; 
   }
 }
 
 @media (max-width: 520px){
   .vinyl{ 
-    bottom: 76px; 
-    width: calc(100vw - 16px);
+    top: 85px;
+    width: 68px;
+  }
+  .vinyl--collapsed{
+    top: 85px !important;
+    width: 68px !important;
+    height: 48px !important;
+  }
+  .vinyl--collapsed .vinyl__disk{ 
+    width: 36px; 
+    height: 36px; 
+  }
+  .vinyl--collapsed:hover{
+    width: 180px !important;
+    height: 56px !important;
   }
   .vinyl__shell{
     flex-direction: column;
