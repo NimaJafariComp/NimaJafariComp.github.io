@@ -1647,189 +1647,86 @@
 
   
   class VinylPlayer {
-    constructor({ rootEl, youtubeEl, diskEl, playBtn, muteBtn, volEl, collapseBtn, titleEl, subEl, labelEl, hintEl }) {
+    constructor({ rootEl, youtubeEl, diskEl, playBtn, muteBtn, volEl, closeBtn, titleEl, subtitleEl, labelEl }) {
       this.rootEl = rootEl;
       this.youtubeEl = youtubeEl;
       this.diskEl = diskEl;
       this.playBtn = playBtn;
       this.muteBtn = muteBtn;
       this.volEl = volEl;
-      this.collapseBtn = collapseBtn;
+      this.closeBtn = closeBtn;
       this.titleEl = titleEl;
-      this.subEl = subEl;
+      this.subtitleEl = subtitleEl;
       this.labelEl = labelEl;
-      this.hintEl = hintEl;
 
       this.player = null;
-                     this.ready = false;
+      this.ready = false;
       this.playing = false;
       this.muted = false;
-      this.visualsEnabled = true;
+      this.collapsed = true;
 
       this.videoId = data.audio.youtubeId;
 
+      // Set initial content
       if (this.titleEl) this.titleEl.textContent = data.audio.title;
-      if (this.subEl) this.subEl.textContent = `${data.audio.artist} • ${data.audio.note}`;
+      if (this.subtitleEl) this.subtitleEl.textContent = `${data.audio.artist} • ${data.audio.note}`;
       if (this.labelEl) this.labelEl.textContent = data.audio.artist.split(" ")[0] || "Miles";
 
-      const isMobile = window.innerWidth <= 640;
-      const collapsed = isMobile ? true : this.readBool("vinylCollapsed", false);
-      this.setCollapsed(collapsed, { save: false });
-      // Ensure expanded class is consistent with collapsed state
-      this.rootEl.classList.toggle('vinyl--expanded', !collapsed);
+      // Restore saved state
+      this.collapsed = this.readBool("vinylCollapsed", true);
+      this.setCollapsed(this.collapsed, { save: false });
 
+      // Event listeners
       this.playBtn?.addEventListener("click", () => this.togglePlay());
       this.muteBtn?.addEventListener("click", () => this.toggleMute());
       this.volEl?.addEventListener("input", () => this.setVolume(Number(this.volEl.value)));
-      this.collapseBtn?.addEventListener("click", (e) => {
-        e?.stopPropagation?.();
-        this.setCollapsed(!this.rootEl.classList.contains("vinyl--collapsed"));
+      this.closeBtn?.addEventListener("click", () => this.setCollapsed(true));
+      
+      // Click vinyl disc to expand/collapse
+      this.rootEl?.addEventListener("click", (e) => {
+        // Don't toggle if clicking buttons or volume slider
+        if (e.target.closest("button, input")) return;
+        this.setCollapsed(!this.collapsed);
       });
 
-      // clicking the root toggles expansion when collapsed (works on mobile & desktop)
-      this.rootEl?.addEventListener("click", (e) => {
-        if (!this.rootEl) return;
-        if (!this.rootEl.classList.contains("vinyl--collapsed")) return;
-
-        if (e?.target?.closest?.("#vinylCollapse")) return;
-
-        if (e?.target?.closest?.("button, input, a")) return;
-
-        this.setCollapsed(false);
+      // Keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "m" || e.key === "M") {
+          e.preventDefault();
+          this.toggleMute();
+        }
+        if (e.key === "Escape" && !this.collapsed) {
+          this.setCollapsed(true);
+        }
       });
 
       this.initYouTube();
-
-      // Create and insert backdrop element (used for mobile bottom-sheet)
-      try {
-        this.backdropEl = document.createElement('div');
-        this.backdropEl.className = 'vinyl__backdrop';
-        // insert backdrop just before root so it's behind the sheet but above other content
-        document.body.insertBefore(this.backdropEl, this.rootEl);
-        this.backdropEl.addEventListener('click', () => this.setCollapsed(true));
-      } catch (e) {}
-
-      // lightweight focus trap helper (tab trapping)
-      this._trapTab = (ev) => {
-        const focusable = Array.from(this.rootEl.querySelectorAll('a,button,input,select,textarea,[tabindex]:not([tabindex="-1"])')).filter(el => !el.hasAttribute('disabled'));
-        if (focusable.length === 0) return;
-        const first = focusable[0];
-        const last = focusable[focusable.length - 1];
-        if (ev.shiftKey && document.activeElement === first) {
-          ev.preventDefault(); last.focus();
-        } else if (!ev.shiftKey && document.activeElement === last) {
-          ev.preventDefault(); first.focus();
-        }
-      };
-
-      // Drag-to-dismiss on the shell (mobile only)
-      try {
-        this._onPointerDown = (ev) => {
-          if (window.innerWidth > 640) return;
-          if (!this.rootEl.classList.contains('vinyl--expanded')) return;
-          this._dragStartY = ev.clientY || (ev.touches && ev.touches[0] && ev.touches[0].clientY) || 0;
-          this._dragLastY = this._dragStartY;
-          this._dragging = true;
-          this._shellEl?.setPointerCapture?.(ev.pointerId);
-          this._shellEl?.addEventListener('pointermove', this._onPointerMove);
-          this._shellEl?.addEventListener('pointerup', this._onPointerUp);
-          this._shellEl?.addEventListener('pointercancel', this._onPointerUp);
-        };
-        this._onPointerMove = (ev) => {
-          if (!this._dragging) return;
-          this._dragLastY = ev.clientY || (ev.touches && ev.touches[0] && ev.touches[0].clientY) || this._dragLastY;
-          const dy = Math.max(0, this._dragLastY - this._dragStartY);
-          this._shellEl.style.transform = `translateY(${dy}px)`;
-          this.rootEl.style.boxShadow = `0 ${24 - Math.min(20, dy/6)}px ${60 - Math.min(40, dy/4)}px rgba(0,0,0,${0.36 - Math.min(.28, dy/300)})`;
-        };
-        this._onPointerUp = (ev) => {
-          if (!this._dragging) return;
-          this._dragging = false;
-          const endY = ev.clientY || (ev.changedTouches && ev.changedTouches[0] && ev.changedTouches[0].clientY) || this._dragLastY;
-          const dy = Math.max(0, endY - this._dragStartY);
-          this._shellEl.style.transform = '';
-          this.rootEl.style.boxShadow = '';
-          this._shellEl?.removeEventListener('pointermove', this._onPointerMove);
-          this._shellEl?.removeEventListener('pointerup', this._onPointerUp);
-          this._shellEl?.removeEventListener('pointercancel', this._onPointerUp);
-          // threshold to dismiss
-          if (dy > 80) this.setCollapsed(true);
-        };
-        this._shellEl = this.rootEl.querySelector('.vinyl__shell');
-        if (this._shellEl) {
-          // insert visual drag handle at top (if not present)
-          if (!this._shellEl.querySelector('.vinyl__handle')){
-            const h = document.createElement('div'); h.className = 'vinyl__handle';
-            this._shellEl.insertAdjacentElement('afterbegin', h);
-          }
-          this._shellEl.addEventListener('pointerdown', this._onPointerDown);
-        }
-      } catch (e) {}
     }
 
     readBool(key, fallback) {
       try {
         const v = localStorage.getItem(key);
-        if (v === null) return fallback;
-        return v === "1";
+        return v === null ? fallback : v === "1";
       } catch {
         return fallback;
       }
     }
 
     writeBool(key, val) {
-      try { localStorage.setItem(key, val ? "1" : "0"); } catch {}
+      try { 
+        localStorage.setItem(key, val ? "1" : "0"); 
+      } catch {}
     }
 
     setCollapsed(collapsed, { save = true } = {}) {
       if (!this.rootEl) return;
-      const isCollapsed = !!collapsed;
-      this.rootEl.classList.toggle("vinyl--collapsed", isCollapsed);
-      // On small screens, show an expanded bottom-sheet when not collapsed
-      if (window.innerWidth <= 640) this.rootEl.classList.toggle("vinyl--expanded", !isCollapsed);
-      if (save) this.writeBool("vinylCollapsed", isCollapsed);
-
-      // If the user expanded, clear any scheduled auto-collapse
-      if (!isCollapsed) this.clearAutoCollapse?.();
-
-      // Update collapse button text and aria for better affordance
-      if (this.collapseBtn) {
-        if (isCollapsed) {
-          this.collapseBtn.textContent = "▶";
-          this.collapseBtn.setAttribute("aria-label", "Expand music player");
-        } else {
-          this.collapseBtn.textContent = "—";
-          this.collapseBtn.setAttribute("aria-label", "Collapse music player");
-        }
-      }
-
-      // Accessibility & focus handling for expanded sheet
-      this.rootEl.setAttribute('aria-expanded', (!isCollapsed).toString());
-      if (!isCollapsed) {
-        try { this.backdropEl && this.backdropEl.classList.add('vinyl__backdrop--show'); } catch (e) {}
-        this._prevFocus = document.activeElement;
-        try { this.playBtn?.focus(); } catch (e) {}
-        this._onKey = (ev) => {
-          if (ev.key === 'Escape') this.setCollapsed(true);
-          if (ev.key === 'Tab') this._trapTab(ev);
-        };
-        document.addEventListener('keydown', this._onKey);
-        // accessibility attributes
-        try { this.rootEl.setAttribute('role', 'dialog'); this.rootEl.setAttribute('aria-modal', 'true'); } catch (e) {}
-      } else {
-        try { this.backdropEl && this.backdropEl.classList.remove('vinyl__backdrop--show'); } catch (e) {}
-        try { if (this._onKey) document.removeEventListener('keydown', this._onKey); } catch (e) {}
-        try { this._prevFocus?.focus?.(); } catch (e) {}
-        try { this.rootEl.removeAttribute('role'); this.rootEl.removeAttribute('aria-modal'); } catch (e) {}
-      }
-    }
-
-    setVisualsEnabled(enabled) {
-      this.visualsEnabled = !!enabled;
-      if (!enabled) {
-        this.rootEl?.classList.remove("is-playing");
-      } else {
-        this.rootEl?.classList.toggle("is-playing", this.playing);
+      
+      this.collapsed = !!collapsed;
+      this.rootEl.classList.toggle("vinyl--collapsed", this.collapsed);
+      this.rootEl.classList.toggle("vinyl--expanded", !this.collapsed);
+      
+      if (save) {
+        this.writeBool("vinylCollapsed", this.collapsed);
       }
     }
 
@@ -1841,6 +1738,7 @@
         return;
       }
 
+      // Load YouTube API
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
       document.head.appendChild(tag);
@@ -1871,65 +1769,44 @@
         events: {
           onReady: () => {
             this.ready = true;
-            const hasSavedVol = (() => { try { return localStorage.getItem("vinylVol") !== null; } catch { return false; } })();
-            const vol = hasSavedVol ? this.readVolume() : 20;
+            
+            // Restore volume
+            const vol = this.readVolume();
             if (this.volEl) this.volEl.value = String(vol);
             this.player.setVolume(vol);
-
-            try {
-              if (this.muted) { this.player.unMute(); this.muted = false; }
-            } catch (e) {}
-
+            
             this.player.playVideo();
             this.updateUI();
 
-            if (this._autoplayFallbackTimer) { clearTimeout(this._autoplayFallbackTimer); this._autoplayFallbackTimer = null; }
-            this._autoplayFallbackTimer = setTimeout(() => {
+            // Handle autoplay restrictions
+            setTimeout(() => {
               if (!this.playing) {
-                try { this.player.mute(); this.muted = true; this.player.playVideo(); } catch (e) {}
+                this.player.mute();
+                this.muted = true;
+                this.player.playVideo();
                 this.updateUI();
-
-                try { showToast("Tap anywhere or press M to enable audio"); } catch {}
-                this._origHint = this.hintEl?.textContent;
-                if (this.hintEl) this.hintEl.textContent = "Tap anywhere or press M to enable audio";
-                this.rootEl?.classList.add("vinyl--unmute-hint");
-                this._unmuteHintTimeout = setTimeout(() => {
-                  if (this.hintEl && typeof this._origHint !== "undefined") this.hintEl.textContent = this._origHint || "Tip: press M to toggle music";
-                  this.rootEl?.classList.remove("vinyl--unmute-hint");
-                  this._unmuteHintTimeout = null;
-                }, 8000);
-
-                const onFirstGesture = () => {
-                  try {
-                    if (this.muted) { this.player.unMute(); this.muted = false; this.updateUI(); }
-                    this.player.playVideo();
-                    try { showToast("Audio enabled"); } catch {}
-                  } catch (e) {}
-                  if (this.hintEl && typeof this._origHint !== "undefined") this.hintEl.textContent = this._origHint || "Tip: press M to toggle music";
-                  this.rootEl?.classList.remove("vinyl--unmute-hint");
-                  if (this._unmuteHintTimeout) { clearTimeout(this._unmuteHintTimeout); this._unmuteHintTimeout = null; }
-
-                  document.removeEventListener("pointerdown", onFirstGesture);
-                  document.removeEventListener("keydown", onFirstGesture);
+                
+                showToast("Tap anywhere to enable audio");
+                
+                // Enable audio on first user interaction
+                const enableAudio = () => {
+                  if (this.muted) {
+                    this.player.unMute();
+                    this.muted = false;
+                    this.updateUI();
+                    showToast("Audio enabled");
+                  }
+                  document.removeEventListener("pointerdown", enableAudio);
+                  document.removeEventListener("keydown", enableAudio);
                 };
-                document.addEventListener("pointerdown", onFirstGesture, { once: true });
-                document.addEventListener("keydown", onFirstGesture, { once: true });
+                
+                document.addEventListener("pointerdown", enableAudio, { once: true });
+                document.addEventListener("keydown", enableAudio, { once: true });
               }
             }, 1200);
-
-            setTimeout(() => {
-              if (this.ready && this.player) {
-                try { this.player.playVideo(); } catch (e) {}
-              }
-            }, 1000);
           },
           onStateChange: (ev) => {
-            if (ev.data === window.YT.PlayerState.PLAYING) {
-              this.playing = true;
-              if (this._autoplayFallbackTimer) { clearTimeout(this._autoplayFallbackTimer); this._autoplayFallbackTimer = null; }
-            } else if (ev.data === window.YT.PlayerState.PAUSED || ev.data === window.YT.PlayerState.ENDED) {
-              this.playing = false;
-            }
+            this.playing = ev.data === window.YT.PlayerState.PLAYING;
             this.updateUI();
           }
         }
@@ -1939,15 +1816,16 @@
     readVolume() {
       try {
         const v = Number(localStorage.getItem("vinylVol"));
-        if (Number.isFinite(v)) return clamp(v, 0, 100);
-        return 65;
+        return Number.isFinite(v) ? clamp(v, 0, 100) : 65;
       } catch {
         return 65;
       }
     }
 
     writeVolume(v) {
-      try { localStorage.setItem("vinylVol", String(v)); } catch {}
+      try { 
+        localStorage.setItem("vinylVol", String(v)); 
+      } catch {}
     }
 
     setVolume(v) {
@@ -1958,27 +1836,12 @@
       }
     }
 
-    toggleMute() {
-      if (!this.ready || !this.player) {
-        showToast("Music loading…");
-        return;
-      }
-      this.muted = !this.muted;
-      if (this.muted) this.player.mute();
-      else {
-        this.player.unMute();
-        if (this.hintEl && typeof this._origHint !== "undefined") this.hintEl.textContent = this._origHint || "Tip: press M to toggle music";
-        this.rootEl?.classList.remove("vinyl--unmute-hint");
-        if (this._unmuteHintTimeout) { clearTimeout(this._unmuteHintTimeout); this._unmuteHintTimeout = null; }
-      }
-      this.updateUI();
-    }
-
     togglePlay() {
       if (!this.ready || !this.player) {
         showToast("Music loading…");
         return;
       }
+      
       if (this.playing) {
         this.player.pauseVideo();
       } else {
@@ -1986,25 +1849,29 @@
       }
     }
 
-    updateUI() {
-      if (this.playBtn) this.playBtn.textContent = this.playing ? "❚❚" : "▶";
-      if (this.muteBtn) this.muteBtn.textContent = this.muted ? "🔇" : "🔈";
-      if (this.visualsEnabled) {
-        this.rootEl?.classList.toggle("is-playing", this.playing);
+    toggleMute() {
+      if (!this.ready || !this.player) {
+        showToast("Music loading…");
+        return;
       }
+      
+      this.muted = !this.muted;
+      if (this.muted) {
+        this.player.mute();
+      } else {
+        this.player.unMute();
+      }
+      this.updateUI();
     }
 
-    scheduleAutoCollapse(delay = 1500) {
-      try {
-        if (this._autoCollapseTimer) clearTimeout(this._autoCollapseTimer);
-        this._autoCollapseTimer = setTimeout(() => {
-          this.setCollapsed(true);
-        }, delay);
-      } catch (e) {}
-    }
-
-    clearAutoCollapse() {
-      if (this._autoCollapseTimer) { clearTimeout(this._autoCollapseTimer); this._autoCollapseTimer = null; }
+    updateUI() {
+      if (this.playBtn) {
+        this.playBtn.textContent = this.playing ? "❚❚" : "▶";
+      }
+      if (this.muteBtn) {
+        this.muteBtn.textContent = this.muted ? "🔇" : "🔈";
+      }
+      this.rootEl?.classList.toggle("is-playing", this.playing);
     }
   }
 
@@ -2054,15 +1921,11 @@
       playBtn: $("#vinylPlay"),
       muteBtn: $("#vinylMute"),
       volEl: $("#vinylVol"),
-      collapseBtn: $("#vinylCollapse"),
+      closeBtn: $("#vinylClose"),
       titleEl: $("#vinylTitle"),
-      subEl: $("#vinylSub"),
+      subtitleEl: $("#vinylSubtitle"),
       labelEl: $("#vinylLabel"),
-      hintEl: $("#vinylHint"),
     });
-
-    // Don't auto-collapse on initial mount on mobile; user should control expand/collapse explicitly.
-    // (If desired we can add a user-setting to enable automatic collapse after some delay.)
   }
 
   setMotion(state.motionEnabled);

@@ -104,28 +104,29 @@
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   
-  <aside class="vinyl" id="vinyl" aria-label="Music player">
-    <div class="vinyl__shell brush-card">
-      <button class="vinyl__collapse" id="vinylCollapse" type="button" aria-label="Collapse music player">—</button>
-
+  <aside class="vinyl vinyl--collapsed" id="vinyl" aria-label="Music player">
+    <div class="vinyl__container">
+      <button class="vinyl__close" id="vinylClose" type="button" aria-label="Close music player">×</button>
+      
       <div class="vinyl__disk" id="vinylDisk" aria-hidden="true">
         <div class="vinyl__label" id="vinylLabel">Miles</div>
       </div>
 
-      <div class="vinyl__meta">
-        <div class="vinyl__title" id="vinylTitle">It Never Entered My Mind</div>
-        <div class="vinyl__sub" id="vinylSub">Miles Davis • 1956</div>
-
-        <div class="vinyl__controls">
-          <button class="vinyl__btn magnetic" id="vinylPlay" type="button" aria-label="Play or pause">▶</button>
-          <button class="vinyl__btn magnetic" id="vinylMute" type="button" aria-label="Mute or unmute">🔈</button>
-          <input class="vinyl__vol" id="vinylVol" type="range" min="0" max="100" value="65" aria-label="Volume" />
+      <div class="vinyl__content">
+        <div class="vinyl__meta">
+          <div class="vinyl__title" id="vinylTitle">It Never Entered My Mind</div>
+          <div class="vinyl__subtitle" id="vinylSubtitle">Miles Davis • 1956</div>
         </div>
 
-        <div class="vinyl__hint" id="vinylHint">Tip: press <span class="mono">M</span> to toggle music</div>
+        <div class="vinyl__controls">
+          <button class="vinyl__btn" id="vinylPlay" type="button" aria-label="Play or pause">▶</button>
+          <button class="vinyl__btn" id="vinylMute" type="button" aria-label="Mute or unmute">🔈</button>
+          <div class="vinyl__volume">
+            <input id="vinylVol" type="range" min="0" max="100" value="65" aria-label="Volume" />
+          </div>
+        </div>
       </div>
 
-      
       <div class="yt" id="ytPlayer" aria-hidden="true"></div>
     </div>
   </aside>
