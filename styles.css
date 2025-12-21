@@ -39,14 +39,31 @@
 
   --radius: 22px;
   --radius2: 16px;
-  
+
   --constellation-top: 120px;
-  --nav-safe-top: clamp(140px, calc(var(--constellation-top) + 90px), 220px);
+  --constellation-h: 52px;
+
+  /* topbar sizing (approx) */
+  --topbar-top: 14px;
+  --topbar-h: 62px;
+
+  /* breathing room below fixed UI */
+  --safe-gap: 14px;
+
+  /* safe boundary: whichever is lower (topbar or constellation) + gap */
+  --safe-top: calc(
+    max(
+      calc(var(--topbar-top) + var(--topbar-h)),
+      calc(var(--constellation-top) + var(--constellation-h))
+    ) + var(--safe-gap)
+  );
 }
+
 @media (max-width: 520px){
   :root{
-    --constellation-top: 92px; /* pull dots up a bit on phones */
-    --nav-safe-top: 150px;     /* less wasted vertical space */
+    --constellation-top: 92px;
+    --topbar-h: 58px;
+    --safe-gap: 12px;
   }
 } 
 
@@ -402,28 +419,40 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height:100vh;
   min-height:100vh;
   scroll-snap-align:start;
-  padding: 0 18px 22px;  /* ✅ remove the big top padding */
+  padding: 0; /* panel is a clean container; inner is the scroll viewport */
   position:relative;
 }
 @media (min-width: 720px){
-  .panel{ padding: 0 28px 28px; }
+  .panel{ padding: 0; }
 }
 @media (min-width: 1024px){
-  .panel{ padding: 0 48px 34px; }
+  .panel{ padding: 0; }
 }
 
 .panel__inner{
-  height:100%;
-  overflow:auto;
-  padding: var(--nav-safe-top) 2px 22px; /* ✅ single source of truth */
-  scroll-padding-top: var(--nav-safe-top);
-}
+  position:absolute;
+  left:0;
+  right:0;
+  top: var(--safe-top);
+  bottom: 0;
 
-/* remove spacer if you still have it */
+  overflow:auto;
+
+  /* layout padding lives here */
+  padding: 0 18px 22px;
+  scroll-padding-top: 16px;
+}
 .panel__inner::before{ content:none; }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
 .panel__inner::-webkit-scrollbar-track{ background: color-mix(in srgb, var(--ink) 4%, transparent); }
+
+@media (min-width: 720px){
+  .panel__inner{ padding: 0 28px 28px; }
+}
+@media (min-width: 1024px){
+  .panel__inner{ padding: 0 48px 34px; }
+}
 
 /* --- Content layout --- */
 .container{ 
