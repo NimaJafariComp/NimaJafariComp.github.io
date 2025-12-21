@@ -1790,6 +1790,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   overflow: hidden;
 }
 
+.vinyl--expanded .vinyl__container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .vinyl--collapsed .vinyl__container {
   border-radius: 40px;
   padding: 0;
@@ -1861,6 +1867,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .vinyl--expanded .vinyl__content {
   display: flex;
+  width: 100%;
 }
 
 .vinyl__meta {
@@ -1893,7 +1900,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   display: none;
   gap: 8px;
   align-items: center;
-  margin-top: 8px;
+  width: 100%;
 }
 
 .vinyl--expanded .vinyl__controls {
