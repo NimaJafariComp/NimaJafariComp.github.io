@@ -829,13 +829,13 @@
     const isProvence = (state?.theme === "provence" || document.documentElement.dataset.theme === "provence");
     const gradStops = isProvence ? `
       <stop offset="0" stop-color="rgba(0,0,0,0)"/>
-      <stop offset=".25" stop-color="rgba(0,0,0,.28)"/>
-      <stop offset=".6" stop-color="rgba(0,0,0,.22)"/>
+      <stop offset=".20" stop-color="rgba(0,0,0,.60)"/>
+      <stop offset=".65" stop-color="rgba(0,0,0,.48)"/>
       <stop offset="1" stop-color="rgba(0,0,0,0)"/>
     ` : `
       <stop offset="0" stop-color="rgba(255,255,255,0)"/>
-      <stop offset=".25" stop-color="rgba(255,255,255,.70)"/>
-      <stop offset=".6" stop-color="rgba(255,255,255,.50)"/>
+      <stop offset=".25" stop-color="rgba(255,255,255,.80)"/>
+      <stop offset=".6" stop-color="rgba(255,255,255,.58)"/>
       <stop offset="1" stop-color="rgba(255,255,255,0)"/>
     `;
     defs.innerHTML = `<linearGradient id="lineGrad" x1="0" y1="0" x2="${navRect.width}" y2="0" gradientUnits="userSpaceOnUse">${gradStops}</linearGradient>`;
