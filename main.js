@@ -274,7 +274,7 @@
             </div>
             <hr class="sep" />
             <div class="row" style="margin-top:12px;">
-              ${a.interests.map(i => `<span class="chip">${escapeHtml(i)}</span>`).join("")}
+              ${a.interests.map((i, idx) => { const tones = ['sun','cobalt','cypress','ember','azure']; const tone = tones[idx % tones.length]; return `<span class="chip chip--${tone}">${escapeHtml(i)}</span>` }).join("")}
             </div>
           </div>
         </div>
