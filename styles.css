@@ -369,10 +369,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   position:relative;
 }
 @media (min-width: 720px){
-  .panel{ padding: 92px 28px 28px; }
+  .panel{ padding: 132px 28px 28px; }
 }
 @media (min-width: 1024px){
-  .panel{ padding: 94px 48px 34px; }
+  .panel{ padding: 134px 48px 34px; }
 }
 
 .panel__inner{
@@ -859,7 +859,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .constellation{
   position:fixed;
   left:50%;
-  top: 76px; /* below topbar */
+  top: 120px; /* moved further down to avoid colliding with content */
   transform: translateX(-50%);
   z-index: 10;
   width: min(720px, calc(100vw - 40px));
@@ -917,7 +917,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .constellation__label{
   position:absolute;
-  top: 42px; /* label shows under dot when nav is at top */
+  top: -44px; /* label shows above dot */
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
@@ -927,13 +927,13 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   padding: 6px 9px;
   border-radius: 999px;
   white-space: nowrap;
-  opacity:0;
+  opacity:1; /* labels visible by default */
   pointer-events:none;
   transition: opacity .2s var(--ease), transform .2s var(--ease), background 700ms var(--ease2);
 }
 .constellation__dot:hover .constellation__label{
   opacity:1;
-  transform: translateX(-50%) translateY(2px);
+  transform: translateX(-50%) translateY(-2px);
 }
 
 /* Palette removed */
@@ -942,7 +942,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .toast{
   position:fixed;
   left:50%;
-  top: 140px; /* moved below topbar + nav */
+  top: 188px; /* moved below topbar + nav */
   transform: translateX(-50%);
   z-index: 50;
   background: color-mix(in srgb, var(--card) 92%, transparent);
