@@ -55,7 +55,7 @@
   --topbar-h: 62px;
 
   /* breathing room below fixed UI */
-  --safe-gap: 14px;
+  --safe-gap: 20px; 
 
   /* safe boundary: whichever is lower (topbar or constellation) + gap */
   --safe-top: calc(
@@ -70,7 +70,7 @@
   :root{
     --constellation-top: 92px;
     --topbar-h: 58px;
-    --safe-gap: 12px;
+    --safe-gap: 16px;
   }
 } 
 
