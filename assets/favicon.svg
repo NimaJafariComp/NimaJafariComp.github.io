@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="g0" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(92 88) rotate(55) scale(160 160)">
+      <stop stop-color="#FFD45A"/>
+      <stop offset="0.45" stop-color="#1D6FE0" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#070913"/>
+    </radialGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feColorMatrix type="matrix" values="
+        1 0 0 0 0
+        0 1 0 0 0
+        0 0 1 0 0
+        0 0 0 16 -6" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="256" height="256" rx="56" fill="url(#g0)"/>
+
+  <!-- A simple “brush swirl star” mark -->
+  <path d="M55 136c24-42 76-66 122-44 41 20 30 66-1 77-33 12-70-15-68-42 2-30 48-39 61-14 13 24-10 44-33 38" stroke="#FFD45A" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.92" filter="url(#glow)"/>
+
+  <circle cx="178" cy="72" r="10" fill="#FFD45A" filter="url(#glow)"/>
+  <circle cx="206" cy="94" r="6" fill="#FFD45A" opacity="0.9" filter="url(#glow)"/>
+  <circle cx="64" cy="70" r="5" fill="#FFD45A" opacity="0.85" filter="url(#glow)"/>
+</svg>
