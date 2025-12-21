@@ -1,21 +1,18 @@
-/* =========================================================
-   Nima Jafari — Portfolio
-   Pure HTML/CSS/JS (GitHub Pages friendly)
-   ========================================================= */
+
 
 :root{
-  /* Motion (toggled by JS) */
+  
   --motion: 1;
 
-  /* Typography */
+  
   --font-body: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   --font-title: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
 
-  /* Easing */
+  
   --ease: cubic-bezier(.2,.8,.2,1);
   --ease2: cubic-bezier(.16,1,.3,1);
 
-  /* --- Night theme (default): Starry Night --- */
+  
   --bg0:#070913;
   --bg1:#0b1020;
   --ink:#eaf2ff;
@@ -32,12 +29,12 @@
   --accent: var(--moon);
   --accent2: var(--azure);
 
-  /* Tone palette (Starry Night defaults: yellow + green) */
-  --tone-sun: #ffd45a; /* yellow */
-  --tone-cobalt: #1d6fe0; /* blue */
-  --tone-cypress: #0b6b4f; /* green */
-  --tone-ember: #ff7d4a; /* orange */
-  --tone-azure: #4aa3d9; /* light blue */
+  
+  --tone-sun: #ffd45a; 
+  --tone-cobalt: #1d6fe0; 
+  --tone-cypress: #0b6b4f; 
+  --tone-ember: #ff7d4a; 
+  --tone-azure: #4aa3d9; 
 
   --card: rgba(10, 14, 30, .62);
   --card2: rgba(10, 14, 30, .42);
@@ -50,14 +47,14 @@
   --constellation-top: 132px;
   --constellation-h: 52px; 
 
-  /* topbar sizing (approx) */
+  
   --topbar-top: 14px;
   --topbar-h: 62px;
 
-  /* breathing room below fixed UI */
+  
   --safe-gap: 20px; 
 
-  /* safe boundary: whichever is lower (topbar or constellation) + gap */
+  
   --safe-top: calc(
     max(
       calc(var(--topbar-top) + var(--topbar-h)),
@@ -69,12 +66,12 @@
 @media (max-width: 520px){
   :root{
     --constellation-top: 104px;
-    --topbar-h: 54px; /* reduced from 58px */
+    --topbar-h: 54px; 
     --safe-gap: 16px;
   }
 }
 
-/* Landscape mobile adjustments */
+
 @media (max-height: 500px) and (orientation: landscape){
   :root{
     --constellation-top: 90px;
@@ -85,46 +82,46 @@
 } 
 
 :root[data-theme="provence"]{
-  /* --- Light theme: Farmhouse in Provence (light + legible) --- */
+  
   --bg0:#f6f0d2;
   --bg1:#9fd3e6;
-  --ink:#142033; /* page ink (dark) */
+  --ink:#142033; 
   --muted:rgba(20,32,51,.72);
 
   --ultramarine:#2b3c7a;
   --cobalt:#2f63b6;
   --azure:#4aa3d9;
-  --moon:#f6c44f; /* sun (yellowish hue) */
+  --moon:#f6c44f; 
   --ochre:#d79a2a;
   --cypress:#2f6b3f;
   --ember:#e86b3a;
 
-  /* Provence: prefer green + blue accents */
+  
   --accent: var(--cypress);
   --accent2: var(--cobalt);
 
-  /* Tone palette for Provence (green / blue centric) */
-  --tone-sun: #7fbf90; /* soft green */
-  --tone-cobalt: #2f63b6; /* cobalt blue */
-  --tone-cypress: #2f6b3f; /* deep green */
-  --tone-ember: #d79a2a; /* ochre */
-  --tone-azure: #4aa3d9; /* light blue */
+  
+  --tone-sun: #7fbf90; 
+  --tone-cobalt: #2f63b6; 
+  --tone-cypress: #2f6b3f; 
+  --tone-ember: #d79a2a; 
+  --tone-azure: #4aa3d9; 
 
-  /* Light, slightly tinted card backgrounds so text is dark and legible */
+  
   --card: rgba(255,255,255,.96);
-  --card2: rgba(248,253,246,.92); /* faint greenish tint */
+  --card2: rgba(248,253,246,.92); 
   --border: rgba(20,32,51,.08);
   --shadow: 0 18px 55px rgba(10,20,12,.06);
 
-  /* Card text colors: use dark ink on light cards */
+  
   --card-text: var(--ink);
   --muted-on-card: rgba(20,32,51,.60);
 
-  /* Slightly reduce grain for a cleaner look on light artwork */
+  
   --grain-opacity: .28;
 }
 
-/* Light-theme card text overrides for improved legibility over sunflowers */
+
 :root[data-theme="provence"] .brush-card,
 :root[data-theme="provence"] .card,
 :root[data-theme="provence"] .timelineStatic__inner,
@@ -132,7 +129,7 @@
 :root[data-theme="provence"] .machineNode__card,
 :root[data-theme="provence"] .machinesDetails__panel {
   color: var(--card-text);
-  /* slightly increase padding/spacing for light mode to breathe */
+  
 }
 :root[data-theme="provence"] .card-pad{ padding: 18px 20px; }
 
@@ -145,10 +142,7 @@
   color: var(--muted-on-card);
 }
 
-/* Per-theme static artwork variables (place images in assets/)
-   night  -> assets/starry-night.jpg
-   provence -> assets/sunflowers.jpg
-*/
+
 :root[data-theme="night"]{ --static-bg: url('assets/starry-night.jpg'); }
 :root[data-theme="provence"]{ --static-bg: url('assets/sunflowers.jpg'); }
 
@@ -159,15 +153,15 @@
 *{ box-sizing:border-box; }
 html,body{ 
   height:100%; 
-  /* Support for safe areas on notched devices */
+  
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 body{
   margin:0;
   color:var(--ink);
   font-family:var(--font-body);
-  overflow:hidden; /* the deck scrolls horizontally */
-  /* background layers: gradients on top, static artwork at the bottom (set per-theme variable) */
+  overflow:hidden; 
+  
   background-image:
     radial-gradient(900px 700px at 72% 18%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 62%),
     radial-gradient(900px 700px at 25% 85%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 62%),
@@ -187,16 +181,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   border-radius: 10px;
 }
 
-/* --- Background layers --- */
+
 #staticBg{
   position:fixed;
   inset:0;
-  z-index:-4; /* beneath animated sky layers */
+  z-index:-4; 
   background-position:center;
   background-size:cover;
   background-repeat:no-repeat;
   pointer-events:none;
-  /* Make the static artwork slightly more vivid so it reads through the animation */
+  
   filter: contrast(1.12) saturate(1.12);
   transition: opacity .6s var(--ease2), filter .6s var(--ease2);
 }
@@ -207,8 +201,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   width:100%;
   height:100%;
   z-index:-3;
-  /* Make the animated sky partially transparent so the static artwork below shows through */
-  opacity: 0.70; /* lowered to reveal static artwork */
+  
+  opacity: 0.70; 
   mix-blend-mode: normal;
   transition: opacity .6s var(--ease2);
 }
@@ -243,7 +237,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   100%{ transform: translate3d(-6%,4%,0) rotate(7deg); }
 }
 
-/* Horizon silhouette (changes with theme) */
+
 #horizon{
   position:fixed;
   left:0;
@@ -278,32 +272,32 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   opacity:.78;
 }
 
-/* Theme-backed static imagery (place static images under animated sky) */
+
 :root[data-theme="night"] #staticBg{
-  /* Put your starry night image at assets/starry-night.jpg (recommended: 2400px wide) */
+  
   background-image: url('assets/starry-night.jpg');
-  /* Reduce opacity so animated sky reads through more clearly in dark mode */
+  
   opacity: 0.55;
 }
 
 :root[data-theme="provence"] #staticBg{
-  /* Put your sunflower image at assets/sunflowers.jpg (recommended: 2400px wide) */
+  
   background-image: url('assets/sunflowers.jpg');
   opacity: 1;
 }
 
-/* If images are missing, fall back to subtle gradients */
+
 #staticBg:not([style]){
   background-image: linear-gradient(180deg, rgba(10,12,20,.85), rgba(10,12,20,.96));
 }
 
-/* Overlay tint for readability */
+
 #staticBg::after{
   content:"";
   position:absolute;
   inset:0;
   pointer-events:none;
-  /* Lighter overlay to allow the painting to show more while preserving legibility */
+  
   background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.30));
   mix-blend-mode: multiply;
   transition: background .6s var(--ease2), opacity .6s var(--ease2);
@@ -312,7 +306,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   background: linear-gradient(180deg, rgba(255,250,230,.04), rgba(255,250,230,.28));
 }
 
-/* --- Top bar --- */
+
 .topbar{
   position:fixed;
   top:14px;
@@ -366,29 +360,29 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   display:flex;
   gap:10px;
   align-items:center;
-  flex-wrap:nowrap; /* Prevent wrapping */
+  flex-wrap:nowrap; 
 }
 
-/* Improve mobile topbar: hide button labels on very small screens */
+
 @media (max-width: 520px){
   .topbar{
     padding: 8px 10px;
     gap: 8px;
     overflow-x: auto;
     overflow-y: hidden;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
   }
   .topbar::-webkit-scrollbar{
-    display: none; /* Chrome/Safari */
+    display: none; 
   }
   .topbar__actions{
     gap: 6px;
     flex-shrink: 0;
   }
   .btn__label{
-    display: inline; /* Keep labels visible */
-    font-size: 11px; /* Smaller text */
+    display: inline; 
+    font-size: 11px; 
     white-space: nowrap;
   }
   .btn{
@@ -418,7 +412,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
 }
 
-/* --- Buttons --- */
+
 .btn{
   appearance:none;
   border:1px solid var(--border);
@@ -431,11 +425,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   gap:9px;
   align-items:center;
   user-select:none;
-  /* Minimum touch target size for accessibility */
+  
   min-width: 44px;
   min-height: 44px;
 
-  /* Magnetic + micro-interactions (driven by CSS variables) */
+  
   --magx: 0px;
   --magy: 0px;
   --lift: 0px;
@@ -444,7 +438,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: translate3d(var(--magx), var(--magy), 0) translateY(var(--lift)) scale(var(--press));
   transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease), color 700ms var(--ease2);
   box-shadow: 0 10px 40px rgba(0,0,0,.25);
-  /* Prevent double-tap zoom on mobile */
+  
   touch-action: manipulation;
 }
 
@@ -482,7 +476,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   font-weight:600;
 }
 
-/* --- Deck = horizontal experience --- */
+
 .deck{
   position:fixed;
   inset:0;
@@ -492,7 +486,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   scroll-snap-type:x mandatory;
   scroll-behavior:smooth;
   -webkit-overflow-scrolling: touch;
-  /* Prevent momentum scrolling issues */
+  
   overscroll-behavior-x: contain;
 }
 .deck::-webkit-scrollbar{ height: 10px; }
@@ -509,7 +503,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height:100vh;
   min-height:100vh;
   scroll-snap-align:start;
-  padding: 0; /* panel is a clean container; inner is the scroll viewport */
+  padding: 0; 
   position:relative;
 }
 @media (min-width: 720px){
@@ -529,7 +523,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   overflow:auto;
   -webkit-overflow-scrolling: touch;
 
-  /* layout padding lives here */
+  
   padding: 0 18px 22px;
   scroll-padding-top: 16px;
 }
@@ -540,7 +534,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 @media (max-width: 520px){
   .panel__inner{
-    padding: 0 16px 100px; /* Extra bottom padding for vinyl player */
+    padding: 0 16px 100px; 
   }
   .panel__inner::-webkit-scrollbar{ width: 6px; }
 }
@@ -556,11 +550,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .panel__inner{ padding: 0 48px 34px; }
 }
 
-/* --- Content layout --- */
+
 .container{ 
   max-width: 1100px; 
   margin: 0 auto; 
-  /* Remove extra padding since scroll container now handles the safe zone */
+  
 }
 .grid{ display:grid; gap:16px; }
 @media (min-width: 900px){
@@ -579,11 +573,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .grid--3{ grid-template-columns: 1fr; }
 }
 
-/* -----------------------------
-   Machines timeline — Modern vertical design
-   ----------------------------- */
 
-/* Timeline container */
+
+
 .timelineStatic{ margin-top:24px; }
 .timelineStatic__inner{ 
   position:relative; 
@@ -596,7 +588,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   overflow: visible;
 }
 
-/* Light theme adjustments */
+
 :root[data-theme="provence"] .timelineStatic__inner{
   background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,253,246,.96));
   box-shadow: 0 18px 55px rgba(10,20,12,.08);
@@ -648,7 +640,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   margin: 0 auto;
 }
 
-/* Category filter pills */
+
 .timelineFilters{
   display: flex;
   gap: 8px;
@@ -682,14 +674,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
-/* Timeline grid with central spine */
+
 .timelineStatic__grid{ 
   position: relative;
   max-width: 1100px;
   margin: 0 auto;
 }
 
-/* Central timeline spine */
+
 .timelineStatic__grid::before{
   content: '';
   position: absolute;
@@ -716,7 +708,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   );
 }
 
-/* Timeline nodes alternate left/right */
+
 .timelineNode{ 
   position: relative;
   width: calc(50% - 40px);
@@ -745,7 +737,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Alternating left/right positioning */
+
 .timelineNode:nth-child(odd){
   margin-left: 0;
   margin-right: auto;
@@ -756,7 +748,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   margin-right: 0;
 }
 
-/* Timeline dot connector */
+
 .timelineNode::before{
   content: '';
   position: absolute;
@@ -781,7 +773,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   left: -49px;
 }
 
-/* Connecting line from card to dot */
+
 .timelineNode::after{
   content: '';
   position: absolute;
@@ -806,7 +798,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   );
 }
 
-/* Hover effects */
+
 .timelineNode:hover{ 
   transform: translateY(-4px) scale(1.02);
   box-shadow: 0 20px 50px rgba(0,0,0,.25);
@@ -829,7 +821,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     0 0 30px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
-/* Timeline node content */
+
 .timelineNode__category{
   display: inline-block;
   font-size: 11px;
@@ -887,7 +879,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   color: color-mix(in srgb, var(--ink) 80%, transparent);
 }
 
-/* Tablet responsive - adjust layout */
+
 @media (max-width: 900px) and (min-width: 769px){
   .timelineNode{
     width: calc(50% - 30px);
@@ -897,7 +889,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
 }
 
-/* Mobile responsive - single column */
+
 @media (max-width: 768px){
   .timelineStatic__inner{ padding: 20px 16px 24px; }
   
@@ -941,7 +933,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
 }
 
-/* Legacy styles for details panel */
+
 .milestoneList{ display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
 .milestone{ border:1px solid var(--border); background: color-mix(in srgb, var(--card) 92%, transparent); padding:10px 12px; border-radius:10px; cursor:pointer; display:flex; gap:10px; align-items:center; }
 .milestone__year{ font-weight:700; }
@@ -969,7 +961,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   filter: url(#softGlow);
 }
 
-/* Additional spacing for the Honors page title */
+
 #panel-honors .h1 { margin-bottom: 20px; }
 
 .h2{
@@ -1062,7 +1054,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   position:relative;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  /* stronger grounding color + subtle dark tint for legibility */
+  
   background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, rgba(0,0,0,.04)), color-mix(in srgb, var(--card2) 86%, rgba(0,0,0,.02)));
   box-shadow: 0 26px 80px rgba(0,0,0,.32);
   overflow:hidden;
@@ -1094,12 +1086,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   content:"";
   position:absolute;
   inset:0;
-  /* neutral overlay — defaults to a subtle darkening on dark themes */
+  
   background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.10));
   opacity:.50;
   pointer-events:none;
 }
-/* Light-theme tweak: make the overlay warm/light so cards read on top of Sunflowers */
+
 :root[data-theme="provence"] .brush-card::after{
   background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
   opacity:.60;
@@ -1123,7 +1115,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .sectionTitle__right{ color: var(--muted); font-size: 13px; }
 
-/* Portrait */
+
 .portrait{
   display:grid;
   place-items:center;
@@ -1157,7 +1149,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: scale(1.02);
 }
 
-/* Palette tint (subtle ink wash) */
+
 .portrait__img::before{
   content:"";
   position:absolute;
@@ -1184,7 +1176,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   pointer-events:none;
 }
 
-/* List blocks */
+
 .list{ display:flex; flex-direction:column; gap:12px; }
 .item{ display:flex; gap:12px; align-items:flex-start; }
 .item__dot{
@@ -1194,9 +1186,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   filter:url(#softGlow);
 }
 
-/* Theme-specific dot accents for better visibility over backgrounds */
+
 :root[data-theme="night"] .item__dot{
-  /* bright, warm yellow over Starry Night */
+  
   background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--tone-sun) 98%, white), color-mix(in srgb, var(--tone-sun) 32%, transparent) 56%, transparent 72%);
   border: 1px solid color-mix(in srgb, var(--tone-sun) 36%, transparent);
   box-shadow: 0 8px 30px color-mix(in srgb, var(--tone-sun) 28%, transparent);
@@ -1204,26 +1196,26 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 :root[data-theme="provence"] .item__dot{
-  /* blue accents for Provence (blue bullets) */
+  
   background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--tone-cobalt) 98%, white), color-mix(in srgb, var(--tone-cobalt) 28%, transparent) 56%, transparent 72%);
   border: 1px solid color-mix(in srgb, var(--tone-cobalt) 36%, transparent);
   box-shadow: 0 6px 18px color-mix(in srgb, var(--tone-cobalt) 22%, transparent);
   filter:url(#softGlow);
 } 
 
-/* Bullet lists used in Work / Honors */
+
 .bullets{
   margin: 0;
   padding-left: 20px;
   color: var(--muted);
 }
 .bullets li{
-  margin: 10px 0; /* more vertical breathing room */
-  line-height: 1.7; /* increase readability */
+  margin: 10px 0; 
+  line-height: 1.7; 
 }
 .bullets li::marker{ color: color-mix(in srgb, var(--ink) 18%, transparent); font-weight:700; }
 
-/* Theme-specific bullet color for ul.bullets list markers */
+
 :root[data-theme="night"] .bullets li::marker{ color: var(--tone-sun); }
 :root[data-theme="provence"] .bullets li::marker{ color: var(--tone-cobalt); }
 @media (max-width: 520px){
@@ -1232,12 +1224,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .item__title{ margin:0; font-weight:650; }
 .item__sub{ margin:4px 0 0; color: var(--muted); line-height: 1.55; }
 
-/* Vertical stack helper — use for stacked cards/blocks (Work / Honors) */
+
 .stack{ display:flex; flex-direction:column; gap:16px; }
-/* Ensure stacked nested .brush-card items have comfortable spacing */
+
 .stack > .brush-card{ margin:0; }
 
-/* Tilt cards */
+
 .tilt{
   transform-style: preserve-3d;
   transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
@@ -1254,7 +1246,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .tilt:hover::before{ opacity: .9; }
 
-/* Projects grid */
+
 .cards{ display:grid; gap:14px; grid-template-columns: 1fr; }
 @media (min-width: 900px){
   .cards{ grid-template-columns: repeat(2, 1fr); }
@@ -1299,7 +1291,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .card__links{ margin-top: 12px; display:flex; gap:10px; flex-wrap:wrap; }
 
-/* --- Rise of Machines (timeline flight) --- */
+
 .flightWrap{ margin-top: 14px; }
 .flightScroll{ position:relative; height: 520vh; }
 .flightSticky{ position: sticky; top: 6px; height: min(78vh, 690px); }
@@ -1432,7 +1424,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .milestone__title{ margin-top: 2px; }
 .milestone__sub{ margin-top: 4px; color: var(--muted); font-size: 12.5px; line-height: 1.4; }
 
-/* Skills */
+
 .nebula{
   position:relative;
   height: min(62vh, 520px);
@@ -1464,7 +1456,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: translate3d(0,0,0) scale(0.99);
 }
 
-/* Simple skill list (static tags) */
+
 .skill-list{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
 .skill-list .chip{ cursor:pointer; }
 .skill-chip{ transition: transform .14s var(--ease), box-shadow .14s var(--ease); }
@@ -1473,7 +1465,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 @media (min-width:900px){ .skill-list{ gap:10px; } }
 
-/* CV */
+
 .pdfFrame{
   width: 100%;
   height: min(74vh, 860px);
@@ -1488,19 +1480,19 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   border:0;
 }
 
-/* Constellation nav (moved to top) */
+
 .constellation{
   position:fixed;
-  /* Center within the safe bounds (accounts for notches / insets) */
+  
   left: max(14px, env(safe-area-inset-left));
   right: max(14px, env(safe-area-inset-right));
-  top: var(--constellation-top); /* moved further down to avoid colliding with content */
+  top: var(--constellation-top); 
   z-index: 10;
   width: min(720px, calc(100vw - (max(14px, env(safe-area-inset-left)) + max(14px, env(safe-area-inset-right)))));
   margin-left: auto;
   margin-right: auto;
   pointer-events:none;
-  transform: none; /* center using left/right + auto margins */
+  transform: none; 
 }
 .constellation__lines{
   width:100%;
@@ -1533,12 +1525,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   place-items:center;
   cursor:pointer;
   transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
-  /* Larger touch target */
+  
   min-width: 44px;
   min-height: 44px;
 }
 
-/* Create downward arc - middle dots are lower */
+
 .constellation__dots > li:nth-child(4) .constellation__dot,
 .constellation__dots > li:nth-child(5) .constellation__dot,
 .constellation__dots > li:nth-child(6) .constellation__dot{
@@ -1562,7 +1554,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 98%, white), color-mix(in srgb, var(--accent) 25%, transparent) 55%, transparent 70%);
   filter:url(#softGlow);
 }
-/* Move interactions downward so labels appear below dots when at top */
+
 .constellation__dot:hover{
   border-color: color-mix(in srgb, var(--accent) 30%, transparent);
 }
@@ -1571,7 +1563,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   border-color: color-mix(in srgb, var(--accent) 42%, transparent);
 }
 
-/* Maintain curve on hover/active for middle dots */
+
 .constellation__dots > li:nth-child(4) .constellation__dot:hover,
 .constellation__dots > li:nth-child(5) .constellation__dot:hover,
 .constellation__dots > li:nth-child(6) .constellation__dot:hover,
@@ -1596,7 +1588,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .constellation__label{
   position:absolute;
-  top: -44px; /* label shows above dot */
+  top: -44px; 
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
@@ -1606,7 +1598,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   padding: 6px 9px;
   border-radius: 999px;
   white-space: nowrap;
-  opacity:0; /* hide labels by default on mobile */
+  opacity:0; 
   pointer-events:none;
   transition: opacity .2s var(--ease), transform .2s var(--ease), background 700ms var(--ease2);
   backdrop-filter: blur(8px);
@@ -1617,17 +1609,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: translateX(-50%) translateY(-2px);
 }
 
-/* Show labels on desktop/large screens */
+
 @media (min-width: 900px){
   .constellation__label{
-    opacity: 1; /* Always visible on desktop */
+    opacity: 1; 
   }
   .constellation__dot:hover .constellation__label{
     transform: translateX(-50%) translateY(-3px);
   }
 }
 
-/* Mobile constellation: reduce gaps, ensure labels work */
+
 @media (max-width: 640px){
   .constellation{
     left: max(8px, env(safe-area-inset-left));
@@ -1658,7 +1650,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     text-overflow: ellipsis;
   }
   
-  /* Adjust curve for mobile - slightly less pronounced */
+  
   .constellation__dots > li:nth-child(4) .constellation__dot,
   .constellation__dots > li:nth-child(5) .constellation__dot,
   .constellation__dots > li:nth-child(6) .constellation__dot{
@@ -1699,12 +1691,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
 }
 
-/* Palette removed */
 
-/* Contact / Links panel mobile tweaks */
+
+
 #panel-contact .h1{ font-size: clamp(24px, 6.2vw, 44px); }
 
-/* Avoid oversized header on small screens specifically for contact */
+
 @media (max-width: 520px){
   #panel-contact .h1{ font-size: 22px; }
   #panel-contact .brush-card{ padding: 12px; }
@@ -1719,23 +1711,23 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
 }
 
-/* Ensure link text wraps sensibly on all screens */
+
 .item__sub a{
   word-break: break-word;
   overflow-wrap: anywhere;
 }
 
-/* Tighter layout for small tablets */
+
 @media (min-width: 521px) and (max-width: 899px){
   #panel-contact .h1{ font-size: clamp(26px, 5.5vw, 38px); }
   #panel-contact .brush-card{ padding: 14px; }
 }
 
-/* Toast */
+
 .toast{
   position:fixed;
   left:50%;
-  top: calc(var(--constellation-top, 120px) + 28px); /* positioned below constellation nav */
+  top: calc(var(--constellation-top, 120px) + 28px); 
   transform: translateX(-50%);
   z-index: 50;
   background: color-mix(in srgb, var(--card) 92%, transparent);
@@ -1749,13 +1741,13 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .toast--show{ opacity:1; transform: translateX(-50%) translateY(2px); }
 
-/* --- Vinyl player --- */
+
 .vinyl{
   position:fixed;
   left: 14px;
-  bottom: 86px; /* above constellation nav */
+  bottom: 86px; 
   z-index: 20;
-  /* Give a bit more headroom so metadata can display when expanded */
+  
   width: min(520px, calc(100vw - 28px));
   transition: width .34s var(--ease), left .34s var(--ease), bottom .34s var(--ease), transform .34s var(--ease), box-shadow .34s var(--ease);
   will-change: transform, width, left, bottom;
@@ -1765,9 +1757,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   display:flex;
   gap:14px;
   align-items:center;
-  padding: 18px 18px; /* Increased padding for more vertical space on desktop */
+  padding: 18px 18px; 
   position: relative;
-  border-radius: 999px; /* Pill shape */
+  border-radius: 999px; 
   transition: transform .22s var(--ease);
 }
 
@@ -1833,7 +1825,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl__title{ font-weight: 800; letter-spacing:.2px; font-size: clamp(14px, 2vw, 18px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .vinyl__sub{ margin-top: 2px; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Backdrop for mobile expanded sheet */
+
 .vinyl__backdrop{
   position: fixed;
   inset: 0;
@@ -1848,9 +1840,9 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   pointer-events: auto;
 }
 
-/* Expanded bottom-sheet variant (mobile) */
+
 .vinyl--expanded{
-  position: fixed; /* ensure we can move it to center-bottom */
+  position: fixed; 
   left: 50%;
   right: auto;
   transform: translateX(-50%);
@@ -1864,7 +1856,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 .vinyl--expanded .vinyl__shell{ transform: translateY(0); }
 
-/* small drag handle indicator */
+
 .vinyl--expanded .vinyl__handle{
   width: 36px; height: 4px; border-radius: 999px; background: color-mix(in srgb, var(--ink) 12%, transparent); margin: 6px auto 0; opacity: .85;
 }
@@ -1874,30 +1866,30 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl--collapsed:hover .vinyl__btn{ width: 26px; height: 26px; font-size: 12px; }
 .vinyl--collapsed:hover .vinyl__vol{ width: 118px; }
 
-/* Ensure meta has a sensible minimum width when expanded */
+
 .vinyl--collapsed:hover .vinyl__meta{ min-width: 220px; }
 .vinyl--collapsed:hover .vinyl__title{ font-size: 14px; }
 
 @media (max-width: 640px){
-  /* Ensure hover-based min-width hacks don't apply on touch devices */
+  
   .vinyl--collapsed:hover .vinyl__meta{ min-width: 0; }
 }
 @media (max-width: 520px){
   .vinyl--collapsed:hover .vinyl__meta{ min-width: 0; }
 } 
 
-/* Allow the vinyl player to overflow its brush-card so it can expand cleanly */
+
 .vinyl{ overflow: visible; z-index: 9999; }
 .vinyl__shell{ overflow: visible; }
 
-/* Ensure inner brush-card matches pill shape and clips its blurred pseudo-element */
+
 .vinyl .brush-card{
-  overflow: hidden; /* clip pseudo-element */
-  border-radius: 999px; /* pill shape */
+  overflow: hidden; 
+  border-radius: 999px; 
   background-clip: padding-box;
 }
 .vinyl .brush-card::before{
-  border-radius: inherit; /* ensure the decorative pseudo-element follows the pill shape */
+  border-radius: inherit; 
   clip-path: inset(0 round 999px);
 }
 
@@ -1917,19 +1909,19 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl__vol{ width: 140px; }
 .vinyl__hint{ margin-top: 8px; font-size: 12px; color: var(--muted); }
 
-/* Collapsed behavior: tuck into corner as a compact horizontal bar */
+
 .vinyl--collapsed{
   width: 96px !important;
   height: 56px !important;
   left: 8px !important;
   bottom: 8px !important;
-  border-radius: 999px; /* Full pill shape */
+  border-radius: 999px; 
   box-shadow: 0 10px 24px rgba(0,0,0,.22);
   overflow: visible;
   display: flex;
   align-items: center;
   padding: 0;
-  /* Slide halfway off screen */
+  
   transform: translateX(-48px) !important;
 }
 .vinyl--collapsed .vinyl__shell{ padding: 6px; gap: 8px; align-items: center; border-radius: 999px; }
@@ -1937,12 +1929,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl--collapsed .vinyl__collapse{ right: 8px; top: 8px; opacity:.95; transform: none; }
 .vinyl--collapsed .vinyl__disk{ width:44px; height:44px; transform: translateX(0); box-shadow: 0 10px 20px rgba(0,0,0,.22); }
 
-/* Hover/peek reveal: expand horizontally and reveal meta */
+
 .vinyl--collapsed:hover{
   transform: translateX(0) translateY(0) !important;
-  width: 360px !important; /* Increased width for more space */
-  height: 100px !important; /* Increased height for more vertical expansion on mobile */
-  border-radius: 999px; /* Maintain pill shape */
+  width: 360px !important; 
+  height: 100px !important; 
+  border-radius: 999px; 
 }
 .vinyl--collapsed:hover .vinyl__meta{ display:flex; }
 .vinyl--collapsed:hover .vinyl__disk{ width:64px; height:64px; transform: translateX(0); }
@@ -1960,7 +1952,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 @media (max-width: 640px){
-  /* Mobile redesign: bottom-right floating button; tap to expand */
+  
   .vinyl{
     top: auto;
     left: auto;
@@ -1972,7 +1964,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
   .vinyl__shell{ padding: 14px 14px 12px; gap: 10px; }
 
-  /* Expanded (not collapsed): taller pill + vertical layout so everything fits */
+  
   .vinyl:not(.vinyl--collapsed){
     width: min(380px, 92vw) !important;
     min-height: 220px !important;
@@ -1992,7 +1984,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl:not(.vinyl--collapsed) .vinyl__sub{ font-size: clamp(10px, 2.8vw, 11px); }
   .vinyl:not(.vinyl--collapsed) .vinyl__btn{ width: 24px; height: 24px; font-size: 11px; }
 
-  /* Collapsed: compact circular button (no hover-peek on touch screens) */
+  
   .vinyl--collapsed{
     width: 64px !important;
     height: 64px !important;
@@ -2008,7 +2000,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .vinyl--collapsed .vinyl__disk{ width: 56px; height: 56px; box-shadow: 0 10px 22px rgba(0,0,0,.22); }
   .vinyl--collapsed .vinyl__collapse{ top: -8px; right: -8px; width: 28px; height: 28px; }
 
-  /* Disable hover-based expansion on mobile */
+  
   .vinyl--collapsed:hover{
     width: 64px !important;
     height: 64px !important;
@@ -2017,7 +2009,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 @media (max-width: 520px){
-  /* Phone: keep collapsed button compact; make expanded pill taller */
+  
   .vinyl{ right: max(8px, env(safe-area-inset-right)); bottom: max(8px, env(safe-area-inset-bottom)); }
   .vinyl:not(.vinyl--collapsed){ min-height: 176px; }
   .vinyl--collapsed{ width: 60px !important; height: 60px !important; }
