@@ -73,6 +73,8 @@ window.PORTFOLIO = {
       "Robust & Reliable ML",
       "RAG + Agentic Workflows",
       "Graph / Topological ML (Hasse diagrams)",
+      "Vision AI",
+      "Multi‑Agent Debate",
       "Full‑stack ML apps (Next.js / FastAPI)",
       "Automation (extensions, scraping, pipelines)",
     ],

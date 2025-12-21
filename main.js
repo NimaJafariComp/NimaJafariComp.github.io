@@ -261,8 +261,17 @@
           <h2 class="h1" style="font-size:clamp(36px,5.2vw,56px);">About</h2>
           <p class="kicker">${a.body.map(p => escapeHtml(p)).join("<br/><br/>")}</p>
 
-          <div class="row" style="margin-top: 18px;">
-            ${a.interests.map(i => `<span class="chip">${escapeHtml(i)}</span>`).join("")}
+          <div class="brush-card card-pad" style="margin-top: 18px;">
+            <div class="sectionTitle">
+              <div>
+                <div class="h2">Interests</div>
+                <div class="small">Topics I explore and build with.</div>
+              </div>
+            </div>
+            <hr class="sep" />
+            <div class="row" style="margin-top:12px;">
+              ${a.interests.map(i => `<span class="chip">${escapeHtml(i)}</span>`).join("")}
+            </div>
           </div>
         </div>
 

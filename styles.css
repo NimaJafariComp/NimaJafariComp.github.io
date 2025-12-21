@@ -39,6 +39,9 @@
 
   --radius: 22px;
   --radius2: 16px;
+
+  /* Safe spacing for top navigation (constellation) to prevent overlap when panels scroll */
+  --nav-safe-top: 76px; /* default for small screens */
 }
 
 :root[data-theme="provence"]{
@@ -396,16 +399,20 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 @media (min-width: 720px){
   /* On medium screens, provide more vertical space for nav + labels */
   .panel{ padding: 190px 28px 28px; }
+  /* Mid screens: larger safe-top so `.panel__inner` padding grows */
+  :root{ --nav-safe-top: 96px; }
 }
 @media (min-width: 1024px){
   /* Desktop gets the most top spacing to comfortably sit below the nav */
   .panel{ padding: 210px 48px 34px; }
+  :root{ --nav-safe-top: 120px; }
 }
 
 .panel__inner{
   height:100%;
   overflow:auto;
-  padding: 6px 2px 22px;
+  /* Add top-safe padding so scrollable content doesn't slide beneath the fixed constellation nav */
+  padding: calc(var(--nav-safe-top, 76px) + 6px) 2px 22px;
 }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
