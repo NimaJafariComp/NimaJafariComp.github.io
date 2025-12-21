@@ -254,7 +254,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 :root[data-theme="night"] #staticBg{
   /* Put your starry night image at assets/starry-night.jpg (recommended: 2400px wide) */
   background-image: url('assets/starry-night.jpg');
-  opacity: 1;
+  /* Reduce opacity so animated sky reads through more clearly in dark mode */
+  opacity: 0.55;
 }
 
 :root[data-theme="provence"] #staticBg{
