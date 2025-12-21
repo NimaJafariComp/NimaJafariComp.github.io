@@ -1766,7 +1766,25 @@
       this.playBtn?.addEventListener("click", () => this.togglePlay());
       this.muteBtn?.addEventListener("click", () => this.toggleMute());
       this.volEl?.addEventListener("input", () => this.setVolume(Number(this.volEl.value)));
-      this.collapseBtn?.addEventListener("click", () => this.setCollapsed(!this.rootEl.classList.contains("vinyl--collapsed")));
+      this.collapseBtn?.addEventListener("click", (e) => {
+        e?.stopPropagation?.();
+        this.setCollapsed(!this.rootEl.classList.contains("vinyl--collapsed"));
+      });
+
+      // Mobile UX: tap the collapsed player to expand (hover isn't reliable on touch)
+      this.rootEl?.addEventListener("click", (e) => {
+        if (!this.rootEl) return;
+        if (window.innerWidth > 640) return;
+        if (!this.rootEl.classList.contains("vinyl--collapsed")) return;
+
+        // Ignore taps on the collapse button itself (it already toggles)
+        if (e?.target?.closest?.("#vinylCollapse")) return;
+
+        // If the user somehow taps an interactive control, don't hijack it
+        if (e?.target?.closest?.("button, input, a")) return;
+
+        this.setCollapsed(false);
+      });
 
       this.initYouTube();
     }

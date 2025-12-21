@@ -1542,17 +1542,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .constellation__dots > li:nth-child(4) .constellation__dot,
 .constellation__dots > li:nth-child(5) .constellation__dot,
 .constellation__dots > li:nth-child(6) .constellation__dot{
-  transform: translateY(12px);
+  transform: translateY(16px);
 }
 
 .constellation__dots > li:nth-child(3) .constellation__dot,
 .constellation__dots > li:nth-child(7) .constellation__dot{
-  transform: translateY(8px);
+  transform: translateY(11px);
 }
 
 .constellation__dots > li:nth-child(2) .constellation__dot,
 .constellation__dots > li:nth-child(8) .constellation__dot{
-  transform: translateY(3px);
+  transform: translateY(6px);
 }
 .constellation__dot::before{
   content:"";
@@ -1578,21 +1578,21 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .constellation__dots > li:nth-child(4) .constellation__dot[aria-current="true"],
 .constellation__dots > li:nth-child(5) .constellation__dot[aria-current="true"],
 .constellation__dots > li:nth-child(6) .constellation__dot[aria-current="true"]{
-  transform: translateY(13px);
+  transform: translateY(17px);
 }
 
 .constellation__dots > li:nth-child(3) .constellation__dot:hover,
 .constellation__dots > li:nth-child(7) .constellation__dot:hover,
 .constellation__dots > li:nth-child(3) .constellation__dot[aria-current="true"],
 .constellation__dots > li:nth-child(7) .constellation__dot[aria-current="true"]{
-  transform: translateY(9px);
+  transform: translateY(12px);
 }
 
 .constellation__dots > li:nth-child(2) .constellation__dot:hover,
 .constellation__dots > li:nth-child(8) .constellation__dot:hover,
 .constellation__dots > li:nth-child(2) .constellation__dot[aria-current="true"],
 .constellation__dots > li:nth-child(8) .constellation__dot[aria-current="true"]{
-  transform: translateY(4px);
+  transform: translateY(7px);
 }
 .constellation__label{
   position:absolute;
@@ -1638,15 +1638,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     transform: none;
   }
   .constellation__dots{
-    gap: 4px;
-    justify-content: space-evenly;
-    padding-inline: 8px;
+    gap: 2px;
+    justify-content: space-between;
+    padding-inline: 10px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .constellation__dot{
-    width: 32px;
-    height: 32px;
-    min-width: 40px;
-    min-height: 40px;
+    width: 28px;
+    height: 28px;
+    min-width: 34px;
+    min-height: 34px;
   }
   .constellation__label{
     font-size: 11px;
@@ -1660,17 +1662,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .constellation__dots > li:nth-child(4) .constellation__dot,
   .constellation__dots > li:nth-child(5) .constellation__dot,
   .constellation__dots > li:nth-child(6) .constellation__dot{
-    transform: translateY(10px);
+    transform: translateY(14px);
   }
   
   .constellation__dots > li:nth-child(3) .constellation__dot,
   .constellation__dots > li:nth-child(7) .constellation__dot{
-    transform: translateY(6px);
+    transform: translateY(10px);
   }
   
   .constellation__dots > li:nth-child(2) .constellation__dot,
   .constellation__dots > li:nth-child(8) .constellation__dot{
-    transform: translateY(2px);
+    transform: translateY(5px);
   }
   
   .constellation__dots > li:nth-child(4) .constellation__dot:hover,
@@ -1679,21 +1681,21 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   .constellation__dots > li:nth-child(4) .constellation__dot[aria-current="true"],
   .constellation__dots > li:nth-child(5) .constellation__dot[aria-current="true"],
   .constellation__dots > li:nth-child(6) .constellation__dot[aria-current="true"]{
-    transform: translateY(11px);
+    transform: translateY(15px);
   }
   
   .constellation__dots > li:nth-child(3) .constellation__dot:hover,
   .constellation__dots > li:nth-child(7) .constellation__dot:hover,
   .constellation__dots > li:nth-child(3) .constellation__dot[aria-current="true"],
   .constellation__dots > li:nth-child(7) .constellation__dot[aria-current="true"]{
-    transform: translateY(7px);
+    transform: translateY(11px);
   }
   
   .constellation__dots > li:nth-child(2) .constellation__dot:hover,
   .constellation__dots > li:nth-child(8) .constellation__dot:hover,
   .constellation__dots > li:nth-child(2) .constellation__dot[aria-current="true"],
   .constellation__dots > li:nth-child(8) .constellation__dot[aria-current="true"]{
-    transform: translateY(3px);
+    transform: translateY(6px);
   }
 }
 
@@ -1764,6 +1766,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   gap:14px;
   align-items:center;
   padding: 18px 18px; /* Increased padding for more vertical space on desktop */
+  position: relative;
   border-radius: 999px; /* Pill shape */
 }
 
@@ -1929,92 +1932,60 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 @media (max-width: 640px){
-  .vinyl{ 
-    /* Position vertically centered on right side */
-    top: 50%;
+  /* Mobile redesign: bottom-right floating button; tap to expand */
+  .vinyl{
+    top: auto;
     left: auto;
-    right: 8px;
-    bottom: auto;
-    transform: translateY(-50%);
-    width: 70px;
+    right: max(10px, env(safe-area-inset-right));
+    bottom: max(10px, env(safe-area-inset-bottom));
+    transform: none;
+    width: min(420px, calc(100vw - (max(10px, env(safe-area-inset-left)) + max(10px, env(safe-area-inset-right)))));
   }
-  .vinyl__vol{ width: 110px; }
-  .vinyl__shell{
-    padding: 12px;
-    gap: 12px;
-    border-radius: 999px;
+
+  .vinyl__shell{ padding: 14px 14px 12px; gap: 10px; }
+
+  /* Expanded (not collapsed): taller pill + vertical layout so everything fits */
+  .vinyl:not(.vinyl--collapsed){
+    min-height: 148px;
   }
-  /* On mobile, collapsed state at vertically centered right - slide halfway off */
-  .vinyl--collapsed{ 
-    top: 50% !important;
+  .vinyl:not(.vinyl--collapsed) .vinyl__shell{
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .vinyl:not(.vinyl--collapsed) .vinyl__disk{ width: 64px; height: 64px; }
+  .vinyl:not(.vinyl--collapsed) .vinyl__meta{ width: 100%; }
+  .vinyl:not(.vinyl--collapsed) .vinyl__controls{ width: 100%; }
+  .vinyl:not(.vinyl--collapsed) .vinyl__vol{ width: 100%; }
+
+  /* Collapsed: compact circular button (no hover-peek on touch screens) */
+  .vinyl--collapsed{
+    width: 64px !important;
+    height: 64px !important;
+    right: max(10px, env(safe-area-inset-right)) !important;
+    bottom: max(10px, env(safe-area-inset-bottom)) !important;
     left: auto !important;
-    right: 0px !important;
-    bottom: auto !important;
-    transform: translateY(-50%) translateX(35px) !important;
-    width: 70px !important;
-    height: 50px !important;
-    border-radius: 999px; /* Full pill shape */
-  }
-  .vinyl--collapsed .vinyl__shell{
+    top: auto !important;
+    transform: none !important;
     border-radius: 999px;
+    box-shadow: 0 12px 26px rgba(0,0,0,.22);
   }
-  .vinyl--collapsed .vinyl__disk{ 
-    width: 38px; 
-    height: 38px; 
-  }
+  .vinyl--collapsed .vinyl__shell{ padding: 0; gap: 0; justify-content: center; }
+  .vinyl--collapsed .vinyl__disk{ width: 56px; height: 56px; box-shadow: 0 10px 22px rgba(0,0,0,.22); }
+  .vinyl--collapsed .vinyl__collapse{ top: -8px; right: -8px; width: 28px; height: 28px; }
+
+  /* Disable hover-based expansion on mobile */
   .vinyl--collapsed:hover{
-    width: 260px !important; /* increased on mobile */
-    height: 110px !important; /* taller when expanded */
-    border-radius: 999px; /* Maintain pill shape */
-    transform: translateY(-50%) translateX(-8px) !important;
-    right: 8px !important;
-  }
-  .vinyl--collapsed:hover .vinyl__shell{ padding: 12px 14px; }
-  .vinyl--collapsed:hover .vinyl__disk{ 
-    width: 56px; 
-    height: 56px; 
+    width: 64px !important;
+    height: 64px !important;
+    transform: none !important;
   }
 }
 
 @media (max-width: 520px){
-  .vinyl{ 
-    top: 50%;
-    right: 6px;
-    transform: translateY(-50%);
-    width: 68px;
-  }
-  .vinyl--collapsed{
-    top: 50% !important;
-    right: 0px !important;
-    transform: translateY(-50%) translateX(34px) !important;
-    width: 68px !important;
-    height: 48px !important;
-    border-radius: 999px; /* Full pill shape */
-  }
-  .vinyl--collapsed .vinyl__shell{
-    border-radius: 999px;
-  }
-  .vinyl--collapsed .vinyl__disk{ 
-    width: 36px; 
-    height: 36px; 
-  }
-  .vinyl--collapsed:hover{
-    width: 180px !important;
-    height: 148px !important; /* taller when expanded */
-    border-radius: 999px; /* Maintain pill shape */
-    transform: translateY(-50%) translateX(-6px) !important;
-    right: 6px !important;
-  }
-  .vinyl--collapsed:hover .vinyl__shell{ padding: 12px 14px; }
-  .vinyl__shell{
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .vinyl__controls{
-    width: 100%;
-  }
-  .vinyl__vol{
-    flex: 1;
-    width: 100%;
-  }
+  /* Phone: keep collapsed button compact; make expanded pill taller */
+  .vinyl{ right: max(8px, env(safe-area-inset-right)); bottom: max(8px, env(safe-area-inset-bottom)); }
+  .vinyl:not(.vinyl--collapsed){ min-height: 176px; }
+  .vinyl--collapsed{ width: 60px !important; height: 60px !important; }
+  .vinyl--collapsed .vinyl__disk{ width: 52px; height: 52px; }
+  .vinyl--collapsed .vinyl__collapse{ top: -8px; right: -8px; width: 28px; height: 28px; }
 }
