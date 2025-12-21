@@ -39,11 +39,15 @@
 
   --radius: 22px;
   --radius2: 16px;
-
-  /* Constellation positioning and safe spacing (used to avoid collisions) */
-  --constellation-top: 120px; /* default */
-  /* Keep the safe top space tied to constellation position (dots height + buffer) */
-  --nav-safe-top: calc(var(--constellation-top, 120px) + 70px);
+  
+  --constellation-top: 120px;
+  --nav-safe-top: clamp(140px, calc(var(--constellation-top) + 90px), 220px);
+}
+@media (max-width: 520px){
+  :root{
+    --constellation-top: 92px; /* pull dots up a bit on phones */
+    --nav-safe-top: 150px;     /* less wasted vertical space */
+  }
 } 
 
 :root[data-theme="provence"]{
@@ -395,37 +399,28 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .panel{
   width:100vw;
   min-width:100vw;
-  flex: 0 0 100vw;
   height:100vh;
   min-height:100vh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  /* Reverted top padding to original values — spacing is enforced via --nav-safe-top for scrolling content */
-  padding: 86px 18px 22px;
+  scroll-snap-align:start;
+  padding: 0 18px 22px;  /* ✅ remove the big top padding */
   position:relative;
-} 
+}
 @media (min-width: 720px){
-  /* On medium screens: use original paddings and keep constellation top fixed */
-  .panel{ padding: 132px 28px 28px; }
-  :root{ --constellation-top: 120px; }
+  .panel{ padding: 0 28px 28px; }
 }
 @media (min-width: 1024px){
-  /* Desktop paddings restored */
-  .panel{ padding: 134px 48px 34px; }
-  :root{ --constellation-top: 120px; }
-} 
+  .panel{ padding: 0 48px 34px; }
+}
 
 .panel__inner{
   height:100%;
   overflow:auto;
-
-  /* reserve real space for the fixed top nav (constellation + topbar) */
-  padding: var(--nav-safe-top, 220px) 2px 22px;
-
-  /* helps scrollIntoView land below fixed UI */
-  scroll-padding-top: var(--nav-safe-top, 220px);
+  padding: var(--nav-safe-top) 2px 22px; /* ✅ single source of truth */
+  scroll-padding-top: var(--nav-safe-top);
 }
-.panel__inner::before{ content: none; }
+
+/* remove spacer if you still have it */
+.panel__inner::before{ content:none; }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
 .panel__inner::-webkit-scrollbar-track{ background: color-mix(in srgb, var(--ink) 4%, transparent); }
