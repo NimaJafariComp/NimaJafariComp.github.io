@@ -40,8 +40,9 @@
   --radius: 22px;
   --radius2: 16px;
 
-  /* Safe spacing for top navigation (constellation) to prevent overlap when panels scroll */
-  --nav-safe-top: 76px; /* default for small screens */
+  /* Constellation positioning and safe spacing (used to avoid collisions) */
+  --constellation-top: 120px; /* default */
+  --nav-safe-top: calc(var(--constellation-top, 120px) + 12px);
 }
 
 :root[data-theme="provence"]{
@@ -404,14 +405,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 @media (min-width: 720px){
   /* On medium screens, provide more vertical space for nav + labels */
-  .panel{ padding: 190px 28px 28px; }
-  /* Mid screens: larger safe-top so `.panel__inner` padding grows */
-  :root{ --nav-safe-top: 96px; }
+  .panel{ padding: 220px 28px 28px; }
+  /* Mid screens: lift the constellation further down to increase safe spacing */
+  :root{ --constellation-top: 150px; }
 }
 @media (min-width: 1024px){
   /* Desktop gets the most top spacing to comfortably sit below the nav */
-  .panel{ padding: 210px 48px 34px; }
-  :root{ --nav-safe-top: 120px; }
+  .panel{ padding: 260px 48px 34px; }
+  :root{ --constellation-top: 190px; }
 }
 
 .panel__inner{
@@ -909,7 +910,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .constellation{
   position:fixed;
   left:50%;
-  top: 120px; /* moved further down to avoid colliding with content */
+  top: var(--constellation-top); /* moved further down to avoid colliding with content */
   transform: translateX(-50%);
   z-index: 10;
   width: min(720px, calc(100vw - 40px));
@@ -992,7 +993,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .toast{
   position:fixed;
   left:50%;
-  top: 188px; /* moved below topbar + nav */
+  top: calc(var(--constellation-top, 120px) + 28px); /* positioned below constellation nav */
   transform: translateX(-50%);
   z-index: 50;
   background: color-mix(in srgb, var(--card) 92%, transparent);
