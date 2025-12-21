@@ -667,6 +667,7 @@
     });
 
     window.addEventListener("resize", drawLines);
+    window.addEventListener("orientationchange", () => { setTimeout(drawLines, 120); });
     setTimeout(drawLines, 120);
   }
 
