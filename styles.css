@@ -417,16 +417,20 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .panel__inner{
   height:100%;
   overflow:auto;
-  /* Use scroll-padding-top to enforce safe distance — prevents content from scrolling under nav */
-  scroll-padding-top: var(--nav-safe-top, 160px);
-  padding: var(--nav-safe-top, 160px) 2px 22px;
+  /* Removed padding here — content margin will handle the safe distance */
+  padding: 0 2px 22px;
 }
 .panel__inner::-webkit-scrollbar{ width: 10px; }
 .panel__inner::-webkit-scrollbar-thumb{ background: color-mix(in srgb, var(--ink) 14%, transparent); border-radius: 999px; }
 .panel__inner::-webkit-scrollbar-track{ background: color-mix(in srgb, var(--ink) 4%, transparent); }
 
 /* --- Content layout --- */
-.container{ max-width: 1100px; margin: 0 auto; }
+.container{ 
+  max-width: 1100px; 
+  margin: 0 auto; 
+  /* Add top margin to push content below the fixed constellation nav */
+  padding-top: var(--nav-safe-top, 160px);
+}
 .grid{ display:grid; gap:16px; }
 @media (min-width: 900px){
   .grid--2{ grid-template-columns: 1.12fr .88fr; }
