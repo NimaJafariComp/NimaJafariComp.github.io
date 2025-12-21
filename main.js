@@ -448,8 +448,6 @@
             <div class="small">${escapeHtml(p.note)}</div>
           </div>
           <div class="sectionTitle__right">
-            <span class="chip">tilt + glow</span>
-            <span class="chip">magnetic buttons</span>
           </div>
         </div>
 

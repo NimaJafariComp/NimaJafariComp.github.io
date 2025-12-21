@@ -159,7 +159,6 @@ window.PORTFOLIO = {
 
   projects: {
     title: "Featured Projects",
-    note: "Hover for tilt + glow. Click ↗ to open links.",
     items: [
       {
         name: "Strategy Mining in Custom RL Environments",
