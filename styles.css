@@ -1786,7 +1786,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 /* Allow the vinyl player to overflow its brush-card so it can expand cleanly */
 .vinyl{ overflow: visible; z-index: 9999; }
 .vinyl__shell{ overflow: visible; }
-.vinyl .brush-card{ overflow: visible; }
+.vinyl .brush-card{ 
+  overflow: visible; 
+  border-radius: 999px; /* Match pill shape */
+}
 
 .vinyl__controls{ margin-top: 10px; display:flex; gap:10px; align-items:center; }
 .vinyl__btn{
