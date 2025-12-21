@@ -503,7 +503,7 @@
               <div class="brush-card card-pad" style="margin-bottom:14px;">
                 <div class="h2" style="margin:0;">${escapeHtml(g.name)}</div>
                 <div class="row" style="margin-top:12px;">
-                  ${g.items.map(it => `<span class="chip ${g.tone === "accent" ? "chip--accent" : ""}">${escapeHtml(it)}</span>`).join("")}
+                  ${g.items.map(it => `<span class="chip ${g.tone ? `chip--${g.tone}` : ''}">${escapeHtml(it)}</span>`).join("") }
                 </div>
               </div>
             `).join("")}
