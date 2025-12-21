@@ -239,8 +239,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   justify-content:space-between;
   gap:14px;
   z-index:1000; /* ensure on top */
-  /* add safe-area padding to avoid visual overlap with device UI */
-  padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 12px 14px;
+  padding: 12px 14px;
   border:1px solid var(--border);
   background: linear-gradient(180deg, color-mix(in srgb, var(--card) 85%, transparent), color-mix(in srgb, var(--card2) 55%, transparent));
   backdrop-filter: blur(12px);
@@ -367,15 +366,14 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   min-height:100vh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  /* Add extra top padding so fixed header + constellation never overlap titles. Includes safe-area inset. */
-  padding: calc(env(safe-area-inset-top, 0px) + 120px) 18px 22px;
+  padding: calc(env(safe-area-inset-top, 0px) + 86px) 18px 22px;
   position:relative;
 } 
 @media (min-width: 720px){
-  .panel{ padding: calc(env(safe-area-inset-top, 0px) + 168px) 28px 28px; }
+  .panel{ padding: calc(env(safe-area-inset-top, 0px) + 110px) 28px 28px; }
 } 
 @media (min-width: 1024px){
-  .panel{ padding: calc(env(safe-area-inset-top, 0px) + 172px) 48px 34px; }
+  .panel{ padding: calc(env(safe-area-inset-top, 0px) + 120px) 48px 34px; }
 } 
 
 .panel__inner{
