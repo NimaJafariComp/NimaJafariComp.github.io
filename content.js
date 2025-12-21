@@ -218,11 +218,19 @@ window.PORTFOLIO = {
       {
         name: "Machine Learning & Research",
         items: [
-          "Reinforcement Learning (PPO, SB3)", "RAG", "LangChain", "Experiment tracking", "Model evaluation",
-          "Prompt & tool orchestration", "Vector search", "Deployment patterns", "Latency/cost tradeoffs",
-          "Reproducibility", "Responsible AI"
+          "Reinforcement Learning (PPO, A2C, DQN, SAC, TD3)",
+          "Computer Vision (ViT, ResNet, EfficientNet, Faster R-CNN, YOLO, Swin Transformer)",
+          "Vision libraries & tools (OpenCV, torchvision, Detectron2, albumentations)",
+          "Transformers & Foundation Models (Hugging Face Transformers, BERT, ViT)",
+          "Self-supervised learning (SimCLR, BYOL)",
+          "Experiment tracking (Weights & Biases, MLflow)",
+          "Model evaluation (mAP, IoU, FID, LPIPS)",
+          "Vector search & retrieval", "Prompt & tool orchestration", "Deployment patterns (TorchServe, BentoML)",
+          "Distributed training (DeepSpeed, PyTorch Lightning, Horovod)",
+          "Simulation & environments (Gym, MuJoCo, PyBullet, Brax)",
+          "Reproducibility & Responsible AI"
         ]
-      },
+      }, 
       {
         name: "Databases & Infrastructure",
         items: [
@@ -240,7 +248,7 @@ window.PORTFOLIO = {
         name: "Data & Analysis",
         items: [
           "Statistics", "Feature engineering", "Data cleaning", "Exploratory Data Analysis (EDA)", "Visualization",
-          "Forecasting", "A/B testing basics", "Storytelling with data"
+          "Forecasting", "A/B testing basics"
         ]
       }
     ],
