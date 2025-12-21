@@ -171,9 +171,7 @@
             }).join("")}
           </div>
 
-          <p class="small" style="margin-top:14px;">
-            Tip: Scroll vertically inside a panel. When you hit the edge, keep scrolling to drift to the next constellation.
-          </p>
+
         </div>
 
         <div>
@@ -359,8 +357,7 @@
           <div class="grid grid--2">
             <div>
               <div class="h2" style="margin-top:0;">Fly through milestones</div>
-              <p class="p">Nodes are “constellations” in the paint sky. Scroll to move forward. Click a node to pin the details.</p>
-              <p class="small">${escapeHtml(t.tip)}</p>
+              <p class="p">Explore milestones along the timeline; click a node to pin details.</p>
               <div class="row">
                 <button class="btn btn--ghost magnetic" type="button" data-action="toggleTheme"><span class="btn__icon">${escapeHtml(data.themes?.night?.emoji || "☾")}</span><span class="btn__label">Switch theme</span></button>
               </div>
@@ -398,7 +395,6 @@
           <div class="sectionTitle">
             <div>
               <div class="h2" style="margin:0;">Milestones</div>
-              <div class="small">Jump to a year (scroll position will animate).</div>
             </div>
           </div>
 

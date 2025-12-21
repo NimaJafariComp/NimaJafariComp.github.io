@@ -10,7 +10,7 @@ window.PORTFOLIO = {
     email: "mohammadnimajafari@yahoo.com",
     githubUser: "NimaJafariComp",
 
-    // Public CV (phone removed). Replace with your own file if you want.
+    // Public CV. Replace with your own file if you want.
     resumeUrl: "assets/Nima_Jafari_Resume_2025_public.pdf",
 
     // Headshot (placeholder included). Replace this file with your real photo.
@@ -125,7 +125,7 @@ window.PORTFOLIO = {
   machines: {
     title: "Rise of Machines",
     subtitle: "Major milestones as glowing constellations in a static layout.",
-    tip: "Scroll inside this panel. Click a node to pin details.",
+    tip: "",
     items: [
       { year: 1945, title: "ENIAC", subtitle: "One of the first electronic general‑purpose computers", desc: "The idea of computation becomes a machine." },
       { year: 1947, title: "The Transistor", subtitle: "The heartbeat of modern tech", desc: "From vacuum tubes to scalable electronics." },
@@ -204,39 +204,42 @@ window.PORTFOLIO = {
 
   skills: {
     title: "Skills",
-    note: "Everything I use across projects + a clean set of industry essentials for SWE / AI / Data Science.",
+    note: "Technologies and tools organized by category.",
     groups: [
       {
-        name: "Core (from projects + CV)",
+        name: "Languages & Frameworks",
         tone: "accent",
         items: [
           "Python", "Java", "C++", "JavaScript", "TypeScript", "HTML/CSS", "SQL",
           "PyTorch", "TensorFlow/Keras", "scikit‑learn", "NumPy", "Pandas", "Jupyter",
-          "Reinforcement Learning (PPO, SB3)", "RAG", "LangChain",
-          "FastAPI", "Node.js/Express", "Next.js", "React", "Tailwind CSS", "Electron", "Playwright",
-          "PostgreSQL", "MySQL", "SQLite", "Neo4j", "Redis", "MinIO",
-          "Docker", "Docker Compose", "Alembic", "Git", "pytest", "REST APIs", "PDFKit",
+          "FastAPI", "Node.js/Express", "Next.js", "React", "Tailwind CSS", "Electron", "Playwright"
         ]
       },
       {
-        name: "Software Engineer essentials",
+        name: "Machine Learning & Research",
         items: [
-          "Data structures & algorithms", "System design", "API design", "Testing strategy", "Debugging",
-          "CI/CD (GitHub Actions)", "Linux + Bash", "Observability (logs/metrics)",
-          "Security basics (auth, OWASP)", "Performance profiling", "Documentation"
+          "Reinforcement Learning (PPO, SB3)", "RAG", "LangChain", "Experiment tracking", "Model evaluation",
+          "Prompt & tool orchestration", "Vector search", "Deployment patterns", "Latency/cost tradeoffs",
+          "Reproducibility", "Responsible AI"
         ]
       },
       {
-        name: "AI Engineer essentials",
+        name: "Databases & Infrastructure",
         items: [
-          "Experiment tracking", "Model evaluation", "Prompt + tool orchestration", "Vector search",
-          "Deployment patterns", "Latency/cost tradeoffs", "Reproducibility", "Responsible AI"
+          "PostgreSQL", "MySQL", "SQLite", "Neo4j", "Redis", "MinIO", "Docker", "Docker Compose", "Alembic", "REST APIs"
         ]
       },
       {
-        name: "Data Scientist essentials",
+        name: "Engineering & Tooling",
         items: [
-          "Statistics", "Feature engineering", "Data cleaning", "EDA", "Visualization",
+          "Git", "pytest", "CI/CD (GitHub Actions)", "Linux + Bash", "Observability (logs/metrics)", "Security basics (auth, OWASP)",
+          "Performance profiling", "Testing strategy", "API design", "Data structures & algorithms", "System design", "Debugging", "Documentation"
+        ]
+      },
+      {
+        name: "Data & Analysis",
+        items: [
+          "Statistics", "Feature engineering", "Data cleaning", "Exploratory Data Analysis (EDA)", "Visualization",
           "Forecasting", "A/B testing basics", "Storytelling with data"
         ]
       }
@@ -245,7 +248,7 @@ window.PORTFOLIO = {
 
   cv: {
     title: "CV",
-    subtitle: "Embedded PDF + one-click download (public version, phone removed).",
+    subtitle: "Embedded CV (PDF) with one-click download.",
   },
 
   honors: {
