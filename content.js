@@ -24,12 +24,12 @@ window.PORTFOLIO = {
     night: {
       label: "Starry Night",
       emoji: "☾",
-      hint: "Van Gogh — The Starry Night (procedural simulation)",
+      hint: "Starry Night palette",
     },
     provence: {
       label: "Farmhouse in Provence",
       emoji: "☀",
-      hint: "Van Gogh — warm daylight palette (procedural simulation)",
+      hint: "Warm daylight palette",
     },
   },
 
@@ -50,8 +50,8 @@ window.PORTFOLIO = {
       { label: "Focus", value: "RL + Full‑Stack" },
     ],
     quote: {
-      text: "This site is a Van Gogh-inspired simulation: paint-stroke physics, constellation navigation, and a timeline you can fly through.",
-      note: "No copyrighted artwork is used — the visuals are generated procedurally.",
+      text: "",
+      note: "",
     },
     ctas: [
       { label: "Email", icon: "✉", action: "copyEmail" },
@@ -124,7 +124,7 @@ window.PORTFOLIO = {
 
   machines: {
     title: "Rise of Machines",
-    subtitle: "Major milestones as glowing constellations. Scroll to fly through the timeline.",
+    subtitle: "Major milestones as glowing constellations in a static layout.",
     tip: "Scroll inside this panel. Click a node to pin details.",
     items: [
       { year: 1945, title: "ENIAC", subtitle: "One of the first electronic general‑purpose computers", desc: "The idea of computation becomes a machine." },

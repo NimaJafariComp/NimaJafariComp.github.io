@@ -1,5 +1,5 @@
 /* =========================================================
-   Main interactive logic (Van Gogh Simulation Portfolio)
+   Main interactive logic (Portfolio)
    ========================================================= */
 
 (() => {
@@ -157,7 +157,6 @@
           </div>
 
           <div class="quote brush-card card-pad">
-            <div class="h2" style="margin-bottom:6px;">Van Gogh simulation portfolio</div>
             <p class="p">${escapeHtml(hero.quote.text)}</p>
             <hr class="sep" />
             <p class="small">${escapeHtml(hero.quote.note)}</p>
@@ -293,7 +292,6 @@
 
             <div class="row">
               <button class="btn btn--ghost magnetic" type="button" data-action="toggleTheme"><span class="btn__icon">${escapeHtml(data.themes?.night?.emoji || "☾")}</span><span class="btn__label">Toggle theme</span></button>
-              <button class="btn btn--ghost magnetic" type="button" data-action="toggleMotion"><span class="btn__icon">⟲</span><span class="btn__label">Toggle motion</span></button>
             </div>
           </div>
         </div>
@@ -365,7 +363,6 @@
               <p class="small">${escapeHtml(t.tip)}</p>
               <div class="row">
                 <button class="btn btn--ghost magnetic" type="button" data-action="toggleTheme"><span class="btn__icon">${escapeHtml(data.themes?.night?.emoji || "☾")}</span><span class="btn__label">Switch theme</span></button>
-                <button class="btn btn--ghost magnetic" type="button" data-action="toggleMotion"><span class="btn__icon">⟲</span><span class="btn__label">Toggle motion</span></button>
               </div>
             </div>
             <div>
@@ -381,29 +378,18 @@
           </div>
         </div>
 
-        <div class="flightScroll" id="flightScroll" aria-label="Timeline flight path">
-          <div class="flightSticky">
-            <div class="flightScene brush-card" id="flightScene" aria-label="Timeline scene">
-              <canvas class="flightCanvas" id="flightCanvas" aria-hidden="true"></canvas>
-              <div class="flightNodes" id="flightNodes" aria-hidden="false"></div>
-
-              <div class="flightHUD" id="flightHUD">
-                <div class="flightHUD__left">
-                  <div class="small" style="opacity:.85;">Nearest constellation</div>
-                  <div class="flightHUD__year mono" id="flightYear">—</div>
-                  <div class="flightHUD__title" id="flightTitle">—</div>
-                  <div class="flightHUD__sub" id="flightSub">—</div>
-                  <div class="small" id="flightDesc" style="margin-top:6px;">—</div>
-                </div>
-                <div class="flightHUD__right">
-                  <button class="btn btn--ghost magnetic" type="button" id="flightUnpin"><span class="btn__icon">⎋</span><span class="btn__label">Unpin</span></button>
-                </div>
-              </div>
-
-              <div class="flightLegend" aria-hidden="true">
-                <div class="flightLegend__dot"></div>
-                <div class="flightLegend__text">Scroll = forward motion • Click node = pin</div>
-              </div>
+        <div class="timelineStatic" id="timelineStatic" aria-label="Timeline">
+          <div class="timelineStatic__inner brush-card" style="padding:20px; border-radius:18px;">
+            <div class="timelineStatic__lead small">Major milestones — static, styled timeline</div>
+            <div class="timelineStatic__grid" id="timelineGrid">
+              ${t.items.map(it => `
+                <article class="timelineNode">
+                  <div class="timelineNode__year mono">${escapeHtml(it.year)}</div>
+                  <div class="timelineNode__title">${escapeHtml(it.title)}</div>
+                  <div class="timelineNode__sub small">${escapeHtml(it.subtitle)}</div>
+                  <p class="timelineNode__desc small">${escapeHtml(it.desc || "")}</p>
+                </article>
+              `).join("")}
             </div>
           </div>
         </div>
@@ -488,7 +474,7 @@
             <div class="small">${escapeHtml(s.note)}</div>
           </div>
           <div class="sectionTitle__right">
-            <button class="btn btn--ghost magnetic" type="button" data-action="shuffleNebula"><span class="btn__icon">✶</span><span class="btn__label">Shuffle</span></button>
+            <span class="chip">static</span>
           </div>
         </div>
 
@@ -505,15 +491,17 @@
           </div>
 
           <div>
-            <div class="brush-card card-pad" style="height:100%; min-height: 520px;">
+            <div class="brush-card card-pad" style="height:100%; min-height: 320px;">
               <div class="sectionTitle">
                 <div>
-                  <div class="h2" style="margin:0;">Skill Nebula</div>
-                  <div class="small">Cursor perturbs the field. Click a tag to copy it.</div>
+                  <div class="h2" style="margin:0;">All skills</div>
+                  <div class="small">Click a tag to copy it to clipboard.</div>
                 </div>
               </div>
               <hr class="sep"/>
-              <div class="nebula" id="nebulaStage" aria-label="Skill nebula"></div>
+              <div class="skill-list" id="skillList" aria-label="All skills">
+                ${s.groups.map(g => g.items.map(it => `<button class="chip skill-chip ${g.tone === "accent" ? "chip--accent" : ""}" type="button" data-action="copySkill" data-skill="${escapeHtml(it)}" title="Click to copy">${escapeHtml(it)}</button>`).join("")).join("")}
+              </div>
             </div>
           </div>
         </div>
@@ -782,6 +770,16 @@
     }
   }
 
+  async function copySkill(text) {
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast(`Copied: ${text}`);
+    } catch {
+      showToast(text);
+    }
+  }
+
   function toggleVangogh() {
     state.vangoghBoost = !state.vangoghBoost;
     const disp = document.querySelector("#brush feDisplacementMap");
@@ -796,13 +794,13 @@
       const act = btn.dataset.action;
 
       if (act === "copyEmail") return copyEmail();
+      if (act === "copySkill") return copySkill(btn.dataset.skill || (btn.textContent || "").trim());
       if (act === "toggleMotion") return setMotion(!state.motionEnabled);
       if (act === "toggleVangogh") return toggleVangogh();
       if (act === "toggleTheme") return toggleTheme();
       if (act === "toggleMusic") return vinyl?.togglePlay?.();
       if (act === "jumpMachines") return jumpTo("machines");
       if (act === "jumpCV") return jumpTo("cv");
-      if (act === "shuffleNebula") return nebula?.shuffle?.();
     });
 
     $("#btnMotion")?.addEventListener("click", () => setMotion(!state.motionEnabled));
@@ -1950,8 +1948,7 @@
 
 
   // Mount nebula
-  const nebulaStage = $("#nebulaStage");
-  if (nebulaStage) nebula.mount(nebulaStage);
+
 
   // Mount machines flight
   const machinesInner = $("#panel-machines");

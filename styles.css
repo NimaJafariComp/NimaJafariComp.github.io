@@ -1,5 +1,5 @@
 /* =========================================================
-   Nima Jafari — Van Gogh Simulation Portfolio
+   Nima Jafari — Portfolio
    Pure HTML/CSS/JS (GitHub Pages friendly)
    ========================================================= */
 
@@ -188,7 +188,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   opacity:.78;
 }
 
-/* Theme-backed static imagery (place static Van Gogh pieces under animated sky) */
+/* Theme-backed static imagery (place static images under animated sky) */
 :root[data-theme="night"] #staticBg{
   /* Put your starry night image at assets/starry-night.jpg (recommended: 2400px wide) */
   background-image: url('assets/starry-night.jpg');
@@ -514,7 +514,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   transform: scale(1.02);
 }
 
-/* Palette tint (subtle Van Gogh-ish ink wash) */
+/* Palette tint (subtle ink wash) */
 .portrait__img::before{
   content:"";
   position:absolute;
@@ -686,6 +686,24 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .machineNode.is-active .machineNode__star{ transform: scale(1.15); }
 .machineNode.is-pinned .machineNode__card{ border-color: color-mix(in srgb, var(--accent2) 36%, transparent); }
 
+/* --- Static timeline (styled) --- */
+.timelineStatic { margin-top: 14px; }
+.timelineStatic__inner { border-radius: var(--radius); border:1px solid var(--border); background: linear-gradient(180deg, var(--card), var(--card2)); box-shadow: var(--shadow); padding: 18px; }
+.timelineStatic__grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 14px; margin-top: 12px; align-items:start; }
+.timelineNode { padding: 14px; border-radius: 14px; border:1px solid color-mix(in srgb, var(--ink) 8%, transparent); background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, transparent), color-mix(in srgb, var(--card2) 78%, transparent)); box-shadow: 0 10px 30px rgba(0,0,0,.12); transition: transform .24s var(--ease), box-shadow .24s var(--ease); cursor: default; }
+.timelineNode:hover { transform: translateY(-6px); box-shadow: 0 22px 60px rgba(0,0,0,.18); border-color: color-mix(in srgb, var(--accent) 28%, transparent); }
+.timelineNode__year { font-weight:800; color: var(--muted); font-size:13px; }
+.timelineNode__title { font-family:var(--font-title); font-size:18px; margin-top:6px; font-weight:700; }
+.timelineNode__sub { margin-top:6px; color:var(--muted); font-size:13px; line-height:1.4; }
+.timelineNode__desc { margin-top:8px; color: color-mix(in srgb, var(--ink) 72%, transparent); font-size:13px; line-height:1.5; }
+
+@media (min-width:900px){
+  .timelineStatic__grid{ grid-template-columns: repeat(3, 1fr); position:relative; }
+  .timelineStatic__grid::before{ content:""; position:absolute; top:10px; bottom:10px; left:50%; width:2px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent2) 40%, transparent), color-mix(in srgb, var(--accent) 40%, transparent)); transform:translateX(-50%); border-radius:2px; opacity:.6; pointer-events:none; }
+  .timelineNode{ transform-origin: center; }
+  .timelineNode:nth-child(odd){ transform: translateY(8px); }
+}
+
 .flightHUD{
   position:absolute;
   left: 14px;
@@ -769,6 +787,15 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .nebula__tag:active{
   transform: translate3d(0,0,0) scale(0.99);
 }
+
+/* Simple skill list (static tags) */
+.skill-list{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.skill-list .chip{ cursor:pointer; }
+.skill-chip{ transition: transform .14s var(--ease), box-shadow .14s var(--ease); }
+.skill-chip:hover{ transform: translateY(-6px); box-shadow: 0 18px 48px rgba(0,0,0,.12); border-color: color-mix(in srgb, var(--accent) 28%, transparent); }
+.skill-chip:active{ transform: translateY(-2px); }
+
+@media (min-width:900px){ .skill-list{ gap:10px; } }
 
 /* CV */
 .pdfFrame{
@@ -958,6 +985,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .vinyl__meta{ min-width: 0; }
 .vinyl__title{ font-weight: 800; letter-spacing:.2px; }
 .vinyl__sub{ margin-top: 2px; color: var(--muted); font-size: 12.5px; }
+
+/* Allow the vinyl player to overflow its brush-card so it can expand cleanly */
+.vinyl{ overflow: visible; z-index: 9999; }
+.vinyl__shell{ overflow: visible; }
+.vinyl .brush-card{ overflow: visible; }
 
 .vinyl__controls{ margin-top: 10px; display:flex; gap:10px; align-items:center; }
 .vinyl__btn{
