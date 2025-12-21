@@ -1538,21 +1538,21 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   min-height: 44px;
 }
 
-/* Create upward curve - middle dots are higher */
+/* Create downward arc - middle dots are lower */
 .constellation__dot:nth-child(4),
 .constellation__dot:nth-child(5),
 .constellation__dot:nth-child(6){
-  transform: translateY(-12px);
+  transform: translateY(12px);
 }
 
 .constellation__dot:nth-child(3),
 .constellation__dot:nth-child(7){
-  transform: translateY(-8px);
+  transform: translateY(8px);
 }
 
 .constellation__dot:nth-child(2),
 .constellation__dot:nth-child(8){
-  transform: translateY(-3px);
+  transform: translateY(3px);
 }
 .constellation__dot::before{
   content:"";
@@ -1578,21 +1578,21 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .constellation__dot:nth-child(4)[aria-current="true"],
 .constellation__dot:nth-child(5)[aria-current="true"],
 .constellation__dot:nth-child(6)[aria-current="true"]{
-  transform: translateY(-13px);
+  transform: translateY(13px);
 }
 
 .constellation__dot:nth-child(3):hover,
 .constellation__dot:nth-child(7):hover,
 .constellation__dot:nth-child(3)[aria-current="true"],
 .constellation__dot:nth-child(7)[aria-current="true"]{
-  transform: translateY(-9px);
+  transform: translateY(9px);
 }
 
 .constellation__dot:nth-child(2):hover,
 .constellation__dot:nth-child(8):hover,
 .constellation__dot:nth-child(2)[aria-current="true"],
 .constellation__dot:nth-child(8)[aria-current="true"]{
-  transform: translateY(-4px);
+  transform: translateY(4px);
 }
 .constellation__label{
   position:absolute;
