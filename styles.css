@@ -1563,7 +1563,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   padding: 6px 9px;
   border-radius: 999px;
   white-space: nowrap;
-  opacity:0; /* hide labels by default to reduce clutter */
+  opacity:0; /* hide labels by default on mobile */
   pointer-events:none;
   transition: opacity .2s var(--ease), transform .2s var(--ease), background 700ms var(--ease2);
   backdrop-filter: blur(8px);
@@ -1572,6 +1572,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .constellation__dot[aria-current="true"] .constellation__label{
   opacity:1;
   transform: translateX(-50%) translateY(-2px);
+}
+
+/* Show labels on desktop/large screens */
+@media (min-width: 900px){
+  .constellation__label{
+    opacity: 1; /* Always visible on desktop */
+  }
+  .constellation__dot:hover .constellation__label{
+    transform: translateX(-50%) translateY(-3px);
+  }
 }
 
 /* Mobile constellation: reduce gaps, ensure labels work */
