@@ -1776,14 +1776,27 @@
             this.player.setVolume(vol);
             this.writeVolume(vol);
             
-            // Try to play with sound
+            // Try to play with sound immediately
             this.player.playVideo();
             this.updateUI();
+
+            // Retry multiple times to ensure playback starts
+            setTimeout(() => {
+              if (!this.playing) {
+                this.player.playVideo();
+              }
+            }, 300);
+
+            setTimeout(() => {
+              if (!this.playing) {
+                this.player.playVideo();
+              }
+            }, 800);
 
             // Handle autoplay restrictions - browsers may block autoplay with sound
             setTimeout(() => {
               if (!this.playing) {
-                // If not playing, mute and try again (browsers allow muted autoplay)
+                // If still not playing, mute and try again (browsers allow muted autoplay)
                 this.player.mute();
                 this.muted = true;
                 this.player.playVideo();
@@ -1804,7 +1817,7 @@
                 document.addEventListener("pointerdown", enableAudio, { once: true });
                 document.addEventListener("keydown", enableAudio, { once: true });
               }
-            }, 1200);
+            }, 1500);
           },
           onStateChange: (ev) => {
             this.playing = ev.data === window.YT.PlayerState.PLAYING;
