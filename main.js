@@ -825,14 +825,20 @@
     svg.innerHTML = "";
 
     const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    defs.innerHTML = `
-      <linearGradient id="lineGrad" x1="0" y1="0" x2="${navRect.width}" y2="0" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="rgba(255,255,255,.0)"/>
-        <stop offset=".25" stop-color="rgba(255,255,255,.35)"/>
-        <stop offset=".6" stop-color="rgba(255,255,255,.28)"/>
-        <stop offset="1" stop-color="rgba(255,255,255,.0)"/>
-      </linearGradient>
+    // Pick colors based on current theme: bright/white for night, darker/ink for Provence
+    const isProvence = (state?.theme === "provence" || document.documentElement.dataset.theme === "provence");
+    const gradStops = isProvence ? `
+      <stop offset="0" stop-color="rgba(0,0,0,0)"/>
+      <stop offset=".25" stop-color="rgba(0,0,0,.28)"/>
+      <stop offset=".6" stop-color="rgba(0,0,0,.22)"/>
+      <stop offset="1" stop-color="rgba(0,0,0,0)"/>
+    ` : `
+      <stop offset="0" stop-color="rgba(255,255,255,0)"/>
+      <stop offset=".25" stop-color="rgba(255,255,255,.70)"/>
+      <stop offset=".6" stop-color="rgba(255,255,255,.50)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0)"/>
     `;
+    defs.innerHTML = `<linearGradient id="lineGrad" x1="0" y1="0" x2="${navRect.width}" y2="0" gradientUnits="userSpaceOnUse">${gradStops}</linearGradient>`;
     svg.appendChild(defs);
 
     for (let i = 0; i < pts.length - 1; i++) {
@@ -842,9 +848,10 @@
       line.setAttribute("x2", pts[i + 1].x);
       line.setAttribute("y2", pts[i + 1].y);
       line.setAttribute("stroke", "url(#lineGrad)");
-      line.setAttribute("stroke-width", "2");
+      // Use slightly different weight/opacity per theme to increase visibility
+      line.setAttribute("stroke-width", isProvence ? "2" : "2.5");
       line.setAttribute("stroke-linecap", "round");
-      line.setAttribute("opacity", "0.65");
+      line.setAttribute("opacity", isProvence ? "0.85" : "0.95");
       svg.appendChild(line);
     }
   }
