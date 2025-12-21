@@ -980,7 +980,7 @@
       el.hidden = true;
     }
 
-    function isOpen() { return open; }
+    function isOpen() { return !el.hidden; }
 
     backdrop?.addEventListener("click", close);
     closeBtn?.addEventListener("click", (e) => {
@@ -1878,13 +1878,37 @@
             const vol = this.readVolume();
             if (this.volEl) this.volEl.value = String(vol);
             this.player.setVolume(vol);
+
+            // Try to start playback muted (autoplay policies allow muted autoplay).
+            try {
+              this.player.mute();
+              this.muted = true;
+            } catch (e) {}
+
             this.player.playVideo();
             this.updateUI();
 
-            // Attempt to auto-play music programmatically
+            // Unmute on first user gesture (pointerdown/keydown)
+            const onFirstGesture = () => {
+              try {
+                if (this.muted) {
+                  this.player.unMute();
+                  this.muted = false;
+                  this.updateUI();
+                }
+                // also ensure it is playing
+                this.player.playVideo();
+              } catch (e) {}
+              document.removeEventListener("pointerdown", onFirstGesture);
+              document.removeEventListener("keydown", onFirstGesture);
+            };
+            document.addEventListener("pointerdown", onFirstGesture, { once: true });
+            document.addEventListener("keydown", onFirstGesture, { once: true });
+
+            // Attempt to auto-play again after a short delay
             setTimeout(() => {
               if (this.ready && this.player) {
-                this.player.playVideo();
+                try { this.player.playVideo(); } catch (e) {}
               }
             }, 1000);
           },
@@ -1930,7 +1954,13 @@
       }
       this.muted = !this.muted;
       if (this.muted) this.player.mute();
-      else this.player.unMute();
+      else {
+        this.player.unMute();
+        // Hide any unmute hint if present
+        if (this.hintEl && typeof this._origHint !== "undefined") this.hintEl.textContent = this._origHint || "Tip: press M to toggle music";
+        this.rootEl?.classList.remove("vinyl--unmute-hint");
+        if (this._unmuteHintTimeout) { clearTimeout(this._unmuteHintTimeout); this._unmuteHintTimeout = null; }
+      }
       this.updateUI();
     }
 
