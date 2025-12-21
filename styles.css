@@ -1691,6 +1691,37 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 /* Palette removed */
 
+/* Contact / Links panel mobile tweaks */
+#panel-contact .h1{ font-size: clamp(24px, 6.2vw, 44px); }
+
+/* Avoid oversized header on small screens specifically for contact */
+@media (max-width: 520px){
+  #panel-contact .h1{ font-size: 22px; }
+  #panel-contact .brush-card{ padding: 12px; }
+  #panel-contact .item__title{ font-size: 15px; }
+  #panel-contact .item__sub{ font-size: 13px; color: var(--muted); }
+  #panel-contact .item__sub a{
+    display:block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+  }
+}
+
+/* Ensure link text wraps sensibly on all screens */
+.item__sub a{
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Tighter layout for small tablets */
+@media (min-width: 521px) and (max-width: 899px){
+  #panel-contact .h1{ font-size: clamp(26px, 5.5vw, 38px); }
+  #panel-contact .brush-card{ padding: 14px; }
+}
+
 /* Toast */
 .toast{
   position:fixed;
