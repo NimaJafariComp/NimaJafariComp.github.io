@@ -646,6 +646,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .item__title{ margin:0; font-weight:650; }
 .item__sub{ margin:4px 0 0; color: var(--muted); line-height: 1.55; }
 
+/* Vertical stack helper — use for stacked cards/blocks (Work / Honors) */
+.stack{ display:flex; flex-direction:column; gap:16px; }
+/* Ensure stacked nested .brush-card items have comfortable spacing */
+.stack > .brush-card{ margin:0; }
+
 /* Tilt cards */
 .tilt{
   transform-style: preserve-3d;
