@@ -969,7 +969,9 @@
     function openPalette() {
       if (open) return;
       open = true;
+      // Ensure the element is visible — set both the boolean hidden and an inline display to be resilient
       el.hidden = false;
+      try { el.style.display = "grid"; } catch (e) {}
       input.value = "";
       filter("");
       setTimeout(() => input.focus(), 0);
@@ -978,6 +980,8 @@
     function close() {
       open = false;
       el.hidden = true;
+      // Also enforce hiding via inline style in case CSS is overridden elsewhere
+      try { el.style.display = "none"; } catch (e) {}
     }
 
     function isOpen() { return !el.hidden; }
@@ -2003,6 +2007,9 @@
   attachMagnetic();
   attachTilt();
   loadGitHubStats();
+
+  // Defensive: ensure the command palette is closed on boot (some browsers / dev tools may remove the boolean hidden)
+  try { palette?.close?.(); } catch (e) {}
 
   // Mount nebula
   const nebulaStage = $("#nebulaStage");
