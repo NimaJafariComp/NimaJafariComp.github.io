@@ -42,7 +42,7 @@
 
   /* Constellation positioning and safe spacing (used to avoid collisions) */
   --constellation-top: 120px; /* default */
-  --nav-safe-top: calc(var(--constellation-top, 120px) + 12px);
+  --nav-safe-top: 160px; /* Fixed safe distance — content won't scroll under nav */
 }
 
 :root[data-theme="provence"]{
