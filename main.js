@@ -144,6 +144,13 @@
     const m = data.meta;
     const hero = data.hero;
 
+    const quoteHtml = (hero.quote && ((hero.quote.text || "").trim() || (hero.quote.note || "").trim())) ? `
+          <div class="quote brush-card card-pad">
+            <p class="p">${escapeHtml(hero.quote.text)}</p>
+            <hr class="sep" />
+            <p class="small">${escapeHtml(hero.quote.note)}</p>
+          </div>` : "";
+
     host.innerHTML = `
       <div class="container grid grid--2">
         <div>
@@ -156,11 +163,7 @@
             `).join("")}
           </div>
 
-          <div class="quote brush-card card-pad">
-            <p class="p">${escapeHtml(hero.quote.text)}</p>
-            <hr class="sep" />
-            <p class="small">${escapeHtml(hero.quote.note)}</p>
-          </div>
+          ${quoteHtml}
 
           <div class="row">
             ${hero.ctas.map(btn => {
