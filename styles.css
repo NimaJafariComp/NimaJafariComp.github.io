@@ -1187,6 +1187,16 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 /* List blocks */
 .list{ display:flex; flex-direction:column; gap:12px; }
 .item{ display:flex; gap:12px; align-items:flex-start; }
+
+/* Mobile: stack contact items to prevent horizontal overflow */
+@media (max-width: 520px){
+  .item{ flex-direction: column; gap: 8px; align-items: stretch; }
+  .item__dot{ margin-top: 2px; }
+  .item__body{ width: 100%; }
+  .item__title{ font-size: 15px; }
+  .item__sub{ font-size: 13px; }
+  .item__sub a{ display:inline; white-space: normal; word-break: break-word; overflow-wrap: anywhere; }
+}
 .item__dot{
   width:10px; height:10px; border-radius:999px;
   margin-top: 6px;
