@@ -352,170 +352,85 @@
     if (!host) return;
     const t = data.machines;
 
+    // Extract unique categories
+    const categories = ['All', ...new Set(t.items.map(it => it.category).filter(Boolean))];
+
     host.innerHTML = `
       <div class="container">
         <div class="sectionTitle">
           <div>
             <h2 class="h1" style="font-size:clamp(34px,4.4vw,54px); margin:0;">${escapeHtml(t.title)}</h2>
-            <div class="small">${escapeHtml(t.subtitle)}</div>
-          </div>
-          <div class="sectionTitle__right">
-            <span class="chip chip--accent">interactive timeline</span>
+            <div class="small" style="margin-top:8px;">${escapeHtml(t.subtitle)}</div>
           </div>
         </div>
 
-        <div class="flightIntro brush-card card-pad" style="margin-top:16px;">
-          <div class="grid grid--2">
-            <div>
-              <div class="h2" style="margin-top:0;">Explore the timeline</div>
-              <p class="p">Pan or drag the timeline, click a milestone for details.</p>
-              <div class="row">
-                <button class="btn btn--ghost magnetic" type="button" data-action="toggleTheme"><span class="btn__icon">${escapeHtml(data.themes?.night?.emoji || "☾")}</span><span class="btn__label">Switch theme</span></button>
-              </div>
+        <div class="timelineStatic" id="timelineStatic" aria-label="Technology Timeline">
+          <div class="timelineStatic__inner">
+            <div class="timelineStatic__header">
+              <div class="timelineStatic__lead">${escapeHtml(t.tip || 'Timeline')}</div>
+              <h3 class="timelineStatic__title">From Mechanical Dreams to AI Reality</h3>
+              <p class="timelineStatic__subtitle">Tracing the pivotal breakthroughs that transformed computation from theory to the intelligent systems that power our world today.</p>
             </div>
-            <div>
-              <div class="brush-card card-pad" style="border-radius:18px;">
-                <div class="small">Soundtrack</div>
-                <div class="h2" style="margin:6px 0 0;">${escapeHtml(data.audio.title)}</div>
-                <div class="small">${escapeHtml(data.audio.artist)} • ${escapeHtml(data.audio.note)}</div>
-                <div class="row" style="margin-top:12px;">
-                  <button class="btn btn--primary magnetic" type="button" data-action="toggleMusic"><span class="btn__icon">♪</span><span class="btn__label">Play / Pause</span></button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="timelineStatic" id="timelineStatic" aria-label="Timeline">
-          <div class="timelineStatic__inner brush-card" style="padding:20px; border-radius:18px;">
-            <div class="timelineStatic__lead small">Major milestones — interactive timeline</div>
+            <div class="timelineFilters" id="timelineFilters">
+              ${categories.map(cat => `
+                <button class="filterPill ${cat === 'All' ? 'active' : ''}" data-category="${escapeHtml(cat)}" type="button">
+                  ${escapeHtml(cat)}
+                </button>
+              `).join('')}
+            </div>
+
             <div class="timelineStatic__grid" id="timelineGrid">
-              ${t.items.map(it => `
-                <article class="timelineNode">
-                  <div class="timelineNode__year mono">${escapeHtml(it.year)}</div>
+              ${t.items.map((it, idx) => `
+                <article class="timelineNode" data-category="${escapeHtml(it.category || '')}" style="--idx: ${idx}">
+                  ${it.category ? `<span class="timelineNode__category">${escapeHtml(it.category)}</span>` : ''}
+                  <div class="timelineNode__year">${escapeHtml(it.year)}</div>
                   <div class="timelineNode__title">${escapeHtml(it.title)}</div>
-                  <div class="timelineNode__sub small">${escapeHtml(it.subtitle)}</div>
-                  <p class="timelineNode__desc small">${escapeHtml(it.desc || "")}</p>
+                  <div class="timelineNode__sub">${escapeHtml(it.subtitle)}</div>
+                  <p class="timelineNode__desc">${escapeHtml(it.desc || "")}</p>
                 </article>
               `).join("")}
             </div>
-          </div>
-        </div>
-
-        <div class="brush-card card-pad" style="margin-top:16px;">
-          <div class="sectionTitle">
-            <div>
-              <div class="h2" style="margin:0;">Milestones</div>
-            </div>
-          </div>
-
-          <div class="milestoneList" id="milestoneGrid">
-            ${t.items.map((it, i) => `
-              <button class="milestone" type="button" data-milestone="${i}">
-                <div class="milestone__year mono">${escapeHtml(it.year)}</div>
-                <div class="milestone__title">${escapeHtml(it.title)}</div>
-                <div class="milestone__sub small">${escapeHtml(it.subtitle)}</div>
-              </button>
-            `).join("")}
           </div>
         </div>
       </div>
     `;
 
     // -----------------------------
-    // Timeline interactivity
+    // Category filtering
     // -----------------------------
-    const grid = host.querySelector('#timelineGrid');
-    const nodeEls = Array.from(grid ? grid.querySelectorAll('.timelineNode') : []);
-    const milestoneBtns = Array.from(host.querySelectorAll('.milestone'));
+    const filterBtns = Array.from(host.querySelectorAll('.filterPill'));
+    const nodeEls = Array.from(host.querySelectorAll('.timelineNode'));
 
-    // Create details panel
-    let detailsEl = host.querySelector('.machinesDetails');
-    if (!detailsEl) {
-      detailsEl = document.createElement('div');
-      detailsEl.className = 'machinesDetails';
-      detailsEl.innerHTML = `
-        <div class="machinesDetails__panel">
-          <button class="machinesDetails__close btn btn--ghost" aria-label="Close">✕</button>
-          <div class="machinesDetails__year"></div>
-          <div class="machinesDetails__title"></div>
-          <div class="machinesDetails__desc"></div>
-        </div>
-      `;
-      host.appendChild(detailsEl);
-    }
-
-    const yearEl = detailsEl.querySelector('.machinesDetails__year');
-    const titleEl = detailsEl.querySelector('.machinesDetails__title');
-    const descEl = detailsEl.querySelector('.machinesDetails__desc');
-    const closeBtn = detailsEl.querySelector('.machinesDetails__close');
-
-    function centerNode(i) {
-      const node = nodeEls[i];
-      if (!node || !grid) return;
-      const left = node.offsetLeft + node.offsetWidth / 2 - grid.clientWidth / 2;
-      grid.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
-      nodeEls.forEach(n => n.classList.toggle('is-active', n === node));
-    }
-
-    let _prevFocus = null;
-    function pinNode(i) {
-      const it = t.items[i];
-      if (!it) return;
-      nodeEls.forEach((n, idx) => n.classList.toggle('is-pinned', idx === i));
-      yearEl.textContent = it.year;
-      titleEl.textContent = it.title;
-      descEl.textContent = it.desc || '';
-      detailsEl.classList.add('is-open');
-      detailsEl.setAttribute('aria-hidden', 'false');
-      // move focus to close button for keyboard users, remember previous
-      try { _prevFocus = document.activeElement; closeBtn?.focus(); } catch (e) {}
-      history.replaceState(null, '', `#machines-${it.year}`);
-      centerNode(i);
-    }
-
-    function unpin() {
-      nodeEls.forEach(n => n.classList.remove('is-pinned'));
-      detailsEl.classList.remove('is-open');
-      detailsEl.setAttribute('aria-hidden', 'true');
-      // restore focus
-      try { if (_prevFocus && typeof _prevFocus.focus === 'function') _prevFocus.focus(); } catch (e) {}
-      history.replaceState(null, '', ' ');
-    }
-
-    closeBtn?.addEventListener('click', (e) => { unpin(); e.preventDefault(); });
-
-    // Close details on Escape and restore focus
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && detailsEl.classList.contains('is-open')) {
-        unpin();
-      }
-    });
-
-    // Click outside details to close (backdrop)
-    let backdrop = detailsEl.querySelector('.machinesDetails__backdrop');
-    if (!backdrop) {
-      backdrop = document.createElement('div');
-      backdrop.className = 'machinesDetails__backdrop';
-      detailsEl.insertBefore(backdrop, detailsEl.firstChild);
-    }
-    backdrop.addEventListener('click', () => unpin());
-
-    // Make nodes keyboard-accessible and wire clicks
-    nodeEls.forEach((n, i) => {
-      n.setAttribute('tabindex', '0');
-      n.setAttribute('role', 'button');
-      n.dataset.idx = String(i);
-      n.addEventListener('click', () => pinNode(i));
-      n.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pinNode(i); }
-        if (e.key === 'ArrowRight') { const nx = Math.min(nodeEls.length - 1, i + 1); nodeEls[nx].focus(); centerNode(nx); }
-        if (e.key === 'ArrowLeft') { const nx = Math.max(0, i - 1); nodeEls[nx].focus(); centerNode(nx); }
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const selectedCategory = btn.dataset.category;
+        
+        // Update active state
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Filter nodes
+        nodeEls.forEach(node => {
+          const nodeCategory = node.dataset.category;
+          if (selectedCategory === 'All' || nodeCategory === selectedCategory) {
+            node.style.display = '';
+          } else {
+            node.style.display = 'none';
+          }
+        });
       });
     });
 
-    // Milestone quick buttons
-    milestoneBtns.forEach(b => b.addEventListener('click', (e) => { const idx = Number(b.dataset.milestone); pinNode(idx); }));
+    // -----------------------------
+    // Smooth scroll on node click
+    // -----------------------------
+    nodeEls.forEach((node, i) => {
+      node.addEventListener('click', () => {
+        node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  }
 
     // Pointer drag-to-scroll
     let isDown = false; let startX = 0; let startScroll = 0;
