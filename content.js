@@ -36,7 +36,7 @@ window.PORTFOLIO = {
   },
 
   hero: {
-    title: "Software Developer • Researcher • ML Engineer",
+    title: "Full-Stack Software Developer • Researcher • ML Engineer",
     subtitle: "I build intelligent systems that are intuitive, scale efficiently, and hold up under load.",
     highlightStats: [
       { label: "B.S. Computer Science (CSUN)", value: "2026" },
