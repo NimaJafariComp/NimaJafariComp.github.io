@@ -2,11 +2,11 @@
 
 :root{
   
-  --motion: 1;
+  --motion: 0;
 
   
-  --font-body: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-  --font-title: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --font-body: "Trebuchet MS", "Arial", sans-serif;
+  --font-title: "Trebuchet MS", "Arial", sans-serif;
 
   
   --ease: cubic-bezier(.2,.8,.2,1);
@@ -63,6 +63,13 @@
       calc(var(--constellation-top) + var(--constellation-h))
     ) + var(--safe-gap)
   );
+
+  /* Background images used for decorative layers (kept in fixed order) */
+  --bg_star: url('assets/starry-night.jpg');
+  --bg_sun: url('assets/sunflowers.jpg');
+  /* Dim the decorative backgrounds heavily */
+  --static-bg-opacity: 0.06;
+  --static-bg-filter: brightness(.65) saturate(.7) grayscale(.04);
 }
 
 @media (max-width: 520px){
@@ -146,8 +153,7 @@
 }
 
 
-:root[data-theme="night"]{ --static-bg: url('assets/starry-night.jpg'); }
-:root[data-theme="provence"]{ --static-bg: url('assets/sunflowers.jpg'); }
+/* Per-theme static-bg variable removed in favor of layered --bg_star / --bg_sun variables above */
 
 @media (prefers-reduced-motion: reduce){
   :root{ --motion: 0; }
@@ -164,17 +170,29 @@ body{
   color:var(--ink);
   font-family:var(--font-body);
   overflow:hidden; 
-  
-  background-image:
-    radial-gradient(900px 700px at 72% 18%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 62%),
-    radial-gradient(900px 700px at 25% 85%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 62%),
-    linear-gradient(160deg, var(--bg0), var(--bg1)),
-    var(--static-bg, none);
-  background-size: auto, auto, auto, cover;
-  background-position: 72% 18%, 25% 85%, center, center;
-  background-repeat: no-repeat;
+  background: linear-gradient(180deg, var(--bg0), var(--bg1));
   transition: background 700ms var(--ease2), color 700ms var(--ease2);
 }
+
+/* Decorative layered background (starry night then sunflowers) */
+body::before{
+  content: "";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-image: var(--bg_star), var(--bg_sun);
+  background-size: cover, cover;
+  background-position: top center, center center;
+  background-repeat: no-repeat, no-repeat;
+  opacity: var(--static-bg-opacity);
+  filter: var(--static-bg-filter);
+  transition: opacity 700ms var(--ease2), filter 700ms var(--ease2);
+}
+
+/* Ensure main content sits above the decorative backgrounds */
+.deck{ z-index: 1; }
+
 
 a{ color:inherit; text-decoration:none; }
 
@@ -185,129 +203,10 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 
-#staticBg{
-  position:fixed;
-  inset:0;
-  z-index:-4; 
-  background-position:center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  pointer-events:none;
-  
-  filter: contrast(1.12) saturate(1.12);
-  transition: opacity .6s var(--ease2), filter .6s var(--ease2);
-}
-
-#sky{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  z-index:-3;
-  
-  opacity: 0.70; 
-  mix-blend-mode: normal;
-  transition: opacity .6s var(--ease2);
-}
-:root[data-theme="provence"] #sky{ opacity: 0.7; }
-
-#grain-overlay{
-  position:fixed;
-  inset:-20%;
-  z-index:-2;
-  pointer-events:none;
-  opacity:.55;
-  filter:url(#grain);
-  mix-blend-mode: overlay;
-  transition: opacity 700ms var(--ease2);
-}
-
-:root[data-theme="provence"] #grain-overlay{ opacity: var(--grain-opacity, .35); }
-
-#grain-overlay::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(closest-side, rgba(255,255,255,.08), transparent 60%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 1px, transparent 1px 3px),
-    repeating-linear-gradient(0deg, rgba(255,255,255,.04) 0 1px, transparent 1px 4px);
-  transform: rotate(7deg);
-  animation: grainShift calc(10s + 20s * (1 - var(--motion))) linear infinite;
-}
-@keyframes grainShift{
-  0%{ transform: translate3d(0,0,0) rotate(7deg); }
-  100%{ transform: translate3d(-6%,4%,0) rotate(7deg); }
-}
-
-
-#horizon{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:-40px;
-  height: 34vh;
-  z-index:-1;
-  pointer-events:none;
-}
-
-#horizon::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(900px 340px at 22% 72%, rgba(11,43,42,.80), transparent 70%),
-    radial-gradient(820px 320px at 60% 74%, rgba(11,43,42,.78), transparent 72%),
-    radial-gradient(980px 380px at 88% 76%, rgba(11,43,42,.76), transparent 74%),
-    linear-gradient(180deg, transparent, rgba(7,9,19,.88) 52%, rgba(7,9,19,1) 100%);
-  filter:url(#brush);
-  opacity:.95;
-  transform: translate3d(0,0,0);
-  transition: opacity 700ms var(--ease2), background 700ms var(--ease2);
-}
-
-:root[data-theme="provence"] #horizon::before{
-  background:
-    radial-gradient(900px 340px at 22% 72%, rgba(63,140,83,.58), transparent 72%),
-    radial-gradient(820px 320px at 60% 74%, rgba(187,197,88,.52), transparent 74%),
-    radial-gradient(980px 380px at 88% 76%, rgba(168,123,64,.40), transparent 76%),
-    linear-gradient(180deg, transparent, rgba(246,240,210,.0) 42%, rgba(246,240,210,.82) 100%);
-  opacity:.78;
-}
-
-
-:root[data-theme="night"] #staticBg{
-  
-  background-image: url('assets/starry-night.jpg');
-  
-  opacity: 0.55;
-}
-
-:root[data-theme="provence"] #staticBg{
-  
-  background-image: url('assets/sunflowers.jpg');
-  opacity: 1;
-}
-
-
-#staticBg:not([style]){
-  background-image: linear-gradient(180deg, rgba(10,12,20,.85), rgba(10,12,20,.96));
-}
-
-
-#staticBg::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  
-  background: linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.30));
-  mix-blend-mode: multiply;
-  transition: background .6s var(--ease2), opacity .6s var(--ease2);
-}
-:root[data-theme="provence"] #staticBg::after{
-  background: linear-gradient(180deg, rgba(255,250,230,.04), rgba(255,250,230,.28));
-}
+#staticBg,
+#sky,
+#grain-overlay,
+#horizon{ display:none !important; }
 
 
 .topbar{
@@ -331,7 +230,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .brand{
   display:flex;
-  align-items:baseline;
+  align-items:center;
   gap:10px;
   padding-left: 6px;
 }
@@ -343,6 +242,12 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   border-radius: 999px;
   background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 98%, white), color-mix(in srgb, var(--accent) 20%, transparent) 55%, transparent 70%);
   filter:url(#softGlow);
+  overflow: hidden;
+}
+.brand__mark img{
+  width:100%;
+  height:100%;
+  
 }
 .brand__text{
   font-family:var(--font-title);
@@ -961,7 +866,6 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   line-height: 1.05;
   letter-spacing: .2px;
   margin: 0;
-  filter: url(#softGlow);
 }
 
 
@@ -1522,212 +1426,78 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 .constellation{
   position:fixed;
-  
   left: max(14px, env(safe-area-inset-left));
   right: max(14px, env(safe-area-inset-right));
-  top: var(--constellation-top); 
+  top: var(--constellation-top);
   z-index: 10;
-  width: min(720px, calc(100vw - (max(14px, env(safe-area-inset-left)) + max(14px, env(safe-area-inset-right)))));
-  margin-left: auto;
-  margin-right: auto;
-  pointer-events:none;
-  transform: none; 
+  width: min(820px, calc(100vw - (max(14px, env(safe-area-inset-left)) + max(14px, env(safe-area-inset-right)))));
+  margin: 0 auto;
+  pointer-events:auto;
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 8px 12px;
+  box-shadow: var(--shadow);
 }
-.constellation__lines{
-  width:100%;
-  height:52px;
-  display:block;
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity:.75;
-}
+.constellation__lines{ display:none; }
 .constellation__dots{
   list-style:none;
   margin:0;
-  padding: 0;
+  padding:0;
   display:flex;
-  justify-content:space-between;
-  align-items:center;
   gap: 8px;
-  height: 52px;
-  pointer-events:auto;
+  flex-wrap: wrap;
+  align-items:center;
+  justify-content:flex-start;
 }
 .constellation__dot{
   position:relative;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
+  min-width: auto;
+  min-height: auto;
+  height: auto;
+  padding: 8px 12px;
+  border-radius: 10px;
   border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--card2) 70%, transparent);
-  display:grid;
-  place-items:center;
+  background: color-mix(in srgb, var(--card2) 80%, transparent);
+  display:flex;
+  align-items:center;
+  gap:6px;
   cursor:pointer;
-  transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
-  
-  min-width: 44px;
-  min-height: 44px;
+  transition: border-color .2s var(--ease), background .2s var(--ease), transform .2s var(--ease);
 }
-
-
-.constellation__dots > li:nth-child(4) .constellation__dot,
-.constellation__dots > li:nth-child(5) .constellation__dot,
-.constellation__dots > li:nth-child(6) .constellation__dot{
-  transform: translateY(16px);
-}
-
-.constellation__dots > li:nth-child(3) .constellation__dot,
-.constellation__dots > li:nth-child(7) .constellation__dot{
-  transform: translateY(11px);
-}
-
-.constellation__dots > li:nth-child(2) .constellation__dot,
-.constellation__dots > li:nth-child(8) .constellation__dot{
-  transform: translateY(6px);
-}
-.constellation__dot::before{
-  content:"";
-  width: 10px;
-  height: 10px;
-  border-radius:999px;
-  background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent) 98%, white), color-mix(in srgb, var(--accent) 25%, transparent) 55%, transparent 70%);
-  filter:url(#softGlow);
-}
-
-.constellation__dot:hover{
-  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
-}
+.constellation__dot::before{ display:none; content:""; }
+.constellation__dot:hover,
 .constellation__dot[aria-current="true"]{
-  background: color-mix(in srgb, white 10%, transparent);
-  border-color: color-mix(in srgb, var(--accent) 42%, transparent);
-}
-
-
-.constellation__dots > li:nth-child(4) .constellation__dot:hover,
-.constellation__dots > li:nth-child(5) .constellation__dot:hover,
-.constellation__dots > li:nth-child(6) .constellation__dot:hover,
-.constellation__dots > li:nth-child(4) .constellation__dot[aria-current="true"],
-.constellation__dots > li:nth-child(5) .constellation__dot[aria-current="true"],
-.constellation__dots > li:nth-child(6) .constellation__dot[aria-current="true"]{
-  transform: translateY(17px);
-}
-
-.constellation__dots > li:nth-child(3) .constellation__dot:hover,
-.constellation__dots > li:nth-child(7) .constellation__dot:hover,
-.constellation__dots > li:nth-child(3) .constellation__dot[aria-current="true"],
-.constellation__dots > li:nth-child(7) .constellation__dot[aria-current="true"]{
-  transform: translateY(12px);
-}
-
-.constellation__dots > li:nth-child(2) .constellation__dot:hover,
-.constellation__dots > li:nth-child(8) .constellation__dot:hover,
-.constellation__dots > li:nth-child(2) .constellation__dot[aria-current="true"],
-.constellation__dots > li:nth-child(8) .constellation__dot[aria-current="true"]{
-  transform: translateY(7px);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: color-mix(in srgb, var(--card2) 92%, transparent);
+  transform: translateY(-1px);
 }
 .constellation__label{
-  position:absolute;
-  top: -44px; 
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  color: color-mix(in srgb, var(--ink) 92%, transparent);
-  background: color-mix(in srgb, var(--card) 90%, transparent);
-  border:1px solid var(--border);
-  padding: 6px 9px;
-  border-radius: 999px;
-  white-space: nowrap;
-  opacity:0; 
-  pointer-events:none;
-  transition: opacity .2s var(--ease), transform .2s var(--ease), background 700ms var(--ease2);
-  backdrop-filter: blur(8px);
-}
-.constellation__dot:hover .constellation__label,
-.constellation__dot[aria-current="true"] .constellation__label{
+  position: static;
+  transform: none;
+  font-size: 13px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
   opacity:1;
-  transform: translateX(-50%) translateY(-2px);
+  pointer-events:auto;
+  backdrop-filter: none;
 }
-
-
-@media (min-width: 900px){
-  .constellation__label{
-    opacity: 1; 
-  }
-  .constellation__dot:hover .constellation__label{
-    transform: translateX(-50%) translateY(-3px);
-  }
-}
-
 
 @media (max-width: 640px){
   .constellation{
-    left: max(8px, env(safe-area-inset-left));
-    right: max(8px, env(safe-area-inset-right));
-    width: calc(100% - (max(8px, env(safe-area-inset-left)) + max(8px, env(safe-area-inset-right))));
-    margin-left: auto;
-    margin-right: auto;
-    transform: none;
-  }
-  .constellation__dots{
-    gap: 2px;
-    justify-content: space-between;
-    padding-inline: 10px;
-    width: 100%;
-    box-sizing: border-box;
+    left: max(10px, env(safe-area-inset-left));
+    right: max(10px, env(safe-area-inset-right));
+    width: calc(100% - (max(10px, env(safe-area-inset-left)) + max(10px, env(safe-area-inset-right))));
   }
   .constellation__dot{
-    width: 28px;
-    height: 28px;
-    min-width: 34px;
-    min-height: 34px;
+    width: auto;
+    flex: 0 0 auto;
+    padding: 8px 10px;
   }
-  .constellation__label{
-    font-size: 11px;
-    padding: 5px 8px;
-    max-width: 90vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  
-  .constellation__dots > li:nth-child(4) .constellation__dot,
-  .constellation__dots > li:nth-child(5) .constellation__dot,
-  .constellation__dots > li:nth-child(6) .constellation__dot{
-    transform: translateY(14px);
-  }
-  
-  .constellation__dots > li:nth-child(3) .constellation__dot,
-  .constellation__dots > li:nth-child(7) .constellation__dot{
-    transform: translateY(10px);
-  }
-  
-  .constellation__dots > li:nth-child(2) .constellation__dot,
-  .constellation__dots > li:nth-child(8) .constellation__dot{
-    transform: translateY(5px);
-  }
-  
-  .constellation__dots > li:nth-child(4) .constellation__dot:hover,
-  .constellation__dots > li:nth-child(5) .constellation__dot:hover,
-  .constellation__dots > li:nth-child(6) .constellation__dot:hover,
-  .constellation__dots > li:nth-child(4) .constellation__dot[aria-current="true"],
-  .constellation__dots > li:nth-child(5) .constellation__dot[aria-current="true"],
-  .constellation__dots > li:nth-child(6) .constellation__dot[aria-current="true"]{
-    transform: translateY(15px);
-  }
-  
-  .constellation__dots > li:nth-child(3) .constellation__dot:hover,
-  .constellation__dots > li:nth-child(7) .constellation__dot:hover,
-  .constellation__dots > li:nth-child(3) .constellation__dot[aria-current="true"],
-  .constellation__dots > li:nth-child(7) .constellation__dot[aria-current="true"]{
-    transform: translateY(11px);
-  }
-  
-  .constellation__dots > li:nth-child(2) .constellation__dot:hover,
-  .constellation__dots > li:nth-child(8) .constellation__dot:hover,
-  .constellation__dots > li:nth-child(2) .constellation__dot[aria-current="true"],
-  .constellation__dots > li:nth-child(8) .constellation__dot[aria-current="true"]{
-    transform: translateY(6px);
-  }
+  .constellation__label{ font-size: 12px; }
 }
 
 

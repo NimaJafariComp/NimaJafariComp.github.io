@@ -9,10 +9,6 @@
   <title>Nima Jafari — Portfolio</title>
 
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
-
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -38,19 +34,8 @@
 
     <filter id="grain">
       <feTurbulence type="turbulence" baseFrequency="0.8" numOctaves="2" seed="8" result="noise"/>
-  </svg>
-
-  
-  <div id="staticBg" aria-hidden="true"></div>      <feColorMatrix type="saturate" values="0" />
-      <feComponentTransfer>
-        <feFuncA type="table" tableValues="0 0.35" />
-      </feComponentTransfer>
     </filter>
   </svg>
-
-  <canvas id="sky" aria-hidden="true"></canvas>
-  <div id="grain-overlay" aria-hidden="true"></div>
-  <div id="horizon" aria-hidden="true"></div>
 
   <header class="topbar">
     <div class="brand">
@@ -70,14 +55,9 @@
         <span class="btn__label">Theme</span>
       </button>
 
-      <button class="btn btn--ghost magnetic" id="btnMotion" type="button" title="Toggle motion">
-        <span class="btn__icon" aria-hidden="true">⟲</span>
-        <span class="btn__label">Motion</span>
-      </button>
-
       <button class="btn btn--primary magnetic" id="btnCV" type="button" title="Open CV">
         <span class="btn__icon" aria-hidden="true">⇩</span>
-        <span class="btn__label">CV</span>
+        <span class="btn__label">Resume/CV</span>
       </button>
     </div>
   </header>

@@ -17,7 +17,7 @@
   const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 
   const state = {
-    motionEnabled: !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    motionEnabled: false,
     vangoghBoost: false,
     theme: "night",
     pinnedMachine: null,
@@ -111,8 +111,6 @@
       machinesFlight?.stop?.(true);
       vinyl?.setVisualsEnabled?.(false);
     }
-
-    showToast(state.motionEnabled ? "Motion: on" : "Motion: off");
   }
 
   
@@ -133,6 +131,7 @@
     if (!host) return;
     const m = data.meta;
     const hero = data.hero;
+    const pub = hero.featuredPublication;
 
     const quoteHtml = (hero.quote && ((hero.quote.text || "").trim() || (hero.quote.note || "").trim())) ? `
           <div class="quote brush-card card-pad">
@@ -144,6 +143,12 @@
     host.innerHTML = `
       <div class="container grid grid--2">
         <div>
+          <div class="portrait" style="margin:0 0 14px;">
+            <div class="portrait__img">
+              <img src="${escapeHtml(m.headshotUrl)}" alt="Headshot" loading="lazy" />
+            </div>
+          </div>
+
           <h1 class="h1">${escapeHtml(m.name)}</h1>
           <p class="kicker"><strong>${escapeHtml(hero.title)}</strong><br/>${escapeHtml(hero.subtitle)}</p>
 
@@ -152,6 +157,21 @@
               <span class="chip chip--accent"><span class="mono">${escapeHtml(s.value)}</span> ${escapeHtml(s.label)}</span>
             `).join("")}
           </div>
+
+          ${pub && pub.items && pub.items.length ? `
+          <div class="brush-card card-pad" style="margin-top:12px;">
+            <div class="small">${escapeHtml(pub.heading || "Publications")}</div>
+            <div class="stack" style="margin-top:8px;">
+              ${pub.items.map(item => `
+                <div class="brush-card card-pad" style="border-radius:14px;">
+                  <div class="small mono">${escapeHtml(item.label || "Publication")}</div>
+                  <div class="h2" style="margin:4px 0 6px; font-size:18px;">${escapeHtml(item.title || "")}</div>
+                  <p class="p" style="margin:0 0 10px;">${escapeHtml(item.desc || "")}</p>
+                  ${item.href ? `<a class="btn btn--primary magnetic" href="${escapeHtml(item.href)}" target="_blank" rel="noopener"><span class="btn__icon">↗</span><span class="btn__label">Open</span></a>` : ""}
+                </div>
+              `).join("")}
+            </div>
+          </div>` : ""}
 
           ${quoteHtml}
 
@@ -169,21 +189,6 @@
 
         <div>
           <div class="brush-card card-pad">
-            <div class="sectionTitle">
-              <div>
-                <div class="h2" style="margin:0;"></div>
-              </div>
-    
-            </div>
-
-            <div class="portrait">
-              <div class="portrait__img">
-                <img src="${escapeHtml(m.headshotUrl)}" alt="Headshot" loading="lazy" />
-              </div>
-            </div>
-
-            <hr class="sep" />
-
             <div class="grid grid--3" style="margin-top:10px;">
               <div class="brush-card card-pad" style="border-radius:16px;">
                 <div class="small">Repos</div>
@@ -576,8 +581,6 @@
 
         <div>
           <div class="brush-card card-pad">
-            <div class="h2" style="margin:0;">Links</div>
-            <hr class="sep"/>
             <div class="list contactList">
               ${c.socials.map((s) => {
                 const icon = s.icon || `<span class="linkIcon__fallback">↗</span>`;
@@ -633,7 +636,7 @@
 
     dots.innerHTML = sections.map((s) => `
       <li>
-        <button class="constellation__dot magnetic" type="button" data-jump="${escapeHtml(s.id)}" aria-label="${escapeHtml(s.label)}">
+        <button class="constellation__dot magnetic" type="button" data-jump="${escapeHtml(s.id)}">
           <span class="constellation__label">${escapeHtml(s.label)}</span>
         </button>
       </li>
@@ -645,54 +648,11 @@
       jumpTo(btn.dataset.jump);
     });
 
-    window.addEventListener("resize", drawLines);
-    window.addEventListener("orientationchange", () => { setTimeout(drawLines, 120); });
-    setTimeout(drawLines, 120);
   }
 
   function drawLines() {
     const svg = $("#constellationLines");
-    const nav = $("#constellationNav");
-    if (!svg || !nav) return;
-    const buttons = $$("[data-jump]", nav);
-
-    const navRect = nav.getBoundingClientRect();
-    const pts = buttons.map((b) => {
-      const r = b.getBoundingClientRect();
-      return { x: (r.left + r.width / 2) - navRect.left, y: (r.top + r.height / 2) - navRect.top };
-    });
-
-    svg.setAttribute("viewBox", `0 0 ${navRect.width} ${navRect.height}`);
-    svg.innerHTML = "";
-
-    const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    const isProvence = (state?.theme === "provence" || document.documentElement.dataset.theme === "provence");
-    const gradStops = isProvence ? `
-      <stop offset="0" stop-color="rgba(0,0,0,0)"/>
-      <stop offset=".20" stop-color="rgba(0,0,0,.72)"/>
-      <stop offset=".65" stop-color="rgba(0,0,0,.58)"/>
-      <stop offset="1" stop-color="rgba(0,0,0,0)"/>
-    ` : `
-      <stop offset="0" stop-color="rgba(255,255,255,0)"/>
-      <stop offset=".25" stop-color="rgba(255,255,255,.95)"/>
-      <stop offset=".6" stop-color="rgba(255,255,255,.75)"/>
-      <stop offset="1" stop-color="rgba(255,255,255,0)"/>
-    `;
-    defs.innerHTML = `<linearGradient id="lineGrad" x1="0" y1="0" x2="${navRect.width}" y2="0" gradientUnits="userSpaceOnUse">${gradStops}</linearGradient>`;
-    svg.appendChild(defs);
-
-    for (let i = 0; i < pts.length - 1; i++) {
-      const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-      line.setAttribute("x1", pts[i].x);
-      line.setAttribute("y1", pts[i].y);
-      line.setAttribute("x2", pts[i + 1].x);
-      line.setAttribute("y2", pts[i + 1].y);
-      line.setAttribute("stroke", "url(#lineGrad)");
-      line.setAttribute("stroke-width", isProvence ? "2" : "2.5");
-      line.setAttribute("stroke-linecap", "round");
-      line.setAttribute("opacity", isProvence ? "0.85" : "0.95");
-      svg.appendChild(line);
-    }
+    if (svg) svg.innerHTML = "";
   }
 
   function jumpTo(sectionId) {
@@ -846,7 +806,6 @@
       if (act === "jumpCV") return jumpTo("cv");
     });
 
-    $("#btnMotion")?.addEventListener("click", () => setMotion(!state.motionEnabled));
     $("#btnTheme")?.addEventListener("click", toggleTheme);
     $("#btnCV")?.addEventListener("click", () => jumpTo("cv"));
     $("#btnMusic")?.addEventListener("click", () => vinyl?.togglePlay?.());
@@ -1213,7 +1172,8 @@
     }
   }
 
-  const sky = new VanGoghSky($("#sky"));
+  const skyEl = $("#sky");
+  const sky = skyEl ? new VanGoghSky(skyEl) : null;
 
   
   class SkillNebula {
@@ -1923,6 +1883,15 @@
   attachMagnetic();
   attachTilt();
   loadGitHubStats();
+
+  // Replace the top-left logo mark with an inline portrait image if available
+  try {
+    const brandMark = document.querySelector('.brand__mark');
+    if (brandMark && data.meta && data.meta.headshotUrl) {
+      brandMark.innerHTML = `<img src="${escapeHtml(data.meta.headshotUrl)}" alt="${escapeHtml(data.meta.name)} headshot" />`;
+      brandMark.classList.add('brand__mark--img');
+    }
+  } catch (e) { console.warn('Could not set brand portrait:', e); }
 
 
 
