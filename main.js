@@ -158,6 +158,18 @@
             `).join("")}
           </div>
 
+
+          ${quoteHtml}
+
+          <div class="row">
+            ${hero.ctas.map(btn => {
+              if (btn.href) {
+                return `<a class="btn btn--primary magnetic" href="${btn.href}" target="_blank" rel="noopener"><span class="btn__icon" aria-hidden="true">${escapeHtml(btn.icon)}</span><span class="btn__label">${escapeHtml(btn.label)}</span></a>`;
+              }
+              return `<button class="btn btn--primary magnetic" type="button" data-action="${btn.action}"><span class="btn__icon" aria-hidden="true">${escapeHtml(btn.icon)}</span><span class="btn__label">${escapeHtml(btn.label)}</span></button>`;
+            }).join("")}
+          </div>
+
           ${pub && pub.items && pub.items.length ? `
           <div class="brush-card card-pad" style="margin-top:12px;">
             <div class="small">${escapeHtml(pub.heading || "Publications")}</div>
@@ -172,18 +184,6 @@
               `).join("")}
             </div>
           </div>` : ""}
-
-          ${quoteHtml}
-
-          <div class="row">
-            ${hero.ctas.map(btn => {
-              if (btn.href) {
-                return `<a class="btn btn--primary magnetic" href="${btn.href}" target="_blank" rel="noopener"><span class="btn__icon" aria-hidden="true">${escapeHtml(btn.icon)}</span><span class="btn__label">${escapeHtml(btn.label)}</span></a>`;
-              }
-              return `<button class="btn btn--primary magnetic" type="button" data-action="${btn.action}"><span class="btn__icon" aria-hidden="true">${escapeHtml(btn.icon)}</span><span class="btn__label">${escapeHtml(btn.label)}</span></button>`;
-            }).join("")}
-          </div>
-
 
         </div>
 
