@@ -229,7 +229,7 @@
 
             <div class="row" style="margin-top:14px;">
               <a class="btn btn--ghost btn--github magnetic" href="https://github.com/${escapeHtml(m.githubUser)}" target="_blank" rel="noopener"><span class="btn__icon">↗</span><span class="btn__label">Open GitHub</span></a>
-              <button class="btn btn--ghost btn--cv magnetic" type="button" data-action="jumpCV"><span class="btn__icon">⇩</span><span class="btn__label">Open CV</span></button>
+              <button class="btn btn--ghost btn--cv magnetic" type="button" data-action="jumpCV"><span class="btn__icon">⇩</span><span class="btn__label">Open Resume</span></button>
             </div>
           </div>
         </div>
@@ -316,6 +316,7 @@
                 <div>
                   <div class="h2" style="margin:0;">${escapeHtml(it.role)}</div>
                   <div class="small">${escapeHtml(it.org)} • <span class="mono">${escapeHtml(it.when)}</span></div>
+                  ${it.meta ? `<div class="small" style="margin-top:4px;">${escapeHtml(it.meta)}</div>` : ""}
                 </div>
               </div>
               <hr class="sep"/>
@@ -526,7 +527,7 @@
 
         <div class="brush-card card-pad" style="margin-top:16px;">
           <div class="small">Embedded PDF</div>
-          <iframe class="pdfFrame" src="${escapeHtml(m.resumeUrl)}#view=FitH" title="Nima Jafari CV (PDF)"></iframe>
+          <iframe class="pdfFrame" src="${escapeHtml(m.resumeUrl)}#view=FitH" title="Nima Jafari Resume (PDF)"></iframe>
         </div>
       </div>
     `;
@@ -578,6 +579,7 @@
         <div>
           <h2 class="h1" style="font-size:clamp(34px,4.4vw,54px);">${escapeHtml(c.title)}</h2>
           <p class="kicker">${escapeHtml(c.note)}</p>
+        </div>
 
         <div>
           <div class="brush-card card-pad">
@@ -591,6 +593,7 @@
                 const isEmail = rawLabel.includes("email") || /^mailto:/i.test(s.href || "");
                 const isCV = rawLabel.includes("cv");
                 const showCopy = !(isCV);
+                const copyValue = isEmail ? (s.href || "").replace(/^mailto:/i, "") : href;
                 const rowClass = `contactRow${showCopy ? "" : " contactRow--solo"}`;
                 return `
                 <div class="${rowClass}">
@@ -603,7 +606,7 @@
                     <span class="contactRow__open" aria-hidden="true">↗</span>
                   </a>
                   ${showCopy ? `
-                    <button class="btn btn--ghost contactRow__copy magnetic" type="button" data-action="copyLink" data-url="${href}" data-label="${label}">
+                    <button class="btn btn--ghost contactRow__copy magnetic" type="button" data-action="copyLink" data-url="${escapeHtml(copyValue)}" data-label="${label}">
                       <span class="btn__label">Copy link</span>
                     </button>
                   ` : ""}
