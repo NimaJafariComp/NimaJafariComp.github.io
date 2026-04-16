@@ -193,12 +193,12 @@ window.PORTFOLIO = {
 
   projects: {
     title: "Featured Projects",
-    note: "A selection of personal and collaborative projects showcasing my skills in machine learning, full-stack development, and automation.",
+    note: "A selection of personal and collaborative projects showcasing my skills in machine learning, full-stack development, automation, and AI product engineering.",
     items: [
       {
         name: "Strategy Mining in Custom RL Environments",
         badge: "Research",
-        desc: "OpenAI‑Gym‑style robotics tasks; PPO agents; reproducible simulation + logging; custom Hasse clustering to discover strategies.",
+        desc: "OpenAI‑Gym‑style robotics tasks with PPO agents, reproducible simulation and logging, and custom Hasse-diagram clustering to recover symbolic winning strategies.",
         tags: ["Python", "PyTorch", "Stable‑Baselines3", "Jupyter"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/Strategy-Mining-in-Custom-RL-Environments-Dual-Path-Discovery-and-Robust-Graph-Clustering?tab=readme-ov-file", title: "Repo" },
@@ -207,7 +207,7 @@ window.PORTFOLIO = {
       {
         name: "CycleKindAI",
         badge: "LLM + Privacy",
-        desc: "Hybrid RAG pipeline with FastAPI, Neo4j, Postgres, local LLM via Ollama/APIs, Redis/MinIO, Docker Compose. Citation‑first + consent‑forward flows.",
+        desc: "Hybrid RAG pipeline with FastAPI, Neo4j, Postgres, local LLMs, Redis, MinIO, and Docker Compose built around citation-first and consent-forward flows.",
         tags: ["FastAPI", "Neo4j", "Postgres", "RAG", "Docker", "Redis", "MinIO"],
         links: [
           { kind: "github", href: "https://github.com/ZafriAI/CycleKindAI", title: "Repo" },
@@ -215,9 +215,18 @@ window.PORTFOLIO = {
       },
       {
         name: "CareerLift",
-        badge: "Full‑Stack",
-        desc: "End‑to‑end platform: FastAPI + LangChain + Playwright + Neo4j + Next.js/React + Electron + Docker Compose.",
-        tags: ["FastAPI", "Next.js", "React", "TypeScript", "LangChain", "Playwright", "Neo4j", "Electron"],
+        badge: "AI Career Platform",
+        desc: "Designed and built a full-stack AI career platform spanning React web and React Native mobile experiences, with backend systems for resume parsing, job discovery, ATS-style matching, and mock interview coaching.",
+        tags: ["React", "React Native", "TypeScript", "FastAPI", "Neo4j", "LangChain", "Electron"],
+        links: [
+          { kind: "github", href: "https://github.com/NimaJafariComp", title: "GitHub" },
+        ],
+      },
+      {
+        name: "PocketPilot",
+        badge: "Finance + AI",
+        desc: "Designed and built a full-stack personal finance platform across React web and React Native mobile apps, with backend workflows for transaction import, budgeting, savings goals, dashboards, and retrieval-backed AI insights.",
+        tags: ["React", "React Native", "TypeScript", "Tailwind CSS", "Firebase", "Qdrant", "Ollama"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp", title: "GitHub" },
         ],
@@ -225,7 +234,7 @@ window.PORTFOLIO = {
       {
         name: "JobApplyX",
         badge: "Automation",
-        desc: "MV3 extension + Node/Express backend with SQLite + Ollama. Parses job descriptions, answers screening Qs, generates cover letter PDFs.",
+        desc: "MV3 extension and Node/Express backend with SQLite and Ollama for parsing job descriptions, answering screening questions, and generating cover letter PDFs.",
         tags: ["JavaScript", "Node.js", "Express", "SQLite", "Ollama", "MV3"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/JobApplyX", title: "Repo" },
@@ -234,17 +243,17 @@ window.PORTFOLIO = {
       {
         name: "Weather Forecasting (TensorFlow)",
         badge: "ML",
-        desc: "Keras ANN notebooks for training/inference on historical weather data.",
+        desc: "Keras ANN notebooks for training and inference on historical weather data.",
         tags: ["TensorFlow/Keras", "Python", "Notebooks"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/weather-forecasting-project", title: "Repo" },
         ],
       },
       {
-        name: "J.E.N.I Car Rental Application",
-        badge: "Team Project",
-        desc: "Multi‑service app; DB schema + backend services; AWS RDS integration; remote tunneling for dev.",
-        tags: ["SQL", "Backend", "AWS RDS", "HTML/CSS"],
+        name: "J.E.N.I. Car Rental Application",
+        badge: "Desktop Platform",
+        desc: "Engineered a desktop car rental platform with separate customer and admin interfaces for vehicle browsing, booking, inventory management, invoice delivery, and operational reporting.",
+        tags: ["Python", "PyQt5", "MySQL", "AWS RDS", "SendGrid", "bcrypt"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/J.E.N.I-Car-Rental-Application", title: "Repo" },
         ],
@@ -260,9 +269,9 @@ window.PORTFOLIO = {
         name: "Languages & Frameworks",
         tone: "sun",
         items: [
-          "Python", "Java", "C++", "JavaScript", "TypeScript", "HTML/CSS", "SQL",
+          "Python", "Java", "C++", "JavaScript", "TypeScript", "Ruby", "Rust", "HTML/CSS", "SQL",
           "PyTorch", "TensorFlow/Keras", "scikit‑learn", "NumPy", "Pandas", "Jupyter",
-          "FastAPI", "Node.js/Express", "Next.js", "React", "Tailwind CSS", "Electron", "Playwright"
+          "FastAPI", "Node.js/Express", "Next.js", "React", "React Native", "Tailwind CSS", "Electron", "Playwright"
         ]
       },
       {
@@ -293,7 +302,7 @@ window.PORTFOLIO = {
         name: "Engineering & Tooling",
         tone: "ember",
         items: [
-          "Git", "pytest", "CI/CD (GitHub Actions)", "Linux + Bash", "Observability (logs/metrics)", "Security basics (auth, OWASP)",
+          "Git", "pytest", "CI/CD (GitHub Actions)", "Linux + Bash", "Figma", "Observability (logs/metrics)", "Security basics (auth, OWASP)",
           "Performance profiling", "Testing strategy", "API design", "Data structures & algorithms", "System design", "Debugging", "Documentation"
         ]
       },
