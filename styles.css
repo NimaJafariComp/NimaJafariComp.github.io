@@ -661,6 +661,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 
 .timelineNode{ 
+  --node-accent:var(--accent);
   position: relative;
   width: calc(50% - 40px);
   margin-bottom: 48px;
@@ -677,6 +678,17 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   animation: fadeInUp .6s var(--ease) backwards;
   animation-delay: calc(var(--idx, 0) * 0.05s);
 }
+
+.timelineNode[data-category="Computing"],
+.timelineNode[data-category="Web"]{ --node-accent:var(--tone-cobalt); }
+.timelineNode[data-category="Theory"],
+.timelineNode[data-category="Social"]{ --node-accent:var(--tone-sun); }
+.timelineNode[data-category="Hardware"],
+.timelineNode[data-category="Mobile"]{ --node-accent:var(--tone-ember); }
+.timelineNode[data-category="AI"],
+.timelineNode[data-category="Software"]{ --node-accent:var(--tone-azure); }
+.timelineNode[data-category="Networking"],
+.timelineNode[data-category="Crypto"]{ --node-accent:var(--tone-cypress); }
 
 :root[data-theme="provence"] .timelineNode{
   background:linear-gradient(135deg, rgba(250,251,240,.97), rgba(217,234,222,.95));
@@ -707,11 +719,11 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, var(--accent), color-mix(in srgb, var(--accent) 50%, transparent));
+  background: radial-gradient(circle at 30% 30%, var(--node-accent), color-mix(in srgb, var(--node-accent) 50%, transparent));
   border: 3px solid color-mix(in srgb, var(--card) 90%, transparent);
   box-shadow: 
-    0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent),
-    0 0 20px color-mix(in srgb, var(--accent) 40%, transparent);
+    0 0 0 4px color-mix(in srgb, var(--node-accent) 15%, transparent),
+    0 0 20px color-mix(in srgb, var(--node-accent) 40%, transparent);
   z-index: 2;
   transition: all .35s var(--ease);
 }
@@ -732,8 +744,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   height: 2px;
   width: 30px;
   background: linear-gradient(90deg, 
-    color-mix(in srgb, var(--accent) 30%, transparent),
-    color-mix(in srgb, var(--accent) 5%, transparent)
+    color-mix(in srgb, var(--node-accent) 30%, transparent),
+    color-mix(in srgb, var(--node-accent) 5%, transparent)
   );
 }
 
@@ -744,8 +756,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .timelineNode:nth-child(even)::after{
   left: -30px;
   background: linear-gradient(270deg, 
-    color-mix(in srgb, var(--accent) 30%, transparent),
-    color-mix(in srgb, var(--accent) 5%, transparent)
+    color-mix(in srgb, var(--node-accent) 30%, transparent),
+    color-mix(in srgb, var(--node-accent) 5%, transparent)
   );
 }
 
@@ -753,23 +765,23 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .timelineNode:hover{ 
   transform: translateY(-4px) scale(1.02);
   box-shadow: 0 20px 50px rgba(0,0,0,.25);
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  border-color: color-mix(in srgb, var(--node-accent) 40%, transparent);
   background: linear-gradient(135deg, 
     color-mix(in srgb, var(--card) 100%, transparent), 
-    color-mix(in srgb, var(--accent) 8%, transparent)
+    color-mix(in srgb, var(--node-accent) 8%, transparent)
   );
 }
 
 :root[data-theme="provence"] .timelineNode:hover{
   box-shadow:0 16px 40px rgba(23,57,64,.18);
-  background:linear-gradient(135deg, rgba(252,252,242,1), color-mix(in srgb, var(--cypress) 9%, rgba(214,232,220,1)));
+  background:linear-gradient(135deg, rgba(252,252,242,1), color-mix(in srgb, var(--node-accent) 9%, rgba(214,232,220,1)));
 }
 
 .timelineNode:hover::before{
   transform: scale(1.3);
   box-shadow: 
-    0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent),
-    0 0 30px color-mix(in srgb, var(--accent) 60%, transparent);
+    0 0 0 6px color-mix(in srgb, var(--node-accent) 25%, transparent),
+    0 0 30px color-mix(in srgb, var(--node-accent) 60%, transparent);
 }
 
 
@@ -779,8 +791,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--accent);
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--node-accent);
+  background: color-mix(in srgb, var(--node-accent) 12%, transparent);
   padding: 4px 10px;
   border-radius: 6px;
   margin-bottom: 10px;
@@ -800,7 +812,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 .timelineNode__year::before{
   content: '◆';
   font-size: 10px;
-  color: var(--accent);
+  color: var(--node-accent);
 }
 
 .timelineNode__title{ 
