@@ -93,36 +93,36 @@
 
 :root[data-theme="provence"]{
   /* Provençal mineral wash: deliberately narrow blue-green hue range. */
-  --bg0:#dce6e1;
-  --bg1:#c4d6d5;
+  --bg0:#d4e4de;
+  --bg1:#b7d0d0;
   --ink:#1b2d34;
   --muted:#49616a;
 
   --ultramarine:#274f61;
-  --cobalt:#3d7180;
-  --azure:#5a8e98;
+  --cobalt:#347687;
+  --azure:#4e909d;
   --moon:#b9965c;
   --ochre:#9a7041;
-  --cypress:#3d6961;
+  --cypress:#326f64;
   --ember:#a66750;
 
   --accent: var(--cypress);
-  --accent2: var(--cobalt);
+  --accent2:var(--cobalt);
 
   --tone-sun:#9a7d50;
-  --tone-cobalt:#3d7180;
-  --tone-cypress:#3d6961;
+  --tone-cobalt:#347687;
+  --tone-cypress:#326f64;
   --tone-ember:#a66750;
-  --tone-azure:#5a8e98;
+  --tone-azure:#4e909d;
 
   --card:rgba(246,249,245,.92);
-  --card2:rgba(230,239,235,.86);
-  --border:rgba(27,45,52,.14);
-  --shadow:0 18px 55px rgba(27,45,52,.10);
+  --card2:rgba(218,234,227,.90);
+  --border:rgba(27,45,52,.18);
+  --shadow:0 18px 55px rgba(27,45,52,.12);
   --surface-high:#f7faf6;
-  --surface-low:#e3eeea;
-  --control:#d9e8e1;
-  --control-hover:#c9ddd4;
+  --surface-low:#dae9e3;
+  --control:#c7e2d8;
+  --control-hover:#b5d6ca;
 
   --card-text: var(--ink);
   --muted-on-card:#4c646b;
@@ -134,8 +134,8 @@
 
 :root[data-theme="provence"] body{
   background:
-    radial-gradient(110% 72% at 8% 0%, rgba(247,250,246,.72), transparent 58%),
-    radial-gradient(88% 64% at 100% 100%, rgba(122,157,162,.18), transparent 62%),
+    radial-gradient(110% 72% at 8% 0%, rgba(247,250,246,.82), transparent 58%),
+    radial-gradient(88% 64% at 100% 100%, rgba(78,144,157,.22), transparent 62%),
     linear-gradient(145deg, var(--bg0), var(--bg1));
 }
 
