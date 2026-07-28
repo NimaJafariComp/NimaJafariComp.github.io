@@ -3,11 +3,11 @@
 window.PORTFOLIO = {
   meta: {
     name: "Nima Jafari",
-    location: "Los Angeles, CA",
+    location: "Austin, TX",
     email: "mohammadnimajafari@yahoo.com",
     githubUser: "NimaJafariComp",
 
-    resumeUrl: "assets/Resume_NEW.pdf",
+    resumeUrl: "assets/resume_sweV2.pdf",
 
     headshotUrl: "assets/headshot.png",
 
@@ -48,7 +48,7 @@ window.PORTFOLIO = {
       note: "",
     },
     ctas: [
-      { label: "Resume/CV", icon: "⇩", href: "assets/Resume_NEW.pdf" },
+      { label: "Resume/CV", icon: "⇩", href: "assets/resume_sweV2.pdf" },
       { label: "Email", icon: "✉", action: "copyEmail" },
     ],
     featuredPublication: {
@@ -96,7 +96,7 @@ window.PORTFOLIO = {
     ],
     quickFacts: [
       { k: "Education", v: "B.S. Computer Science (2026) — California State University, Northridge (CSUN)" },
-      { k: "Current work", v: "Full-Stack Software Engineer at ZafriAI; Machine Learning Engineer at The University Corporation at CSUN" },
+      { k: "Recent work", v: "Full-Stack Software Engineer at Stealth and SideShift NYC; Machine Learning Engineer at CSUN" },
       { k: "Research", v: "Machine learning research across NSF-, AFOSR-, and DARPA-supported projects" },
       { k: "Languages", v: "English, Farsi; plus Georgian & German" },
     ],
@@ -107,26 +107,37 @@ window.PORTFOLIO = {
     items: [
       {
         role: "Full-Stack Software Engineer",
-        org: "ZafriAI",
-        when: "Aug 2025 - Present · 9 mos",
-        meta: "Self-employed · United States · Remote",
+        org: "Stealth",
+        when: "Aug 2025 - Jun 2026",
+        meta: "Remote",
         bullets: [
           "Engineered backend systems and REST APIs for AI-driven applications, enabling reliable communication between frontend clients, business logic, and data services.",
+          "Used GitHub Copilot, Cursor, Claude Code, and OpenAI Codex for prototyping, debugging, and refactoring; reviewed AI-generated code for correctness, maintainability, security, and integration with existing application logic.",
           "Built end-to-end full-stack workflows connecting frontend interfaces to backend services, including API integration, request handling, and database-driven functionality.",
-          "Designed hybrid RAG pipelines that combined retrieval-based context with model-generated responses to improve answer quality and domain relevance.",
+          "Designed and integrated hybrid RAG and LLM-powered application pipelines with retrieval, ranking, and backend orchestration to improve answer quality, domain relevance, and context-aware outputs.",
           "Developed finance-oriented AI features for analysis, recommendation, and workflow automation, turning structured and unstructured data into user-facing insights.",
-          "Integrated LLM-powered application features with retrieval, ranking, and backend orchestration to support more grounded and context-aware outputs.",
           "Owned full-stack implementation across backend architecture, API design, and frontend integration, debugging cross-layer issues and improving system reliability."
-        ],
-        links: [
-          { label: "GitHub", href: "https://github.com/ZafriAI" }
+        ]
+      },
+      {
+        role: "Full-Stack iOS Engineer",
+        org: "SideShift NYC",
+        when: "May 2026",
+        meta: "Remote",
+        bullets: [
+          "Contributed across SwiftUI mobile development, backend engineering, web application features, and subscription-growth initiatives.",
+          "Improved mobile UI/UX quality and resolved interface issues in SwiftUI.",
+          "Reduced unnecessary cloud database and API usage by optimizing backend data access and mobile caching behavior.",
+          "Built and refined backend-supported web application features for platform workflows.",
+          "Supported product discussions related to subscription conversion and premium feature adoption.",
+          "Collaborated through feedback cycles to deliver production-oriented fixes, feature improvements, and implementation notes."
         ]
       },
       {
         role: "Machine Learning Engineer",
-        org: "The University Corporation at California State University, Northridge",
-        when: "Jan 2023 - Present · 3 yrs 4 mos",
-        meta: "Full-time · Los Angeles, California, United States · Remote",
+        org: "California State University, Northridge (CSUN)",
+        when: "Jan 2023 - Jul 2026",
+        meta: "Los Angeles, California, United States",
         bullets: [
           "Conducted machine learning research across NSF-, AFOSR-, and DARPA-supported projects, contributing to experiments, proposal development, and technical writing for funded research efforts.",
           "Built custom robotics simulation environments and reproducible logging and benchmarking infrastructure that supported systematic reinforcement learning experimentation and analysis.",
@@ -144,15 +155,13 @@ window.PORTFOLIO = {
       },
       {
         role: "Python Software Engineer",
-        org: "MISAN Robotic Company",
-        when: "Jun 2020 - Jun 2021 · 1 yr 1 mo",
-        meta: "Contract · Remote",
+        org: "MISAN Robotic Foundation",
+        when: "Jun 2020 - Jun 2021",
+        meta: "Remote",
         bullets: [
-          "Developed software for robotics prototypes in firefighting and emergency-response applications, contributing to backend logic, system integration, and testing in safety-critical environments.",
-          "Designed and integrated REST API workflows to connect frontend applications with backend services, enabling smoother communication across software and robotics subsystems.",
-          "Owned frontend-to-backend integration tasks, debugging interface issues and improving reliability across full-stack application flows.",
-          "Implemented Pytest-based automated testing to verify core features, integration behavior, and software stability during iterative prototype development.",
-          "Partnered with mechanical engineers and mechatronics contributors to align software implementation with hardware requirements and resolve system-level integration issues."
+          "Supported robotics projects for firefighting and emergency-response applications.",
+          "Contributed to programming, hardware assembly, and mechatronic integration tasks in a hands-on development environment.",
+          "Assisted with prototype development and testing for robotics systems in safety-critical use cases."
         ],
       }
     ],
@@ -223,10 +232,19 @@ window.PORTFOLIO = {
         ],
       },
       {
+        name: "AgenticAI",
+        badge: "Agentic Systems",
+        desc: "An AI-assisted refund-support workflow with a Streamlit chat frontend and FastAPI backend. A deterministic policy engine validates customer and order ownership, evaluates policy, and keeps the LLM limited to missing-information prompts and customer-facing explanations.",
+        tags: ["Python", "FastAPI", "Streamlit", "Pydantic", "SQLite", "Ollama", "OpenAI SDK", "Anthropic SDK", "pytest", "Ruff"],
+        links: [
+          { kind: "github", href: "https://github.com/NimaJafariComp", title: "GitHub" },
+        ],
+      },
+      {
         name: "PocketPilot",
         badge: "Finance + AI",
-        desc: "Designed and built a full-stack personal finance platform across React web and React Native mobile apps, with backend workflows for transaction import, budgeting, savings goals, dashboards, and retrieval-backed AI insights.",
-        tags: ["React", "React Native", "TypeScript", "Tailwind CSS", "Firebase", "Qdrant", "Ollama"],
+        desc: "A full-stack personal finance platform for transaction imports, automatic spending categorization, budgets, savings goals, interactive dashboards, and retrieval-augmented financial Q&A.",
+        tags: ["React", "React Native", "TypeScript", "Tailwind CSS", "Firebase", "Qdrant", "Ollama", "Vite", "Rust", "Solid.js", "Cloud Functions", "Firebase Auth", "Node.js", "Docker"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp", title: "GitHub" },
         ],
@@ -271,7 +289,8 @@ window.PORTFOLIO = {
         items: [
           "Python", "Java", "C++", "JavaScript", "TypeScript", "Ruby", "Rust", "HTML/CSS", "SQL",
           "PyTorch", "TensorFlow/Keras", "scikit‑learn", "NumPy", "Pandas", "Jupyter",
-          "FastAPI", "Node.js/Express", "Next.js", "React", "React Native", "Tailwind CSS", "Electron", "Playwright"
+          "FastAPI", "Node.js/Express", "Next.js", "React", "React Native", "Tailwind CSS", "Electron", "Playwright",
+          "Swift", "SwiftUI", "Solid.js"
         ]
       },
       {
@@ -288,14 +307,17 @@ window.PORTFOLIO = {
           "Vector search & retrieval", "Prompt & tool orchestration", "Deployment patterns (TorchServe, BentoML)",
           "Distributed training (DeepSpeed, PyTorch Lightning, Horovod)",
           "Simulation & environments (Gym, MuJoCo, PyBullet, Brax)",
-          "Reproducibility & Responsible AI"
+          "Reproducibility & Responsible AI", "Supervised learning", "Time-series forecasting", "Graph-grounded retrieval",
+          "LLM application pipelines", "Prompt engineering", "LLM output validation", "AI-generated code review & evaluation",
+          "LangChain", "Ollama"
         ]
       }, 
       {
         name: "Databases & Infrastructure",
         tone: "cypress",
         items: [
-          "PostgreSQL", "MySQL", "SQLite", "Neo4j", "Redis", "MinIO", "Docker", "Docker Compose", "Alembic", "REST APIs"
+          "PostgreSQL", "MySQL", "SQLite", "Neo4j", "Redis", "MinIO", "Docker", "Docker Compose", "Alembic", "REST APIs",
+          "AWS (RDS, EC2, S3)", "Azure", "Qdrant", "Kubernetes", "Data pipelines", "Microservices", "Cloud deployment"
         ]
       },
       {
@@ -303,7 +325,8 @@ window.PORTFOLIO = {
         tone: "ember",
         items: [
           "Git", "pytest", "CI/CD (GitHub Actions)", "Linux + Bash", "Figma", "Observability (logs/metrics)", "Security basics (auth, OWASP)",
-          "Performance profiling", "Testing strategy", "API design", "Data structures & algorithms", "System design", "Debugging", "Documentation"
+          "Performance profiling", "Testing strategy", "API design", "Data structures & algorithms", "System design", "Debugging", "Documentation",
+          "GitHub", "Cursor", "Claude Code", "OpenAI Codex", "Assisted prototyping", "Code review"
         ]
       },
       {
@@ -345,7 +368,7 @@ window.PORTFOLIO = {
       { label: "Spotify", href: "https://open.spotify.com/user/31bzlxmfgtlstf2kacrsl5ziusdq?si=-dg6fMTIQHC_GWPDSQmxDQ", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.771a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.687zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288z"/></svg>` },
       { label: "USTA", href: "https://www.usta.com/en/home/play/player-search/profile.html#uaid=2019407241&tab=tournaments", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.5"/><circle cx="8" cy="8" r="1.5"/><line x1="8" y1="2" x2="8" y2="5" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="11" x2="8" y2="14" stroke="currentColor" stroke-width="1.5"/><line x1="2" y1="8" x2="5" y2="8" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5"/></svg>` },
       { label: "Email", href: "mailto:mohammadnimajafari@yahoo.com", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/></svg>` },
-      { label: "Resume/CV (PDF)", href: "assets/Resume_NEW.pdf", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/><path d="M4.5 4a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zM4 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4z"/></svg>` },
+      { label: "Resume/CV (PDF)", href: "assets/resume_sweV2.pdf", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/><path d="M4.5 4a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zM4 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0 1h-4z"/></svg>` },
       { label: "From Data to Concepts via Wiring Diagrams (arXiv:2511.20138)", href: "https://arxiv.org/pdf/2511.20138.pdf", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12v12H2V2zm1 1v10h10V3H3zm1 1h8v1H4V4zm0 2h8v1H4V6zm0 2h6v1H4V8zm0 2h8v1H4v-1z"/></svg>` },
       { label: "Game Version 2: RL Strategy Mining (DOI 10.5281/zenodo.17315846)", href: "https://doi.org/10.5281/zenodo.17315846", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12v12H2V2zm1 1v10h10V3H3zm1 1h8v1H4V4zm0 2h8v1H4V6zm0 2h6v1H4V8zm0 2h8v1H4v-1z"/></svg>` },
       { label: "Game Version 3: RL Strategy Mining (DOI 10.5281/zenodo.17315753)", href: "https://doi.org/10.5281/zenodo.17315753", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12v12H2V2zm1 1v10h10V3H3zm1 1h8v1H4V4zm0 2h8v1H4V6zm0 2h6v1H4V8zm0 2h8v1H4v-1z"/></svg>` },
