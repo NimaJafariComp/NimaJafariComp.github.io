@@ -45,14 +45,6 @@
     return Math.min(b, Math.max(a, v));
   }
 
-  function prefersLight() {
-    try {
-      return window.matchMedia("(prefers-color-scheme: light)").matches;
-    } catch {
-      return false;
-    }
-  }
-
   
   function setTheme(theme, { save = true, announce = true } = {}) {
     const t = (theme === "provence") ? "provence" : "night";
@@ -1878,7 +1870,7 @@
   const savedTheme = (() => {
     try { return localStorage.getItem("theme"); } catch { return null; }
   })();
-  setTheme(savedTheme || (prefersLight() ? "provence" : "night"), { save: false, announce: false });
+  setTheme(savedTheme || "night", { save: false, announce: false });
 
   render();
   buildConstellationNav();
