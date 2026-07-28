@@ -92,43 +92,40 @@
 } 
 
 :root[data-theme="provence"]{
-  
-  --bg0:#f6f0d2;
-  --bg1:#9fd3e6;
-  --ink:#142033; 
-  --muted:rgba(20,32,51,.72);
+  /* Provençal mineral wash: deliberately narrow blue-green hue range. */
+  --bg0:#dce6e1;
+  --bg1:#c4d6d5;
+  --ink:#1b2d34;
+  --muted:#49616a;
 
-  --ultramarine:#2b3c7a;
-  --cobalt:#2f63b6;
-  --azure:#4aa3d9;
-  --moon:#f6c44f; 
-  --ochre:#d79a2a;
-  --cypress:#2f6b3f;
-  --ember:#e86b3a;
+  --ultramarine:#274f61;
+  --cobalt:#3d7180;
+  --azure:#5a8e98;
+  --moon:#b9965c;
+  --ochre:#9a7041;
+  --cypress:#3d6961;
+  --ember:#a66750;
 
-  
   --accent: var(--cypress);
   --accent2: var(--cobalt);
 
-  
-  --tone-sun: #7fbf90; 
-  --tone-cobalt: #2f63b6; 
-  --tone-cypress: #2f6b3f; 
-  --tone-ember: #d79a2a; 
-  --tone-azure: #4aa3d9; 
+  --tone-sun:#9a7d50;
+  --tone-cobalt:#3d7180;
+  --tone-cypress:#3d6961;
+  --tone-ember:#a66750;
+  --tone-azure:#5a8e98;
 
-  
-  --card: rgba(255,255,255,.96);
-  --card2: rgba(248,253,246,.92); 
-  --border: rgba(20,32,51,.08);
-  --shadow: 0 18px 55px rgba(10,20,12,.06);
+  --card:rgba(246,249,245,.92);
+  --card2:rgba(230,239,235,.86);
+  --border:rgba(27,45,52,.14);
+  --shadow:0 18px 55px rgba(27,45,52,.10);
 
-  
   --card-text: var(--ink);
-  --muted-on-card: rgba(20,32,51,.60);
+  --muted-on-card:#4c646b;
 
-  
-  --grain-opacity: .28;
+  --static-bg-opacity:.055;
+  --static-bg-filter:brightness(1.08) saturate(.36) hue-rotate(118deg);
+  --grain-opacity:.20;
 }
 
 
@@ -498,8 +495,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 
 
 :root[data-theme="provence"] .timelineStatic__inner{
-  background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,253,246,.96));
-  box-shadow: 0 18px 55px rgba(10,20,12,.08);
+  background:linear-gradient(180deg, rgba(246,249,245,.96), rgba(230,239,235,.94));
+  box-shadow:0 18px 55px rgba(27,45,52,.10);
 }
 
 .timelineStatic__header{
@@ -636,8 +633,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 :root[data-theme="provence"] .timelineNode{
-  background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(248,253,246,.94));
-  box-shadow: 0 8px 24px rgba(10,20,12,.08);
+  background:linear-gradient(135deg, rgba(247,250,246,.96), rgba(231,239,235,.94));
+  box-shadow:0 8px 24px rgba(27,45,52,.10);
 }
 
 @keyframes fadeInUp {
@@ -718,8 +715,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
 }
 
 :root[data-theme="provence"] .timelineNode:hover{
-  box-shadow: 0 16px 40px rgba(10,20,12,.12);
-  background: linear-gradient(135deg, rgba(255,255,255,1), color-mix(in srgb, var(--cypress) 5%, rgba(248,253,246,1)));
+  box-shadow:0 16px 40px rgba(27,45,52,.14);
+  background:linear-gradient(135deg, rgba(250,252,248,1), color-mix(in srgb, var(--cypress) 7%, rgba(230,239,235,1)));
 }
 
 .timelineNode:hover::before{
@@ -1930,5 +1927,4 @@ a:focus-visible, button:focus-visible, input:focus-visible{
     font-size: 11px;
   }
 }
-
 
