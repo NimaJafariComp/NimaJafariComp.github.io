@@ -92,28 +92,28 @@
 } 
 
 :root[data-theme="provence"]{
-  /* Verdigris, lichen, and brass: a narrow palette with one warm highlight. */
+  /* Lichen surfaces with distinct brass, teal, blue, forest, and terracotta accents. */
   --bg0:#e0ead8;
   --bg1:#a7c9c1;
   --ink:#173940;
   --muted:#3f6268;
 
   --ultramarine:#1f5162;
-  --cobalt:#247384;
-  --azure:#3e8d98;
-  --moon:#bd9345;
-  --ochre:#9e7130;
-  --cypress:#226a60;
-  --ember:#99734f;
+  --cobalt:#217b92;
+  --azure:#429bb1;
+  --moon:#c28b32;
+  --ochre:#a66e25;
+  --cypress:#287654;
+  --ember:#b86447;
 
-  --accent: var(--cypress);
+  --accent:var(--moon);
   --accent2:var(--cobalt);
 
-  --tone-sun:#bd9345;
-  --tone-cobalt:#247384;
-  --tone-cypress:#226a60;
-  --tone-ember:#99734f;
-  --tone-azure:#3e8d98;
+  --tone-sun:#c28b32;
+  --tone-cobalt:#217b92;
+  --tone-cypress:#287654;
+  --tone-ember:#b86447;
+  --tone-azure:#429bb1;
 
   --card:rgba(246,248,235,.94);
   --card2:rgba(214,232,220,.91);
@@ -121,8 +121,8 @@
   --shadow:0 18px 55px rgba(23,57,64,.14);
   --surface-high:#f9faed;
   --surface-low:#d2e5d8;
-  --control:#b8ddce;
-  --control-hover:#a3cdbd;
+  --control:#e3c37e;
+  --control-hover:#d6ad5e;
 
   --card-text: var(--ink);
   --muted-on-card:#4c646b;
@@ -160,18 +160,18 @@
 
 :root[data-theme="provence"] .btn--primary{
   background:var(--control);
-  border-color:#3e8275;
-  box-shadow:0 5px 14px rgba(34,106,96,.22);
+  border-color:#a66e25;
+  box-shadow:0 5px 14px rgba(166,110,37,.22);
 }
 
 :root[data-theme="provence"] .btn:hover{
-  border-color:#2d776a;
-  background:#eef6e9;
+  border-color:#217b92;
+  background:#eaf4ef;
 }
 
 :root[data-theme="provence"] .btn--primary:hover{
   background:var(--control-hover);
-  box-shadow:0 7px 18px rgba(34,106,96,.26);
+  box-shadow:0 7px 18px rgba(166,110,37,.28);
 }
 
 
@@ -1030,7 +1030,7 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   pointer-events:none;
   mix-blend-mode: screen;
 }
-:root[data-theme="provence"] .brush-card::before{ mix-blend-mode: screen; opacity:.28; filter:url(#brush); }
+:root[data-theme="provence"] .brush-card::before{ mix-blend-mode: screen; opacity:.18; filter:url(#brush); }
 
 .brush-card::after{
   content:"";
@@ -1257,7 +1257,8 @@ a:focus-visible, button:focus-visible, input:focus-visible{
   }
 }
 .card__top{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.badge{
+.badge,
+.card__badge{
   font-size: 12px;
   padding: 6px 10px;
   border-radius: 999px;
