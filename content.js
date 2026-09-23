@@ -36,8 +36,8 @@ window.PORTFOLIO = {
   },
 
   hero: {
-    title: "Full-Stack Software Dev • ML Researcher & Engineer",
-    subtitle: "I build production-minded AI products, reliable backend systems, and research-driven ML workflows that turn ideas into usable software.",
+    title: "Software Engineer • Machine Learning & Robotics",
+    subtitle: "I build simulation-based robotics, machine learning, and full-stack AI systems. I’m excited to develop new systems with mission-oriented teams, and open to full-time and contract-to-hire opportunities.",
     highlightStats: [
       { label: "B.S. Computer Science (CSUN)", value: "2026" },
       { label: "Dean’s List", value: "3.98 GPA" },
@@ -56,9 +56,15 @@ window.PORTFOLIO = {
       items: [
         {
           label: "arXiv Preprint",
+          title: "Wiring Diagram Extraction and Gluing (arXiv:2607.27598)",
+          href: "https://arxiv.org/abs/2607.27598",
+          desc: "Applies iterative Hasse clustering to figure-skating jump videos, using wiring diagrams to represent and classify temporal patterns in 3D motion data."
+        },
+        {
+          label: "arXiv Preprint",
           title: "From Data to Concepts via Wiring Diagrams (arXiv:2511.20138)",
-          href: "https://arxiv.org/pdf/2511.20138.pdf",
-          desc: "Introduces quasi-skeleton wiring diagrams—formal graphs connecting sequential data to abstract concepts via DAGs/Hasse diagrams. Algorithms extract diagrams from agent trajectories to summarize RL strategies, spanning category theory, clustering, symbolic reasoning, and RL behavior understanding."
+          href: "https://arxiv.org/abs/2511.20138",
+          desc: "Designed two versions of a video game and trained PPO reinforcement-learning agents to play them. Hasse-clustering algorithms analyzed gameplay traces to recover winning strategies, with comparisons against DBSCAN and hierarchical clustering."
         },
         {
           label: "Zenodo DOI: 10.5281/zenodo.17315846",
@@ -79,8 +85,8 @@ window.PORTFOLIO = {
   about: {
     title: "About",
     body: [
-      "I’m a full-stack software engineer and machine learning engineer focused on AI systems, reinforcement learning, retrieval-augmented generation, and production-ready application development.",
-      "My work spans funded ML research, backend architecture, API design, and end-to-end product integration. I care about grounded intelligence, robustness, and building systems people can actually rely on."
+      "I build software across machine learning, robotics simulation, AI systems, and full-stack product development.",
+      "My experience includes grant-supported machine learning projects, a pre-seed startup role, and end-to-end product engineering. I’m excited to build new systems with mission-oriented teams."
     ],
     interests: [
       "Reinforcement Learning (PPO, SB3)",
@@ -95,9 +101,9 @@ window.PORTFOLIO = {
       "Automation (extensions, scraping, pipelines)",
     ],
     quickFacts: [
-      { k: "Education", v: "B.S. Computer Science (2026) — California State University, Northridge (CSUN)" },
-      { k: "Recent work", v: "Full-Stack Software Engineer at Stealth and SideShift NYC; Machine Learning Engineer at CSUN" },
-      { k: "Research", v: "Machine learning research across NSF-, AFOSR-, and DARPA-supported projects" },
+      { k: "Education", v: "B.S. Computer Science, May 2026; GPA 3.98/4.00 — California State University, Northridge (CSUN)" },
+      { k: "Recent work", v: "Founding AI Engineer at Driftless; Machine Learning Engineer on contract projects; Full-Stack iOS Engineer at SideShift NYC" },
+      { k: "Project support", v: "DoW- and NSF-supported projects, including DARPA and AFOSR programs; appointment administered through University Corporation at CSUN" },
       { k: "Languages", v: "English, Farsi; plus Georgian & German" },
     ],
   },
@@ -106,62 +112,48 @@ window.PORTFOLIO = {
     title: "Experience",
     items: [
       {
-        role: "Full-Stack Software Engineer",
-        org: "Stealth",
-        when: "Aug 2025 - Jun 2026",
-        meta: "Remote",
+        role: "Machine Learning Engineer",
+        org: "Contract Projects",
+        when: "Jan 2023 - Sep 2026",
+        meta: "DoW- and NSF-supported projects, including DARPA and AFOSR programs; appointment administered through University Corporation at CSUN.",
         bullets: [
-          "Engineered backend systems and REST APIs for AI-driven applications, enabling reliable communication between frontend clients, business logic, and data services.",
-          "Used GitHub Copilot, Cursor, Claude Code, and OpenAI Codex for prototyping, debugging, and refactoring; reviewed AI-generated code for correctness, maintainability, security, and integration with existing application logic.",
-          "Built end-to-end full-stack workflows connecting frontend interfaces to backend services, including API integration, request handling, and database-driven functionality.",
-          "Designed and integrated hybrid RAG and LLM-powered application pipelines with retrieval, ranking, and backend orchestration to improve answer quality, domain relevance, and context-aware outputs.",
-          "Developed finance-oriented AI features for analysis, recommendation, and workflow automation, turning structured and unstructured data into user-facing insights.",
-          "Owned full-stack implementation across backend architecture, API design, and frontend integration, debugging cross-layer issues and improving system reliability."
+          "Built a Franka Panda simulation environment in NVIDIA Isaac Sim for tabletop manipulation, including planar pushing and guarded peg insertion; implemented structured observations, controller bindings, bounded closed-loop execution, and auditable trial logs.",
+          "Developed and evaluated an Isaac study comparing wiring-diagram planning with a symbolic baseline: 29/30 original nominal trials reached target, and all 60/60 missing or stale observation fault trials stopped safely.",
+          "Created reproducible benchmark tooling with held-out task families, ordered trial records, raw evidence, and configuration hashes; results are reported within the frozen study scope.",
+          "Developed a from-scratch multinomial linear next-action policy baseline with separate training, validation, and evaluation families; qualified legal proposals and safe-stop behavior without direct robot-dispatch authority.",
+          "Developed Hasse-diagram clustering for sequential reinforcement-learning behavior, recovering two winning strategies across all 125 successful episodes and evaluating robustness against 10% data corruption.",
+          "Separately trained and evaluated CNN-based figure-skating video classifiers, including transfer learning with a Kinetics-pretrained R(2+1)D-18, and tested pose models including YOLOv8-Pose, MediaPipe, Keypoint R-CNN, and OpenPose.",
+          "Co-authored two arXiv preprints during this appointment and presented findings at CSUN, Stanford SRC 2026, and the AFOSR 2025 Computational Cognition & Machine Intelligence Program Review."
         ]
       },
       {
-        role: "Full-Stack iOS Engineer",
+        role: "Founding AI Engineer",
+        org: "Driftless",
+        when: "Aug 2025 - Present",
+        meta: "Equity-based, part-time role at a pre-seed startup",
+        bullets: [
+          "Helped build a multi-tenant SaaS product for human teams and AI agents to coordinate work through shared task management and agent execution workflows.",
+          "Delivered features across the React client, Node.js/Express services, MongoDB data layer, and command-line agent tools, including task workflows, agent sessions, and organization-scoped access.",
+          "Built interactive terminal experiences for agent runs with live task status, inbox handoffs, model/provider selection, onboarding, and resilient process lifecycle handling."
+        ]
+      },
+      {
+        role: "Full-Stack iOS Engineer (Contract)",
         org: "SideShift NYC",
         when: "May 2026",
         meta: "Remote",
         bullets: [
-          "Contributed across SwiftUI mobile development, backend engineering, web application features, and subscription-growth initiatives.",
-          "Improved mobile UI/UX quality and resolved interface issues in SwiftUI.",
-          "Reduced unnecessary cloud database and API usage by optimizing backend data access and mobile caching behavior.",
-          "Built and refined backend-supported web application features for platform workflows.",
-          "Supported product discussions related to subscription conversion and premium feature adoption.",
-          "Collaborated through feedback cycles to deliver production-oriented fixes, feature improvements, and implementation notes."
-        ]
-      },
-      {
-        role: "Machine Learning Engineer",
-        org: "California State University, Northridge (CSUN)",
-        when: "Jan 2023 - Jul 2026",
-        meta: "Los Angeles, California, United States",
-        bullets: [
-          "Conducted machine learning research across NSF-, AFOSR-, and DARPA-supported projects, contributing to experiments, proposal development, and technical writing for funded research efforts.",
-          "Built custom robotics simulation environments and reproducible logging and benchmarking infrastructure that supported systematic reinforcement learning experimentation and analysis.",
-          "Developed an RL-to-symbolic analysis pipeline with a custom Hasse-diagram clustering method that recovered 2 winning strategies covering 100% of 125 successful episodes.",
-          "Evaluated robustness under 10% corruption, showing that the proposed Hasse-clustering approach preserved full coverage while DBSCAN and hierarchical clustering underperformed or required tuning to approach similar consensus.",
-          "Developed computer vision pipelines for sports-motion analysis using YOLO pose and other pose-estimation encoders, and trained CNNs on sports video data for successful figure skating jump-type detection.",
-          "Co-authored 1 arXiv preprint and contributed to 2 ongoing research projects.",
-          "Presented findings at CSUN research events, the AFOSR 2025 Computational Cognition & Machine Intelligence Program Review in Washington, D.C., Stanford SRC 2026, and invited academic talks in the U.S. and abroad."
+          "Shipped SwiftUI interface fixes and backend-supported web features; improved data access and caching to reduce unnecessary cloud database and API usage.",
+          "Collaborated on product refinements related to subscription conversion and premium feature adoption."
         ],
-        links: [
-          { label: "arXiv:2511.20138", href: "https://arxiv.org/abs/2511.20138" },
-          { label: "Game Version 2", href: "https://doi.org/10.5281/zenodo.17315846" },
-          { label: "Game Version 3", href: "https://doi.org/10.5281/zenodo.17315753" }
-        ]
       },
       {
-        role: "Python Software Engineer",
+        role: "Python Software Developer",
         org: "MISAN Robotic Foundation",
         when: "Jun 2020 - Jun 2021",
         meta: "Remote",
         bullets: [
-          "Supported robotics projects for firefighting and emergency-response applications.",
-          "Contributed to programming, hardware assembly, and mechatronic integration tasks in a hands-on development environment.",
-          "Assisted with prototype development and testing for robotics systems in safety-critical use cases."
+          "Supported firefighting and emergency-response robotics through software development, hardware assembly, mechatronic integration, and prototype testing."
         ],
       }
     ],
@@ -206,8 +198,8 @@ window.PORTFOLIO = {
     items: [
       {
         name: "Strategy Mining in Custom RL Environments",
-        badge: "Research",
-        desc: "OpenAI‑Gym‑style robotics tasks with PPO agents, reproducible simulation and logging, and custom Hasse-diagram clustering to recover symbolic winning strategies.",
+        badge: "Reinforcement Learning",
+        desc: "Designed two versions of a video game, trained PPO agents to play them, and analyzed gameplay traces with Hasse-diagram clustering to recover the winning strategies.",
         tags: ["Python", "PyTorch", "Stable‑Baselines3", "Jupyter"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/Strategy-Mining-in-Custom-RL-Environments-Dual-Path-Discovery-and-Robust-Graph-Clustering?tab=readme-ov-file", title: "Repo" },
@@ -228,7 +220,7 @@ window.PORTFOLIO = {
         desc: "Designed and built a full-stack AI career platform spanning React web and React Native mobile experiences, with backend systems for resume parsing, job discovery, ATS-style matching, and mock interview coaching.",
         tags: ["React", "React Native", "TypeScript", "FastAPI", "Neo4j", "LangChain", "Electron"],
         links: [
-          { kind: "github", href: "https://github.com/NimaJafariComp", title: "GitHub" },
+          { kind: "github", href: "https://github.com/NimaJafariComp/CareerLift", title: "Repo" },
         ],
       },
       {
@@ -237,16 +229,16 @@ window.PORTFOLIO = {
         desc: "An AI-assisted refund-support workflow with a Streamlit chat frontend and FastAPI backend. A deterministic policy engine validates customer and order ownership, evaluates policy, and keeps the LLM limited to missing-information prompts and customer-facing explanations.",
         tags: ["Python", "FastAPI", "Streamlit", "Pydantic", "SQLite", "Ollama", "OpenAI SDK", "Anthropic SDK", "pytest", "Ruff"],
         links: [
-          { kind: "github", href: "https://github.com/NimaJafariComp", title: "GitHub" },
+          { kind: "github", href: "https://github.com/NimaJafariComp/AgenticAI", title: "Repo" },
         ],
       },
       {
         name: "PocketPilot",
         badge: "Finance + AI",
-        desc: "A full-stack personal finance platform for transaction imports, automatic spending categorization, budgets, savings goals, interactive dashboards, and retrieval-augmented financial Q&A.",
+        desc: "A full-stack personal finance platform with Expo/React Native iOS and Android clients, a React web app, transaction categorization, budgets, savings goals, and AI-powered services.",
         tags: ["React", "React Native", "TypeScript", "Tailwind CSS", "Firebase", "Qdrant", "Ollama", "Vite", "Rust", "Solid.js", "Cloud Functions", "Firebase Auth", "Node.js", "Docker"],
         links: [
-          { kind: "github", href: "https://github.com/NimaJafariComp", title: "GitHub" },
+          { kind: "github", href: "https://github.com/NimaJafariComp/PocketPilot", title: "Repo" },
         ],
       },
       {
@@ -274,6 +266,35 @@ window.PORTFOLIO = {
         tags: ["Python", "PyQt5", "MySQL", "AWS RDS", "SendGrid", "bcrypt"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/J.E.N.I-Car-Rental-Application", title: "Repo" },
+        ],
+      },
+      {
+        name: "Hasse Clustering for Reinforcement-Learning Game Behavior",
+        badge: "Clustering + RL",
+        desc: "Designed two versions of a video game and trained PPO reinforcement-learning agents; applied Hasse-DAG clustering to gameplay traces to recover winning strategies and compared results with DBSCAN and hierarchical clustering.",
+        tags: ["Python", "Reinforcement Learning", "PPO", "Graph Clustering", "Hasse Diagrams"],
+        links: [
+          { kind: "github", href: "https://github.com/NimaJafariComp/Hasse_clustering", title: "Repo" },
+          { kind: "external", href: "https://arxiv.org/abs/2511.20138", title: "Paper" },
+        ],
+      },
+      {
+        name: "Figure-Skating Jump Analysis Pipeline",
+        badge: "Computer Vision",
+        desc: "Analyzed figure-skating jump videos with CNN classifiers and pose-estimation models, then applied interpretable Hasse-DAG clustering to motion-event sequences.",
+        tags: ["CNN", "YOLOv8-Pose", "Computer Vision", "Hasse Clustering"],
+        links: [
+          { kind: "github", href: "https://github.com/NimaJafariComp/Figure-Skating-Jump-Analysis-Pipeline", title: "Repo" },
+          { kind: "external", href: "https://arxiv.org/abs/2607.27598", title: "Paper" },
+        ],
+      },
+      {
+        name: "Reel Me Listing",
+        badge: "AI Media Pipeline",
+        desc: "Built a browser-based studio that turns property photos into reviewed vertical listing reels, with image-quality checks, optional AI image edits, and video-generation workflows.",
+        tags: ["React", "FastAPI", "Python", "Computer Vision", "FFmpeg", "Video Generation"],
+        links: [
+          { kind: "github", href: "https://github.com/NimaJafariComp/ReelMeListing", title: "Repo" },
         ],
       },
     ],
@@ -350,7 +371,7 @@ window.PORTFOLIO = {
     honors: [
       "CSUN Computer Science & Engineering Department Scholarships (Guerrera Endowed 2023; Engineering Merit 2024; Trustee Steven G. Stepanek Endowed 2025).",
       "Iranian American Women’s Foundation (IAWF) scholarship awardee (2024, 2025); active mentee and volunteer.",
-      "Dean’s List, awarded to students above 3.8 GPA (2023, 2024, ongoing)."
+      "Dean’s List each semester from Fall 2022 through graduation in May 2026."
     ],
     leadership: [
       { title: "Alpha Lambda Delta Honor Society (Co‑founder)", when: "2023 — Present", note: "Treasurer (2024): maintained financial records, budget reports, and funding requests to guide leadership decisions." },
@@ -369,6 +390,7 @@ window.PORTFOLIO = {
       { label: "USTA", href: "https://www.usta.com/en/home/play/player-search/profile.html#uaid=2019407241&tab=tournaments", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" stroke="currentColor" fill="none" stroke-width="1.5"/><circle cx="8" cy="8" r="1.5"/><line x1="8" y1="2" x2="8" y2="5" stroke="currentColor" stroke-width="1.5"/><line x1="8" y1="11" x2="8" y2="14" stroke="currentColor" stroke-width="1.5"/><line x1="2" y1="8" x2="5" y2="8" stroke="currentColor" stroke-width="1.5"/><line x1="11" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5"/></svg>` },
       { label: "Email", href: "mailto:mohammadnimajafari@yahoo.com", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.546z"/></svg>` },
       { label: "Resume/CV (PDF)", href: "assets/resume_sweV2.pdf", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/><path d="M4.5 4a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7zM4 6.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm.5 2a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0 1h-4z"/></svg>` },
+      { label: "Wiring Diagram Extraction and Gluing (arXiv:2607.27598)", href: "https://arxiv.org/abs/2607.27598" },
       { label: "From Data to Concepts via Wiring Diagrams (arXiv:2511.20138)", href: "https://arxiv.org/pdf/2511.20138.pdf", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12v12H2V2zm1 1v10h10V3H3zm1 1h8v1H4V4zm0 2h8v1H4V6zm0 2h6v1H4V8zm0 2h8v1H4v-1z"/></svg>` },
       { label: "Game Version 2: RL Strategy Mining (DOI 10.5281/zenodo.17315846)", href: "https://doi.org/10.5281/zenodo.17315846", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12v12H2V2zm1 1v10h10V3H3zm1 1h8v1H4V4zm0 2h8v1H4V6zm0 2h6v1H4V8zm0 2h8v1H4v-1z"/></svg>` },
       { label: "Game Version 3: RL Strategy Mining (DOI 10.5281/zenodo.17315753)", href: "https://doi.org/10.5281/zenodo.17315753", icon: `<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12v12H2V2zm1 1v10h10V3H3zm1 1h8v1H4V4zm0 2h8v1H4V6zm0 2h6v1H4V8zm0 2h8v1H4v-1z"/></svg>` },
