@@ -25,6 +25,8 @@ test("editorial markup cannot inject HTML or active URL schemes", () => {
 test("delivered HTML preserves professional destinations and unique section targets", () => {
   const html = renderPortfolio();
   assert.equal((html.match(/<h1\b/g) || []).length, 1);
+  assert.ok(html.indexOf('id="experience"') < html.indexOf('id="projects"'));
+  assert.ok(html.indexOf('id="projects"') < html.indexOf('id="research"'));
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
   assert.equal(ids.length, new Set(ids).size);
   for (const href of [...html.matchAll(/href="#([^"]+)"/g)].map(

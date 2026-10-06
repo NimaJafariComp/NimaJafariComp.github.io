@@ -171,8 +171,8 @@ export function renderPortfolio() {
 
   return `<a class="skip-link" href="#main">Skip to content</a>
     <header class="header"><a class="brand" href="#home" aria-label="Nima Jafari home"><span class="brand__symbol" aria-hidden="true">n<span>.</span></span><span>Nima Jafari</span></a>
-      <nav class="desktop-nav" aria-label="Main navigation"><a href="#projects">Work</a><a href="#research">Research</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav>
-      <div class="header__actions"><a class="button button--small" href="${safeHref(p.meta.resumeUrl)}">Resume ${down}</a><details class="mobile-menu"><summary aria-label="Navigation menu"><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="#projects">Work</a><a href="#research">Research</a><a href="#experience">Experience</a><a href="#about">About</a><a href="#contact">Contact</a></nav></details></div>
+      <nav class="desktop-nav" aria-label="Main navigation"><a href="#experience">Experience</a><a href="#projects">Work</a><a href="#research">Research</a><a href="#contact">Contact</a></nav>
+      <div class="header__actions"><a class="button button--small" href="${safeHref(p.meta.resumeUrl)}">Resume ${down}</a><details class="mobile-menu"><summary aria-label="Navigation menu"><span></span><span></span></summary><nav aria-label="Mobile navigation"><a href="#experience">Experience</a><a href="#projects">Work</a><a href="#research">Research</a><a href="#about">About</a><a href="#contact">Contact</a></nav></details></div>
     </header>
     <main id="main">
       <section class="hero" id="home" aria-labelledby="hero-title">
@@ -191,16 +191,6 @@ export function renderPortfolio() {
         </div>
       </section>
 
-      <section class="section work-section" id="projects" aria-labelledby="work-title"><span id="work" class="anchor-alias"></span>
-        <div class="section-heading"><div><h2 id="work-title">Selected projects</h2></div></div>
-        <div class="project-grid">${featured.map(projectCard).join("")}</div>
-        <details class="more-work"><summary>More projects <span>${otherProjects.length + supportingProjects.length} projects <span aria-hidden="true">+</span></span></summary><div class="project-grid">${supportingProjects.map(projectCard).join("")}</div><div class="project-list">${otherProjects.map((item) => `<article id="project-${slug(item.name)}"><div><p class="eyebrow">${escapeHtml(item.badge)}</p><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.desc)}</p>${tags(item.tags)}</div><div class="project-list__links">${links(item.links)}</div></article>`).join("")}</div></details>
-      </section>
-
-      <section class="section research-section" id="research" aria-labelledby="research-title"><div class="section-heading"><div><h2 id="research-title">Research & publications</h2></div><p>Reinforcement learning, motion analysis, and the structure hidden inside sequential data.</p></div>
-        <div class="publications">${p.hero.featuredPublication.items.map((item, index) => `<article class="publication"><span class="publication__number" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span><div><p class="eyebrow">${escapeHtml(item.label)}</p><h3><a href="${safeHref(item.href)}">${escapeHtml(item.title)} ${arrow}</a></h3><p>${escapeHtml(item.desc)}</p></div></article>`).join("")}</div>
-      </section>
-
       <section class="section experience-section" id="experience" aria-labelledby="experience-title"><div class="section-heading"><div><h2 id="experience-title">Experience</h2></div></div>
         <div class="timeline">${p.work.items
           .map(
@@ -215,6 +205,16 @@ export function renderPortfolio() {
               }</div></article>`,
           )
           .join("")}</div>
+      </section>
+
+      <section class="section work-section" id="projects" aria-labelledby="work-title"><span id="work" class="anchor-alias"></span>
+        <div class="section-heading"><div><h2 id="work-title">Selected projects</h2></div></div>
+        <div class="project-grid">${featured.map(projectCard).join("")}</div>
+        <details class="more-work"><summary>More projects <span>${otherProjects.length + supportingProjects.length} projects <span aria-hidden="true">+</span></span></summary><div class="project-grid">${supportingProjects.map(projectCard).join("")}</div><div class="project-list">${otherProjects.map((item) => `<article id="project-${slug(item.name)}"><div><p class="eyebrow">${escapeHtml(item.badge)}</p><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.desc)}</p>${tags(item.tags)}</div><div class="project-list__links">${links(item.links)}</div></article>`).join("")}</div></details>
+      </section>
+
+      <section class="section research-section" id="research" aria-labelledby="research-title"><div class="section-heading"><div><h2 id="research-title">Research & publications</h2></div><p>Reinforcement learning, motion analysis, and the structure hidden inside sequential data.</p></div>
+        <div class="publications">${p.hero.featuredPublication.items.map((item, index) => `<article class="publication"><span class="publication__number" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span><div><p class="eyebrow">${escapeHtml(item.label)}</p><h3><a href="${safeHref(item.href)}">${escapeHtml(item.title)} ${arrow}</a></h3><p>${escapeHtml(item.desc)}</p></div></article>`).join("")}</div>
       </section>
 
       <section class="section about-section" id="about" aria-labelledby="about-title"><div class="about-portrait"><img src="/assets/headshot.webp" width="400" height="400" alt="Portrait of Nima Jafari" loading="lazy"><p>Austin, Texas <span aria-hidden="true">↗</span></p></div><div class="about-copy"><h2 id="about-title">About me</h2>${p.about.body.map((text) => `<p>${escapeHtml(text)}</p>`).join("")}<div class="education"><p class="eyebrow">Education</p><h3>B.S. Computer Science</h3><p>California State University, Northridge<br>May 2026 <span aria-hidden="true">·</span> 3.98 / 4.00 GPA</p></div><details class="about-details" id="honors"><summary>Honors, leadership & life outside code <span aria-hidden="true">+</span></summary><div><ul>${p.honors.honors.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>${p.honors.leadership.map((item) => `<h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.note)}</p>`).join("")}<div class="personal-links">${links(personalLinks)}</div></div></details><details class="about-details" id="skills"><summary>Tools I work with <span aria-hidden="true">+</span></summary><div>${p.skills.groups.map((group) => `<h4>${escapeHtml(group.name)}</h4><p>${escapeHtml(group.items.join(" · "))}</p>`).join("")}</div></details></div></section>
