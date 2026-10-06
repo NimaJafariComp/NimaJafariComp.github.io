@@ -14,7 +14,7 @@
 }
 :root {
   color-scheme: dark;
-  --bg: #091321;
+  --bg: #060a10;
   --surface: #101f31;
   --blue: #142b43;
   --ink: #f4f1e8;
@@ -146,7 +146,7 @@ a svg,
   position: sticky;
   top: 0;
   z-index: 20;
-  background: rgba(9, 19, 33, 0.97);
+  background: rgba(6, 10, 16, 0.98);
 }
 .brand {
   display: flex;

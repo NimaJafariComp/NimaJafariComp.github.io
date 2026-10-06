@@ -19,7 +19,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
     powerPreference: "low-power",
   });
   renderer.setPixelRatio(Math.min(devicePixelRatio, compact ? 1.5 : 1.75));
-  renderer.setClearColor(0x091321, 0);
+  renderer.setClearColor(0x060a10, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
@@ -29,7 +29,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
   mount.append(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x091321, 11, 25);
+  scene.fog = new THREE.Fog(0x060a10, 11, 25);
   const camera = new THREE.PerspectiveCamera(37, 1, 0.1, 40);
   const environment = new THREE.PMREMGenerator(renderer);
   const environmentMap = environment.fromEquirectangular(source);
@@ -99,7 +99,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
   for(const material of [materials.titanium,materials.brass,materials.ivory]) {
     material.roughnessMap=grain;material.bumpMap=grain;material.bumpScale=0.0012;
   }
-  const desktopMaterial = new THREE.MeshStandardMaterial({color:0x0b1420,roughness:0.86,metalness:0.12});
+  const desktopMaterial = new THREE.ShadowMaterial({color:0x000000,opacity:0.3,fog:false});
   materials.desktop = desktopMaterial;
   const labelMaterials = [];
   const geometries = new Set();
@@ -145,7 +145,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
     geometry.translate(...position);
     benchParts.push(geometry);
   }
-  box([18,0.3,70],[0,-0.2,-24],desktopMaterial,scene);
+  box([18,0.3,70],[0,-0.2,-24],desktopMaterial,scene).castShadow = false;
   benchBox([1.1, 0.12, 0.85], [-0.4, 0.07, 0]);
   benchBox([0.8, 0.16, 0.58], [-0.4, 0.19, 0]);
   mesh(mergeGeometries(benchParts), materials.blue);
