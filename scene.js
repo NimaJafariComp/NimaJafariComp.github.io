@@ -19,7 +19,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
     powerPreference: "low-power",
   });
   renderer.setPixelRatio(Math.min(devicePixelRatio, compact ? 1.5 : 1.75));
-  renderer.setClearColor(0x060a10, 0);
+  renderer.setClearColor(0x030507, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
   renderer.shadowMap.enabled = true;
@@ -29,7 +29,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
   mount.append(renderer.domElement);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x060a10, 11, 25);
+  scene.fog = new THREE.Fog(0x030507, 11, 25);
   const camera = new THREE.PerspectiveCamera(37, 1, 0.1, 40);
   const environment = new THREE.PMREMGenerator(renderer);
   const environmentMap = environment.fromEquirectangular(source);
