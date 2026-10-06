@@ -239,6 +239,7 @@ export const portfolio = {
         tags: ["React", "React Native", "TypeScript", "Rust", "Firebase", "Qdrant", "Ollama"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/PocketPilot", title: "Repo" },
+          { kind: "demo", href: "https://pocketpilot-staging.web.app/signin", title: "Open app" },
         ],
       },
       {

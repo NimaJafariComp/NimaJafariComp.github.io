@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 import { HDRLoader } from "three/addons/loaders/HDRLoader.js";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { CSS3DObject, CSS3DRenderer } from "three/addons/renderers/CSS3DRenderer.js";
 
 export async function createWorkbench(mount, { compact = false, onFailure, onInspectChange }) {
   const response = await fetch("/assets/lighting/studio-small-09-1k.hdr", { signal: AbortSignal.timeout(12000) });
@@ -27,6 +28,9 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
   renderer.domElement.setAttribute("aria-hidden", "true");
   renderer.domElement.tabIndex = -1;
   mount.append(renderer.domElement);
+  const screenRenderer = new CSS3DRenderer();
+  screenRenderer.domElement.className = "phone-screen-layer";
+  mount.append(screenRenderer.domElement);
 
   const scene = new THREE.Scene();
   scene.fog = new THREE.Fog(0x030507, 11, 25);
@@ -358,7 +362,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
     for(let j=0;j<6;j++) box([0.045,0.025,0.42],[-0.61+j*0.24,0.12,0.57],materials.brass,layer,0.005);
   }
   const boardMaterial = new THREE.MeshStandardMaterial({color:0x16302c,roughness:0.58,metalness:0.25});materials.board=boardMaterial;
-  const circuit=box([2.0,0.045,2.7],[-1.30,0.055,0],boardMaterial,ml,0.012);
+  const circuit=box([1.65,0.045,2.7],[-1.475,0.055,0],boardMaterial,ml,0.012);
   for(let i=0;i<6;i++) {
     box([0.45,0.05,0.27],[-1.65+(i%2)*0.64,0.105,-0.8+Math.floor(i/2)*0.72],materials.dark,ml,0.009);
     for(let j=0;j<4;j++) box([0.04,0.009,0.03],[-1.84+(i%2)*0.64+j*0.11,0.09,-0.99+Math.floor(i/2)*0.72],materials.brass,ml,0.002);
@@ -381,8 +385,17 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
   }
   const ai = station('products');
   box([1.5,2.65,0.16],[0.72,1.37,-0.15],materials.titanium,ai,0.055);
-  label(['PocketPilot','','Transactions.','Budgets.','','Financial context.'],1.33,2.4,[0.72,1.37,-0.06],ai);
-  box([0.38,0.065,0.02],[0.72,2.51,-0.045],materials.dark,ai,0.025);
+  box([1.33,2.4,0.01],[0.72,1.37,-0.06],materials.dark,ai,0.01);
+  const phoneFrame = document.createElement('iframe');
+  phoneFrame.title = 'PocketPilot sign in';
+  phoneFrame.className = 'phone-screen';
+  phoneFrame.referrerPolicy = 'no-referrer';
+  const phoneScreen = new CSS3DObject(phoneFrame);
+  phoneScreen.position.set(0.72,1.37,-0.045);
+  phoneScreen.scale.setScalar(1.33 / 390);
+  ai.add(phoneScreen);
+  // Keep the camera cutout above the app viewport instead of covering its heading.
+  box([0.38,0.035,0.02],[0.72,2.625,-0.045],materials.dark,ai,0.015);
   for(let i=0;i<3;i++) {
     const card=new THREE.Group();card.position.set(-1.42+i*0.18,1.0+i*0.07,-0.35+i*0.24);ai.add(card);layers.products.push(card);
     box([1.3,1.7,0.009],[0,0,0],materials.ivory,card,0.004);
@@ -469,8 +482,12 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
     key.target.updateMatrixWorld();
     camera.position.copy(cameraPosition);
     camera.lookAt(lookAt);
+    phoneScreen.visible = topic === 'products' && (!journey || path.flight < 0.1);
+    if (phoneScreen.visible && !phoneFrame.hasAttribute('src'))
+      phoneFrame.src = 'https://pocketpilot-staging.web.app/signin';
     const before = performance.now();
     renderer.render(scene, camera);
+    screenRenderer.render(scene, camera);
     const duration = performance.now() - before;
     frames++;
     mount.dataset.frames = String(frames);
@@ -498,11 +515,12 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
     rect = mount.getBoundingClientRect();
     if (rect.width < 1 || rect.height < 1 || disposed) return;
     renderer.setSize(rect.width, rect.height, false);
+    screenRenderer.setSize(rect.width, rect.height);
     camera.aspect = rect.width / rect.height;
     camera.zoom = Math.min(1, camera.aspect / 1.05) * (compact ? 0.88 : 1);
     camera.updateProjectionMatrix();
     // A paused scene still gets one correctly sized frame without restarting motion.
-    if (paused) renderer.render(scene, camera);
+    if (paused) { renderer.render(scene, camera); screenRenderer.render(scene, camera); }
     else requestRender();
   }
   function pointerMove(event) {
@@ -641,6 +659,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
       renderer.dispose();
       renderer.forceContextLoss();
       renderer.domElement.remove();
+      screenRenderer.domElement.remove();
     },
   };
 }
