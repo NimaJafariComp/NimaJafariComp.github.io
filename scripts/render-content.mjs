@@ -60,14 +60,14 @@ export function renderPortfolio() {
   const existingProjects = [
     {
       id: "project-robotics",
-      name: "Robot manipulation in Isaac Sim",
-      category: "Robotics · Simulation",
+      name: "Wiring Diagram SDK",
+      category: "SDK · Kernel design",
       kind: "robotics",
       description:
-        "Closed-loop tabletop manipulation in NVIDIA Isaac Sim, with structured observations, bounded execution, and an auditable record of every trial.",
-      tech: ["Python", "NVIDIA Isaac Sim", "Robotics"],
+        "Designed the kernel for the Wiring Diagram SDK, using NVIDIA Isaac Sim as a test environment for concept validation and evaluation.",
+      tech: ["Python", "Kernel design", "Wiring diagrams", "NVIDIA Isaac Sim"],
       story: [
-        ["The work", p.work.items[0].bullets[0]],
+        ["Kernel design & validation", p.work.items[0].bullets[0]],
         ["Evidence, within scope", p.work.items[0].bullets[1]],
         ["Reproducibility", p.work.items[0].bullets[2]],
       ],

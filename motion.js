@@ -7,7 +7,7 @@ const chapters = [
   ["software", "Software engineering", "CareerLift", "Web and mobile applications built with React, React Native, and FastAPI.", "#project-careerlift"],
   ["products", "Retrieval-augmented generation", "PocketPilot", "Hybrid retrieval over financial records with Rust, Qdrant, and local Ollama inference.", "#project-pocketpilot"],
   ["research", "Machine learning & research", "Hasse Clustering", "A Python clustering engine running in the browser through Pyodide and Web Workers.", "#project-hasse-clustering"],
-  ["robotics", "Robotics", "Robot manipulation", "Tabletop manipulation experiments in NVIDIA Isaac Sim.", "#project-robotics"],
+  ["robotics", "SDK · Kernel design", "Wiring Diagram SDK", "I designed the SDK kernel and used NVIDIA Isaac Sim to validate concepts and test its behavior.", "#project-robotics"],
 ];
 
 export function setupMotion(scene, onTopic) {

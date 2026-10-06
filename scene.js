@@ -332,7 +332,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
   screen.fillStyle='#1d2934';screen.fillRect(0,0,1536,64);screen.fillRect(0,64,252,790);
   screen.fillStyle='#c1a373';screen.font='500 25px monospace';screen.fillText('NIMA JAFARI  /  ENGINEERING',32,42);
   screen.fillStyle='#9dafbe';screen.font='22px monospace';
-  ['EXPLORER','','career-lift/','  app/','  services/','  models/','','strategy-mining/','pocket-pilot/','robotics/'].forEach((v,i)=>screen.fillText(v,26,116+i*40));
+  ['EXPLORER','','career-lift/','  app/','  services/','  models/','','strategy-mining/','pocket-pilot/','wiring-diagram-sdk/'].forEach((v,i)=>screen.fillText(v,26,116+i*40));
   screen.fillStyle='#d7dfe5';screen.font='32px monospace';screen.fillText('From an idea to a working system.',304,150);
   const code=[['# Full-stack · ML · AI · Robotics','#758898'],['','#fff'],['class EngineeringPractice:','#a9c6c2'],['    def build(self, idea):','#c7b593'],['        system = self.design(idea)','#b1bcc5'],['        evidence = self.evaluate(system)','#b1bcc5'],['        return self.ship(system, evidence)','#b1bcc5']];
   screen.font='25px monospace';code.forEach(([line,color],i)=>{screen.fillStyle=color;screen.fillText(line,310,226+i*48)});

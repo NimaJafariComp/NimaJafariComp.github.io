@@ -117,8 +117,8 @@ export const portfolio = {
         when: "Jan 2023 - Sep 2026",
         meta: "DoW- and NSF-supported projects, including DARPA and AFOSR programs; appointment administered through University Corporation at CSUN.",
         bullets: [
-          "Built a Franka Panda simulation environment in NVIDIA Isaac Sim for tabletop manipulation, including planar pushing and guarded peg insertion; implemented structured observations, controller bindings, bounded closed-loop execution, and auditable trial logs.",
-          "Developed and evaluated an Isaac study comparing wiring-diagram planning with a symbolic baseline: 29/30 original nominal trials reached target, and all 60/60 missing or stale observation fault trials stopped safely.",
+          "Designed the kernel for the Wiring Diagram SDK. Used a Franka Panda environment in NVIDIA Isaac Sim to validate concepts and test the kernel through planar pushing and guarded peg insertion, with structured observations, bounded execution, and auditable trial logs.",
+          "Tested the SDK concepts in an Isaac Sim study comparing wiring-diagram planning with a symbolic baseline: 29/30 original nominal trials reached target, and all 60/60 missing or stale observation fault trials stopped safely.",
           "Created reproducible benchmark tooling with held-out task families, ordered trial records, raw evidence, and configuration hashes; results are reported within the frozen study scope.",
           "Developed a from-scratch multinomial linear next-action policy baseline with separate training, validation, and evaluation families; qualified legal proposals and safe-stop behavior without direct robot-dispatch authority.",
           "Developed Hasse-diagram clustering for sequential reinforcement-learning behavior, recovering two winning strategies across all 125 successful episodes and evaluating robustness against 10% data corruption.",
