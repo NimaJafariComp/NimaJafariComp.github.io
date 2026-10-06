@@ -15,12 +15,13 @@
 :root {
   color-scheme: dark;
   --bg: #030507;
-  --surface: #090d12;
+  --surface: #0d131b;
+  --surface-hover: #121b25;
   --blue: #151b23;
   --ink: #f4f1e8;
   --muted: #adbccd;
   --gold: #c4a66b;
-  --line: rgba(173, 188, 205, 0.18);
+  --line: #35404d;
   --display: "Space Grotesk", sans-serif;
   --body: "IBM Plex Sans", sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -146,7 +147,7 @@ a svg,
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--bg);
+  background: #0b1016;
 }
 .brand {
   display: flex;
@@ -1495,10 +1496,10 @@ details[open] > summary span[aria-hidden] {
 .section-heading { align-items: flex-start; margin-bottom: 32px; gap: 32px; }
 .section h2 { font-size: clamp(28px,3vw,40px); letter-spacing: -.035em; }
 .section .eyebrow { color: var(--muted); letter-spacing: .07em; }
-.project-grid { display: block; }
+.project-grid { display: block; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
 .project, .project:hover {
   display: grid; grid-template-columns: minmax(180px,.7fr) minmax(0,1.8fr);
-  gap: 48px; padding: 32px 0; border: 0; border-top: 1px solid var(--line);
+  gap: 48px; padding: 32px; border: 0; border-top: 1px solid var(--line);
   background: transparent; transition: none;
 }
 .project__heading h3 { font-size: 25px; line-height: 1.2; margin: 9px 0 20px; letter-spacing: -.025em; }
@@ -1520,7 +1521,23 @@ details[open] > summary span[aria-hidden] {
 @media (max-width:767px) {
   .section { padding-top: 56px; padding-bottom: 56px; }
   .section-heading { margin-bottom: 24px; }
-  .project, .project:hover { grid-template-columns: 1fr; gap: 14px; padding: 26px 0; }
+  .project, .project:hover { grid-template-columns: 1fr; gap: 14px; padding: 24px 18px; }
   .project__heading h3 { margin-bottom: 6px; }
   .project__body > p:not(.eyebrow) { font-size: 15px; }
+}
+
+/* Solid surfaces distinguish content without brightening the 3D backdrop. */
+.about-section, .research-section, .contact-section { background: #090e14; }
+.project-grid > .project:first-child { border-top: 0; }
+.project:focus-within { background: var(--surface-hover); }
+.timeline { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 0 28px; }
+.timeline .experience + .experience { border-top: 1px solid var(--line); }
+.timeline .experience__content { border: 0; padding-bottom: 0; }
+.publication { border-top-color: var(--line); }
+@media (hover:hover) {
+  .project:hover { background: var(--surface-hover); }
+}
+@media (max-width:767px) {
+  .timeline { padding: 0 18px; }
+  .timeline .experience { padding: 24px 0; }
 }
