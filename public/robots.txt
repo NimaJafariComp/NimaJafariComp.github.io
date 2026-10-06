@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://nimajafaricomp.github.io/sitemap.xml

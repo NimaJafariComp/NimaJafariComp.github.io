@@ -1,6 +1,6 @@
 
 
-window.PORTFOLIO = {
+export const portfolio = {
   meta: {
     name: "Nima Jafari",
     location: "Austin, TX",
@@ -102,7 +102,7 @@ window.PORTFOLIO = {
     ],
     quickFacts: [
       { k: "Education", v: "B.S. Computer Science, May 2026; GPA 3.98/4.00 — California State University, Northridge (CSUN)" },
-      { k: "Recent work", v: "Founding AI Engineer at Driftless; Machine Learning Engineer on contract projects; Full-Stack iOS Engineer at SideShift NYC" },
+      { k: "Recent work", v: "Founding AI Engineer at Driftless; Machine Learning Engineer on contract projects; Full-Stack iOS Engineer at SideShift in New York City" },
       { k: "Project support", v: "DoW- and NSF-supported projects, including DARPA and AFOSR programs; appointment administered through University Corporation at CSUN" },
       { k: "Languages", v: "English, Farsi; plus Georgian & German" },
     ],
@@ -139,9 +139,9 @@ window.PORTFOLIO = {
       },
       {
         role: "Full-Stack iOS Engineer (Contract)",
-        org: "SideShift NYC",
+        org: "SideShift",
         when: "May 2026",
-        meta: "Remote",
+        meta: "New York City, NY",
         bullets: [
           "Shipped SwiftUI interface fixes and backend-supported web features; improved data access and caching to reduce unnecessary cloud database and API usage.",
           "Collaborated on product refinements related to subscription conversion and premium feature adoption."
@@ -206,17 +206,17 @@ window.PORTFOLIO = {
         ],
       },
       {
-        name: "CycleKindAI",
-        badge: "LLM + Privacy",
-        desc: "Hybrid RAG pipeline with FastAPI, Neo4j, Postgres, local LLMs, Redis, MinIO, and Docker Compose built around citation-first and consent-forward flows.",
-        tags: ["FastAPI", "Neo4j", "Postgres", "RAG", "Docker", "Redis", "MinIO"],
+        name: "GhostD",
+        badge: "Developer tooling",
+        desc: "A local TypeScript runtime that records developer-agent events in SQLite and compiles versioned context for side questions to Codex, Claude, or Gemini. Includes a CLI, a VS Code extension, and a read-only MCP server.",
+        tags: ["TypeScript", "Node.js", "SQLite", "MCP", "VS Code"],
         links: [
-          { kind: "github", href: "https://github.com/ZafriAI/CycleKindAI", title: "Repo" },
+          { kind: "github", href: "https://github.com/NimaJafariComp/GhostD", title: "Repo" },
         ],
       },
       {
         name: "CareerLift",
-        badge: "AI Career Platform",
+        badge: "Full-stack · Web & mobile",
         desc: "Designed and built a full-stack AI career platform spanning React web and React Native mobile experiences, with backend systems for resume parsing, job discovery, ATS-style matching, and mock interview coaching.",
         tags: ["React", "React Native", "TypeScript", "FastAPI", "Neo4j", "LangChain", "Electron"],
         links: [
@@ -234,9 +234,9 @@ window.PORTFOLIO = {
       },
       {
         name: "PocketPilot",
-        badge: "Finance + AI",
-        desc: "A full-stack personal finance platform with Expo/React Native iOS and Android clients, a React web app, transaction categorization, budgets, savings goals, and AI-powered services.",
-        tags: ["React", "React Native", "TypeScript", "Tailwind CSS", "Firebase", "Qdrant", "Ollama", "Vite", "Rust", "Solid.js", "Cloud Functions", "Firebase Auth", "Node.js", "Docker"],
+        badge: "Full-stack · Finance & RAG",
+        desc: "Personal finance apps for web and mobile, with transactions, budgets, savings goals, and a Rust RAG service. Qdrant combines semantic and keyword retrieval over user-specific financial records, with local inference through Ollama.",
+        tags: ["React", "React Native", "TypeScript", "Rust", "Firebase", "Qdrant", "Ollama"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/PocketPilot", title: "Repo" },
         ],
@@ -251,30 +251,13 @@ window.PORTFOLIO = {
         ],
       },
       {
-        name: "Weather Forecasting (TensorFlow)",
-        badge: "ML",
-        desc: "Keras ANN notebooks for training and inference on historical weather data.",
-        tags: ["TensorFlow/Keras", "Python", "Notebooks"],
-        links: [
-          { kind: "github", href: "https://github.com/NimaJafariComp/weather-forecasting-project", title: "Repo" },
-        ],
-      },
-      {
-        name: "J.E.N.I. Car Rental Application",
-        badge: "Desktop Platform",
-        desc: "Engineered a desktop car rental platform with separate customer and admin interfaces for vehicle browsing, booking, inventory management, invoice delivery, and operational reporting.",
-        tags: ["Python", "PyQt5", "MySQL", "AWS RDS", "SendGrid", "bcrypt"],
-        links: [
-          { kind: "github", href: "https://github.com/NimaJafariComp/J.E.N.I-Car-Rental-Application", title: "Repo" },
-        ],
-      },
-      {
-        name: "Hasse Clustering for Reinforcement-Learning Game Behavior",
+        name: "Hasse Clustering",
         badge: "Clustering + RL",
-        desc: "Designed two versions of a video game and trained PPO reinforcement-learning agents; applied Hasse-DAG clustering to gameplay traces to recover winning strategies and compared results with DBSCAN and hierarchical clustering.",
-        tags: ["Python", "Reinforcement Learning", "PPO", "Graph Clustering", "Hasse Diagrams"],
+        desc: "A Python engine and browser application for clustering ordered event sequences by Hasse-DAG patterns. The browser runs the engine in a Pyodide Web Worker, with CSV/JSON input, graph visualization, cluster exports, and cancellation.",
+        tags: ["Python", "Pyodide", "Web Workers", "SVG", "Graph Clustering"],
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/Hasse_clustering", title: "Repo" },
+          { kind: "external", href: "https://hasse-clustering.pages.dev/", title: "Live demo" },
           { kind: "external", href: "https://arxiv.org/abs/2511.20138", title: "Paper" },
         ],
       },
@@ -289,8 +272,8 @@ window.PORTFOLIO = {
         ],
       },
       {
-        name: "Reel Me Listing",
-        badge: "AI Media Pipeline",
+        name: "ReelMeListing",
+        badge: "Full-stack · Media",
         desc: "Built a browser-based studio that turns property photos into reviewed vertical listing reels, with image-quality checks, optional AI image edits, and video-generation workflows.",
         tags: ["React", "FastAPI", "Python", "Computer Vision", "FFmpeg", "Video Generation"],
         links: [

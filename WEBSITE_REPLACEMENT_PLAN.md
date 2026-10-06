@@ -10,22 +10,22 @@ Baseline: `494e5606a6287fd1a65532eb2c773f163ec3f189`. Original files and baselin
 | --- | --- | --- |
 | 1. Preserve baseline | Complete | Starting commit recorded; original files saved in `/tmp/nima-portfolio-original`; existing five-size screenshots retained. |
 | 2. Confirm content | Complete | Existing roles, dates and scoped research metrics retained; rendering check verifies every project repository and publication link. Availability wording kept conservative. |
-| 3. Static build | Complete | Vite build passes; 34.64 KB HTML includes all essential content; two focused rendering/security checks pass. |
-| 4. Visual foundation | Implemented; visual QA running | Vertical layout, accessible native disclosures and mobile navigation are built. Five viewport captures are in progress. |
-| 5. Media | In progress | Higgsfield reference optimized to 20 KB desktop / 14 KB phone; portrait 8 KB; two self-hosted font subsets total 62.6 KB with licenses. Final scene-matching poster/social image still to capture. |
-| 6. Scene prototype | Three.js fallback implemented; QA running | Spline lists tools but all authoring calls return “No editor is connected.” Agreed fallback uses authored primitive geometry; no paid account or generated model required. |
-| 7. Scene integration | Implemented; behavior QA pending | Deferred renderer, replay, pause, offscreen/hidden-tab lifecycle, and static fallback integrated. |
-| 8. Motion | Implemented; behavior QA pending | One bounded scroll-driven camera progression, pointer offsets, shared CSS/GSAP timing; no scroll hijacking or idle loop. |
-| 9. Mobile | Pending | Poster-first layout and opt-in scene. |
-| 10. Accessibility / SEO | Pending | No-JS, keyboard, reduced motion and metadata. |
-| 11. QA / performance | Pending | Screenshots, browser checks and measured budgets. |
-| 12. Deployment | Pending | Prepare workflow; production cutover follows verified preview. |
+| 3. Static build | Complete | Vite production build passes; essential content is present without JavaScript. |
+| 4. Visual foundation | Verified in Chromium | Desktop 1920, laptop 1366, tablet 768, phone 390 and 412 px screenshots inspected; tablet copy/scene overlap corrected. |
+| 5. Media | Integrated | Four new Higgsfield Nano Banana Pro 2K images: software, robotics, ML hardware, AI product. User-authorized budget: 8 credits; 4 × 2 used, balance 0. Responsive 800/1400px WebPs: about 16–52 KB each. Prompts/job IDs recorded in `scripts/editorial-assets.json`; originals in Downloads. |
+| 6. Scene | Photographic + live modes implemented | Cinematic view uses generated concept imagery; Enter 3D explicitly loads custom geometry. Detailed laptop, machined assemblies, HDR studio reflections, grain, shadows and drag rotation. No Spline dependency/branding. Generated images are clearly labeled and are not project screenshots. |
+| 7. Scene integration | Verified in Chromium | Topic switches, inspection, replay, pause, idle/offscreen suspension, failed-load fallback and reduced-motion teardown pass. |
+| 8. Motion | Implemented | Bounded scroll/pointer movement; physical robot pickup uses tested inverse kinematics. No continuous idle render loop. |
+| 9. Mobile | Emulation verified | Poster first, touch-accessible opt-in, all four live scenes checked at phone size; 320px and landscape layouts have no horizontal overflow. Physical devices pending. |
+| 10. Accessibility / SEO | Partially verified | No-JS content, resume destinations, reduced motion, semantic headings and fallback verified. Comprehensive assistive-technology audit remains pending. |
+| 11. QA / performance | Local checks pass | Three node tests and production build pass. About 2.8 KB gzip initial JS, 150 KB deferred scene, 44.5 KB deferred motion; 1.62 MB HDR lighting loads only on explicit 3D entry. Local interaction/layout checks pass; earlier timing numbers are historical, not a current production/mobile-network benchmark. |
+| 12. Deployment | Not performed | Live Pages settings and production site remain unchanged. Cross-browser/device checks and deployment verification remain outstanding. |
 
 Progress notes are updated with each implementation milestone; statuses describe verified work, not intended work.
 
 ## 1. The direction
 
-Build **Robotics Workbench**: a cinematic, tactile, interactive exhibit of Nima's work in robotics, machine learning, research, and AI product engineering. One beautifully composed workbench is the signature of the site. Visitors can inspect it, replay a short assembly animation, and follow its controls into real projects and publications.
+Build **Engineering Workbench**: a cinematic, tactile, interactive exhibit of Nima's work in robotics, machine learning, research, and AI product engineering. Four inspectable stations span software, AI products, machine learning, and robotics; software is the arrival scene. Visitors can inspect it, replay a short assembly animation, and follow its controls into real projects and publications.
 
 The experience should feel like entering an engineer's carefully curated studio. Deep blue, warm ivory, brushed brass, deliberate typography, and believable lighting connect it to the existing painterly identity. The surrounding portfolio stays quiet, legible, and specific to Nima.
 
@@ -405,7 +405,7 @@ Because reverting code alone does not reverse a Pages source-setting change, ret
 
 The replacement is complete only when the scene has a clear purpose; the homepage communicates Nima's work within the intended time windows; resume/contact always work; content remains usable without JS/3D; keyboard and reduced-motion modes pass; mobile composition is intentionally designed; performance gates pass under recorded conditions; primary screenshots have been inspected; and the deployed build has been checked live.
 
-**Stopping point for this task:** this plan is the deliverable. Website implementation, further media generation, and deployment begin only after direction approval.
+**Current status:** implementation approved and underway on the feature branch. Production deployment remains unchanged until the build is verified.
 
 ### Implementation log
 
@@ -413,3 +413,58 @@ The replacement is complete only when the scene has a clear purpose; the homepag
 - Static build and content preservation checks pass. Initial application JS is 2.21 KB gzip; deferred motion 44.53 KB; deferred Three.js scene 138.13 KB. The scene receives a build warning for its 552 KB uncompressed chunk, but remains far below the planned compressed runtime budget; it is already dynamically imported.
 - Spline authoring unavailable because no editor bridge is connected; selected the approved direct Three.js path. No additional Higgsfield credits spent.
 - Started five-size production-build screenshots and browser error/layout inspection.
+- User correction: Spline is required for the final interactive experience; the Three.js workbench is a temporary prototype, not the final renderer.
+- Spline MCP connection repaired: the short-lived diagnostic client closed before the editor connected. A persistent official-server session now reads the live empty 3D document successfully. Authoring the Spline scene and verifying export integration next.
+
+- Authored and exported an original Spline scene using the official desktop MCP; verified actual pick-and-place motion, exploded inspection, pause, idle/offscreen rendering suspension, and reduced-motion fallback in Chromium. The direct Three.js prototype is superseded.
+- Expanding the scene to four disciplines following user feedback: machined software service layers, an AI retrieval device and source cards, ML model layers, and the robotic assembly. Shared titanium, brass, ceramic, and blue finishes; no additional generated-media credits spent.
+
+- User rejected Spline attribution and withdrew the Spline requirement. Removed the Spline runtime and exported scene from the website. Rebuilding the same four interactive disciplines directly in Three.js; no branding is hidden or stripped from a Spline export. Existing Spline authoring is retained outside the repository for recovery only. Higgsfield remains an art-direction tool, not the runtime.
+
+- Custom Three.js replacement verified with zero uncaught browser errors. Desktop software scene: 42 draw calls / 10,410 triangles; robot scene: 25 draw calls / 5,806 triangles. No Spline network requests or runtime references remain in delivered source/assets. Node tests cover content escaping/link preservation and robot gripper/part alignment.
+- Spline MCP configuration and desktop app are left installed but unused; no account changes or additional Higgsfield credit spending. Production remains untouched.
+
+- Realism correction: previous live models were simplified primitives and did not match the photographic Higgsfield reference. Replaced the software stack with a detailed laptop; added studio HDR lighting, contact/cast shadows, finer geometry, material grain, mechanical fasteners and cabling. Software scene now ~62 draw calls / 68,790 rendered triangles including shadow pass; robot ~70 / 21,308. Fine laptop grille details are instanced.
+- User authorized spending the remaining 8 Higgsfield credits. Exactly four Nano Banana Pro jobs at 2 credits each completed; account balance verified as 0. Assets cover all four disciplines and appear in cinematic hero topic views plus four featured project cards. No video generation, subscriptions, or further spend.
+- Cinematic and live geometry modes are explicitly separate: generated photography is not misrepresented as real-time rendered geometry. Three.js, GSAP and 1K HDR lighting load only after Enter 3D. Visitors can switch back; reduced-motion/no-JS users retain imagery, content, resume and contact.
+- Lighting asset: [Studio Small 09](https://polyhaven.com/a/studio_small_09), Sergej Majboroda / Poly Haven, CC0; license/source retained beside the HDR. The 1K asset is a deliberate quality/bandwidth tradeoff, loaded on demand.
+- Final browser checks for this iteration: all four cinematic topic images switch; Enter 3D, drag rotation, laptop inspection, return to cinematic view and repeated entry pass. Keyboard activation/focus restoration and mobile menu Escape pass. Resume returns a valid PDF and contact remains a mailto link. Five viewport captures, 320px/landscape, no-JS, reduced motion and blocked-renderer fallback pass without overflow or uncaught errors. Detailed local results/screenshots remain in ignored `artifacts/qa`. Physical iOS/Android and non-Chromium browsers remain unverified; no production deployment performed.
+
+### Interaction correction — October 6, 2026
+
+- Latest user feedback supersedes the photo-first implementation above. The reference describes a continuous scroll-directed camera experience; a still-image hero with an optional model viewer did not satisfy that requirement.
+- Live Three.js now loads automatically (except reduced motion or explicit data saving). Wide screens use a pinned, four-chapter camera journey through software, AI, ML/research and robotics. Camera movement, hardware separation and robot manipulation respond to page progression. Chapter links jump directly within that journey; project/resume/contact links bypass it.
+- Objects support direct pointer/touch inspection plus drag orbit, with equivalent keyboard-operated controls. Smaller screens retain automatic live 3D and topic controls without the long pinned sequence. A still-view control disposes the renderer and removes pinning.
+- Reused the existing Three.js/GSAP stack. No new runtime dependency, Spline embedding, generated video, or additional Higgsfield spending. Existing generated photographs remain supporting project imagery and fallback assets, not 3D models.
+- Circuit detail batching reduces ML draw calls from 159 to 63. Settled chapter counts: software 62, AI 23, ML 63, robotics 70. Runtime remains demand-rendered and pauses offscreen; automatic loading now incurs the approximately 151 KB gzip renderer chunk and 1.6 MB HDR asset without a click. Previous photo-only Lighthouse timings do not describe this iteration.
+- Status: interaction correction implemented locally; production unchanged. Model fidelity remains custom procedural geometry, not scanned/product-grade assets or the photorealistic generated video shown in the reference. Do not represent this as having reached that visual fidelity.
+- Verification: four Node tests and production build pass. Chromium checks pass for native-scroll chapter progression, pause/frozen frames, direct mesh inspection, project bypass, five viewport widths, reduced-motion renderer/pin teardown, and resume retrieval. Chromium and WebKit both render live 3D with no uncaught errors, horizontal overflow, or axe WCAG A/AA findings in the checked desktop/mobile states. Screenshots inspected. Firefox automation stalled and was terminated; Firefox and physical-device verification are outstanding. Build retains the expected warning for the deferred Three.js chunk exceeding 500 KB uncompressed.
+
+### Mobile scroll correction — October 6, 2026
+
+- Removed the desktop-only scroll restriction. Mobile/tablet now have a dedicated pinned stage after the introduction, with all four chapters driven by native page scrolling in either direction. The stage reserves explicit pin spacing inside the flex layout, preventing project content from overlapping the renderer.
+- Kept chapter text, touch controls, and model together; fitted stage height to the actual header and small viewport, adjusted camera framing, and added a landscape arrangement. Reduced-motion/still-view teardown removes pinning. This supersedes the earlier mobile variant without a scroll sequence.
+- Verified 320×568, 390×844, 412×915, 768×1024 and 844×390 in Chromium and WebKit: chapter progression/reversal, controls within viewport, no horizontal overflow or project overlap, clean release into content, and reduced-motion cleanup. Inspected screenshots. A Chromium emulated native touch swipe over the canvas scrolls the page; phone-to-desktop resizing restores one desktop pin and working chapters. Four Node tests, production build and diff whitespace checks pass. Physical-phone testing remains unperformed; production deployment unchanged.
+
+### Scene controls and copy cleanup — October 6, 2026
+
+- Removed the still-view, replay, inspection, pause and load buttons, their event handlers, the scene-status footer, scroll instruction, and decorative annotation. Scroll/touch interaction and chapter navigation remain; reduced-motion and data-saving preferences still select the fallback automatically.
+- Replaced slogan headings with Nima's name, project names and direct section labels. Chapter descriptions now identify the actual technologies and work. Used the freed mobile space for the model.
+- Four Node tests, build and whitespace checks pass. Browser verification confirms the removed UI is absent, native touch scrolling still works over the canvas, and desktop chapter navigation still works after resizing. Mobile screenshot inspected; production unchanged.
+
+### GitHub project selection — October 6, 2026
+
+- Reviewed public GitHub repository metadata, READMEs and relevant source files. Featured selection now leads with PocketPilot, CycleKindAI, CareerLift, ReelMeListing, GhostD and Hasse Clustering. Robotics, StrategyMining and AgenticAI remain available under More projects with preserved deep links. Removed the weather notebook and older car-rental entry from the portfolio selection.
+- Confirmed PocketPilot's dense/sparse retrieval and incremental indexing in `backend/rust/crates/common/src/rag.rs`; confirmed CycleKindAI's Neo4j vector retrieval, user context and returned sources in `ZafriAI/CycleKindAI/api/routes/rag.py`. GhostD's context compiler is presented as developer tooling, not RAG. Hasse's current browser implementation uses Pyodide in a Web Worker; linked its documented live demo. No private repository details or unsupported deployment/user-count claims added.
+- Updated scene chapter destinations and labels to match the featured work. Four existing tests and build pass. Browser checks confirm six featured cards, no horizontal overflow at desktop/phone widths, removed older entries, and deep-link expansion of supporting projects. Screenshots inspected. These checks validate the portfolio, not the runtime behavior of the external projects. Production unchanged.
+
+### Project presentation refinement — October 6, 2026
+
+- Removed generated project images, image captions, decorative numbering and hidden detail panels. Selected projects now use aligned rows with a name/repository column and visible descriptions, technologies and implementation details. Mobile stacks the same information without large image blocks.
+- Removed research/contact background gradients, reduced section-heading size and excess spacing, aligned sections to the page gutter, and limited content accents to muted text and standard links. The interactive hero remains intact.
+- Four tests and production build pass; desktop/phone browser checks confirm all six projects, working supporting-project deep links and no horizontal overflow. Inspected updated screenshots at 1440px and 390px. Production remains unchanged.
+
+### Production release — October 6, 2026
+
+- User authorized committing, pushing and publishing the current site. Clean `npm ci`, four tests, production build and built-asset checks pass; npm audit reports no vulnerabilities. CycleKindAI is removed from content and scene references.
+- Publishing through the checked-in GitHub Actions Pages workflow, which builds and uploads `dist` from `main`. Live deployment verification follows the push.

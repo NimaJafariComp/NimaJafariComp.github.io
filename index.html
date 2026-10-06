@@ -1,117 +1,61 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b1020" />
-  <meta name="description" content="Nima Jafari — Software Engineer focused on machine learning, robotics, and full-stack AI systems." />
-
-  <title>Nima Jafari — Portfolio</title>
-
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  
-  <svg class="svg-filters" width="0" height="0" aria-hidden="true" focusable="false">
-    <filter id="brush">
-      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="2" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="7" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-
-    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feColorMatrix type="matrix" values="
-        1 0 0 0 0
-        0 1 0 0 0
-        0 0 1 0 0
-        0 0 0 18 -8" result="glow"/>
-      <feMerge>
-        <feMergeNode in="glow"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <filter id="grain">
-      <feTurbulence type="turbulence" baseFrequency="0.8" numOctaves="2" seed="8" result="noise"/>
-    </filter>
-  </svg>
-
-  <header class="topbar">
-    <div class="brand">
-      <span class="brand__mark" aria-hidden="true">✶</span>
-      <span class="brand__text">Nima Jafari</span>
-      <span class="brand__sub" id="themeLabel">Starry Night</span>
-    </div>
-
-    <div class="topbar__actions">
-      <button class="btn btn--ghost magnetic" id="btnMusic" type="button" title="Toggle music (M)">
-        <span class="btn__icon" aria-hidden="true">♪</span>
-        <span class="btn__label">Music</span>
-      </button>
-
-      <button class="btn btn--ghost magnetic" id="btnTheme" type="button" title="Toggle theme (T)">
-        <span class="btn__icon" aria-hidden="true">☾</span>
-        <span class="btn__label">Theme</span>
-      </button>
-
-      <button class="btn btn--primary magnetic" id="btnCV" type="button" title="Open resume">
-        <span class="btn__icon" aria-hidden="true">⇩</span>
-        <span class="btn__label">Resume</span>
-      </button>
-    </div>
-  </header>
-
-  <nav class="constellation" id="constellationNav" aria-label="Section navigation">
-    <svg class="constellation__lines" id="constellationLines" aria-hidden="true"></svg>
-    <ol class="constellation__dots" id="constellationDots"></ol>
-  </nav>
-
-  <main id="deck" class="deck" aria-label="Portfolio sections (horizontal)">
-    <section class="panel" data-section="home" data-label="Home"><div class="panel__inner" id="panel-home"></div></section>
-    <section class="panel" data-section="about" data-label="About"><div class="panel__inner" id="panel-about"></div></section>
-    <section class="panel" data-section="work" data-label="Work"><div class="panel__inner" id="panel-work"></div></section>
-    <section class="panel" data-section="projects" data-label="Projects"><div class="panel__inner" id="panel-projects"></div></section>
-    <section class="panel" data-section="skills" data-label="Skills"><div class="panel__inner" id="panel-skills"></div></section>
-    <section class="panel" data-section="cv" data-label="Resume"><div class="panel__inner" id="panel-cv"></div></section>
-    <section class="panel" data-section="honors" data-label="Honors"><div class="panel__inner" id="panel-honors"></div></section>
-    <section class="panel" data-section="contact" data-label="Links"><div class="panel__inner" id="panel-contact"></div></section>
-    <section class="panel" data-section="machines" data-label="Machines"><div class="panel__inner" id="panel-machines"></div></section>
-  </main>
-
-
-
-  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-
-  
-  <aside class="vinyl vinyl--collapsed" id="vinyl" aria-label="Music player">
-    <div class="vinyl__container">
-      <button class="vinyl__close" id="vinylClose" type="button" aria-label="Close music player">×</button>
-      
-      <div class="vinyl__disk" id="vinylDisk" aria-hidden="true">
-        <div class="vinyl__label" id="vinylLabel">Miles</div>
-      </div>
-
-      <div class="vinyl__content">
-        <div class="vinyl__meta">
-          <div class="vinyl__title"><span id="vinylTitle">It Never Entered My Mind</span></div>
-          <div class="vinyl__subtitle"><span id="vinylSubtitle">Miles Davis • 1956</span></div>
-        </div>
-
-        <div class="vinyl__controls">
-          <button class="vinyl__btn" id="vinylPlay" type="button" aria-label="Play or pause">▶</button>
-          <button class="vinyl__btn" id="vinylMute" type="button" aria-label="Mute or unmute">🔈</button>
-          <div class="vinyl__volume">
-            <input id="vinylVol" type="range" min="0" max="100" value="65" aria-label="Volume" />
-          </div>
-        </div>
-      </div>
-
-      <div class="yt" id="ytPlayer" aria-hidden="true"></div>
-    </div>
-  </aside>
-
-  <script src="content.js?v=20260728"></script>
-  <script src="main.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#091321" />
+    <meta
+      name="description"
+      content="Nima Jafari — software engineer building robotics simulation, machine learning research, and full-stack AI products. Explore selected work, publications, and experience."
+    />
+    <title>Nima Jafari — Software, ML & Robotics</title>
+    <link rel="canonical" href="https://nimajafaricomp.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Nima Jafari — Intelligence, engineered."
+    />
+    <meta
+      property="og:description"
+      content="Software engineering, machine learning, and robotics. Explore my research and the products I build."
+    />
+    <meta property="og:url" content="https://nimajafaricomp.github.io/" />
+    <meta
+      property="og:image"
+      content="https://nimajafaricomp.github.io/assets/social-preview.jpg"
+    />
+    <meta
+      property="og:image:alt"
+      content="Nima Jafari — software engineering, machine learning and robotics"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Nima Jafari — Intelligence, engineered."
+    />
+    <meta
+      name="twitter:description"
+      content="Software engineering, machine learning, and robotics."
+    />
+    <meta
+      name="twitter:image"
+      content="https://nimajafaricomp.github.io/assets/social-preview.jpg"
+    />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/assets/fonts/space-grotesk-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/main.js"></script>
+  </head>
+  <body>
+    <!-- portfolio -->
+  </body>
 </html>
