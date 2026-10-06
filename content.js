@@ -114,7 +114,7 @@ export const portfolio = {
       {
         role: "Machine Learning Engineer",
         org: "Contract Projects",
-        when: "Jan 2023 - Sep 2026",
+        when: "Jan 2023 - Present",
         meta: "DoW- and NSF-supported projects, including DARPA and AFOSR programs; appointment administered through University Corporation at CSUN.",
         bullets: [
           "Designed the kernel for the Wiring Diagram SDK. Used a Franka Panda environment in NVIDIA Isaac Sim to validate concepts and test the kernel through planar pushing and guarded peg insertion, with structured observations, bounded execution, and auditable trial logs.",
