@@ -185,9 +185,9 @@ export function renderPortfolio() {
         </div>
         <div class="journey-stage">
         <div class="hero__visual" id="workbench"><picture class="scene-poster"><source media="(max-width: 767px)" srcset="/assets/editorial/software-800.webp"><img src="/assets/editorial/software-1400.webp" width="1400" height="781" alt="" fetchpriority="high"></picture><div class="scene-mount"></div><div class="scene-shade"></div></div>
-        <div class="journey-caption" hidden><p class="eyebrow" id="journey-label"></p><h2 id="journey-title"></h2><p id="journey-description"></p><a class="text-link" id="journey-link" href="#projects">Project details ${arrow}</a></div>
+        <div class="journey-caption" hidden><p class="eyebrow" id="journey-label"></p><h2 id="journey-title"></h2><p id="journey-description"></p><a class="text-link" id="journey-link" href="#projects">See related work ${arrow}</a></div>
         <div class="journey-progress" aria-hidden="true"><span></span></div>
-        <div class="workbench-controls"><div class="workbench-topics" aria-label="Explore areas of work"><a class="topic is-active" href="#project-careerlift" data-topic="software">Software</a><a class="topic" href="#project-pocketpilot" data-topic="products">AI engineering</a><a class="topic" href="#project-hasse-clustering" data-topic="research">ML & research</a><a class="topic" href="#project-robotics" data-topic="robotics">Robotics</a></div></div>
+        <div class="workbench-controls"><div class="workbench-topics" aria-label="Explore areas of work"><a class="topic is-active" aria-current="true" href="#project-careerlift" data-topic="software">Software</a><a class="topic" href="#project-pocketpilot" data-topic="products">AI engineering</a><a class="topic" href="#project-hasse-clustering" data-topic="research">ML & research</a><a class="topic" href="#project-robotics" data-topic="robotics">Robotics</a></div></div>
         </div>
       </section>
 

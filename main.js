@@ -35,16 +35,27 @@ document.addEventListener("click", (event) => {
   if (!menu.contains(event.target)) menu.open = false;
 });
 
-document.querySelectorAll("a[data-topic]").forEach((link) => {
+const topicLinks = document.querySelectorAll("a[data-topic]");
+function markTopic(topic) {
+  selectedTopic = topic;
+  topicLinks.forEach((link) => {
+    const active = link.dataset.topic === topic;
+    link.classList.toggle("is-active", active);
+    if (active) link.setAttribute("aria-current", "true");
+    else link.removeAttribute("aria-current");
+  });
+}
+topicLinks.forEach((link) => {
   link.addEventListener("click", (event) => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     event.preventDefault();
-    selectedTopic = link.dataset.topic;
-    updatePoster(selectedTopic);
-    document
-      .querySelectorAll("a[data-topic]")
-      .forEach((item) => item.classList.toggle("is-active", item === link));
-    if (motion?.selectTopic) motion.selectTopic(selectedTopic);
-    else scene?.setTopic(selectedTopic);
+    const topic = link.dataset.topic;
+    if (motion) motion.selectTopic(topic);
+    else {
+      markTopic(topic);
+      updatePoster(topic);
+      scene?.setTopic(topic);
+    }
   });
 });
 
@@ -91,6 +102,7 @@ async function loadScene() {
     const nextScene = await createWorkbench(workbench.querySelector(".scene-mount"), {
       compact: mobile.matches,
       onFailure: showFallback,
+      onTopicChange: (topic) => motion?.showTopic(topic),
     });
     if (started !== generation) { nextScene.dispose(); return; }
     scene = nextScene;
@@ -98,10 +110,11 @@ async function loadScene() {
     if (reducedMotion.matches) { showFallback(); applyPreferences(); return; }
     workbench.classList.add("is-ready");
     const { setupMotion } = await import("./motion.js");
-    if (!reducedMotion.matches && scene) motion = setupMotion(scene, (topic) => {
-      selectedTopic = topic;
-      document.querySelectorAll("a[data-topic]").forEach(link => link.classList.toggle("is-active", link.dataset.topic === topic));
-    });
+    if (!reducedMotion.matches && scene) {
+      const initialTopic = selectedTopic;
+      motion = setupMotion(scene, markTopic);
+      if (!location.hash && initialTopic !== "software") motion.selectTopic(initialTopic);
+    }
     if (location.hash) openHashTarget();
   } catch (error) {
     console.warn("Workbench uses the static illustration:", error.message);
@@ -118,6 +131,7 @@ function showFallback() {
   scene?.dispose();
   scene = undefined;
   workbench.classList.remove("is-ready");
+  updatePoster(selectedTopic);
 }
 
 function applyPreferences() {

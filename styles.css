@@ -340,8 +340,6 @@ h1 span {
   display: block;
   touch-action: pan-y;
 }
-.phone-screen-layer { position: absolute; inset: 0; pointer-events: none; }
-.phone-screen { width: 390px; height: 704px; border: 0; background: #fff; backface-visibility: hidden; }
 .hero__visual.is-ready .scene-mount {
   opacity: 1;
 }
@@ -1444,14 +1442,14 @@ details[open] > summary span[aria-hidden] {
 .journey-caption[hidden] { display: none; }
 .journey-progress { display: none; }
 @media (min-width:1051px) and (min-height:650px) {
-  .hero.is-journey { height:100svh; min-height:650px; max-height:none; }
+  .hero.is-journey { height:calc(100svh - var(--studio-header, 94px)); min-height:0; max-height:none; }
   .is-journey .hero__visual { inset:0 0 135px 28%; }
-  .is-journey .hero__content { width:49%; padding-top:clamp(60px,10vh,120px); }
+  .is-journey .hero__content { width:49%; padding-top:clamp(35px,7vh,90px); }
   .is-journey h1 { font-size:clamp(64px,6.2vw,100px); }
   .is-journey .hero__description { max-width:370px; }
   .is-journey .hero__annotation { top:26px; }
-  .journey-caption { position:absolute; left:var(--gutter); top:24%; width:32%; z-index:3; opacity:0; transition:opacity .25s; }
-  .journey-caption h2 { font-size:clamp(40px,4.5vw,76px); line-height:1.04; letter-spacing:-.055em; margin:24px 0; }
+  .journey-caption { position:absolute; left:var(--gutter); top:clamp(140px,24%,260px); width:31%; z-index:3; opacity:0; }
+  .journey-caption h2 { font-size:clamp(38px,4.1vw,68px); line-height:1.04; letter-spacing:-.055em; margin:20px 0; text-wrap: balance; }
   .journey-caption > p:not(.eyebrow) { max-width:340px; color:var(--muted); }
   .journey-caption .text-link { display:inline-flex; margin-top:22px; }
   .is-journey .journey-progress { display:block; position:absolute; bottom:0; height:2px; background:var(--gold); width:100%; transform:scaleX(var(--journey-progress,0)); transform-origin:left; z-index:5; }
@@ -1473,7 +1471,7 @@ details[open] > summary span[aria-hidden] {
 .is-mobile-journey .journey-caption .text-link { display: inline-flex; align-items: center; min-height: 44px; font-size: 11px; }
 .is-mobile-journey .workbench-controls { position: absolute; inset: auto 20px 44px; padding: 0; margin: 0; display: block; }
 .is-mobile-journey .workbench-topics { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; }
-.is-mobile-journey .topic { justify-content: center; text-align: center; font-size: 10px; }
+.is-mobile-journey .topic { justify-content: center; text-align: center; font-size: 11px; line-height: 1.25; }
 .is-mobile-journey .scene-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 12px; width: 100%; }
 .is-mobile-journey .scene-action { min-height: 44px; }
 .is-mobile-journey .hero__footer { position: absolute; inset: auto 20px 0; margin: 0; height: 44px; }
@@ -1488,8 +1486,20 @@ details[open] > summary span[aria-hidden] {
   .is-mobile-journey .scene-actions { grid-template-columns: repeat(4,minmax(0,1fr)); }
 }
 
-/* Keep the scene chrome to chapter navigation only. */
-.is-mobile-journey .hero__visual { bottom: 70px; }
+/* Keep the lighting local to the studio so it frames the objects. */
+.is-journey .hero__visual.is-ready {
+  background: radial-gradient(ellipse at 54% 52%, rgb(25 52 61 / .34), transparent 64%);
+}
+.is-mobile-journey .hero__visual { bottom: 100px; }
+@media (max-width:767px) and (min-height:680px) {
+  .is-mobile-journey #journey-description {
+    display: block;
+    max-width: 34ch;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
 .is-mobile-journey .workbench-controls { bottom: 14px; }
 @media (min-width:1051px) and (min-height:650px) {
   .is-journey .hero__visual { bottom: 80px; }
