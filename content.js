@@ -112,9 +112,20 @@ export const portfolio = {
     title: "Experience",
     items: [
       {
+        role: "Expert Project Lead",
+        org: "Terac",
+        when: "Oct 2026 - Present",
+        meta: "AI model evaluation",
+        bullets: [
+          "Lead a team of 20 engineers developing software engineering and reinforcement learning evaluation studies and tasks.",
+          "Coordinate task design, review, and quality assurance for AI model capability evaluations.",
+          "Lead red-teaming of AI conversations to identify weaknesses and assess response safety."
+        ],
+      },
+      {
         role: "Machine Learning Engineer",
         org: "Contract Projects",
-        when: "Jan 2023 - Present",
+        when: "Jan 2023 - Sep 2026",
         meta: "DoW- and NSF-supported projects, including DARPA and AFOSR programs; appointment administered through University Corporation at CSUN.",
         bullets: [
           "Designed the kernel for the Wiring Diagram SDK. Used a Franka Panda environment in NVIDIA Isaac Sim to validate concepts and test the kernel through planar pushing and guarded peg insertion, with structured observations, bounded execution, and auditable trial logs.",

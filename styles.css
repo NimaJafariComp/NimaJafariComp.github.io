@@ -817,6 +817,9 @@ details[open] > summary span[aria-hidden] {
 .education > p:not(.eyebrow) {
   font-size: 13px;
 }
+.education > p:not(.eyebrow) + h3 {
+  margin-top: 20px;
+}
 .about-details {
   border-top: 1px solid var(--line);
   margin-top: 24px;
