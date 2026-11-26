@@ -513,6 +513,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
   let lastTime = 0;
   let replayTime = -1;
   let pendingReplay;
+  let replayAt = 0;
   let progress = 0;
   let currentProgress = 0;
   let dragStart = null, orbit = 0;
@@ -734,7 +735,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
     setProgress(value) {
       journey = true;
       const nextProgress = Math.max(0, Math.min(1, value));
-      if (Math.abs(progress - nextProgress) > 0.0005) {
+      if ((pendingReplay || replayTime >= 0) && Math.abs(replayAt - nextProgress) > 0.012) {
         replayTime = -1;
         pendingReplay = undefined;
       }
@@ -753,6 +754,7 @@ export async function createWorkbench(mount, { compact = false, onFailure, onIns
     },
     setInspected(value) { inspected = value; requestRender(); },
     replay(value) {
+      replayAt = progress;
       pendingReplay = value;
       requestRender();
     },

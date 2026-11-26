@@ -5,7 +5,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const chapters = [
   ["software", "Software engineering", "Development Console", "Typed code, schema validation, and tests for the decisions that matter.", "#project-careerlift"],
-  ["products", "AI engineering", "Agent Orchestration", "Retrieve context, run scoped tools, and verify each result in a traceable workflow.", "#project-pocketpilot"],
+  ["products", "AI engineering", "Agent Orchestration", "Retrieve context, run scoped tools, and verify each result in a traceable workflow.", "#project-agenticai"],
   ["research", "ML & research", "Model Evaluation", "From embeddings and inference to evaluating model behavior against evidence.", "#project-hasse-clustering"],
   ["robotics", "Robotics simulation", "Robotics Workcell", "A controlled pick-and-place sequence with coordinated joints and precise release.", "#project-robotics"],
 ];
