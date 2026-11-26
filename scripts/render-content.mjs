@@ -100,10 +100,10 @@ export function renderPortfolio() {
     {
       id: "project-careerlift",
       name: "CareerLift",
-      category: "Product engineering · CareerLift",
+      category: career.badge,
       kind: "product",
       description: career.desc,
-      tech: ["React", "React Native", "FastAPI"],
+      tech: career.tags,
       story: [
         [
           "The problem",
