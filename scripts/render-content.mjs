@@ -54,7 +54,8 @@ function projectCard({ id, name, category, description, tech, story, projectLink
 
 export function renderPortfolio() {
   const p = portfolio;
-  const research = p.projects.items[0];
+  const research = p.projects.items.find((item) => item.name === "Strategy Mining in Custom RL Environments");
+  const mlRole = p.work.items.find((item) => item.role === "Machine Learning Engineer");
   const career = p.projects.items.find((item) => item.name === "CareerLift");
   const agent = p.projects.items.find((item) => item.name === "AgenticAI");
   const existingProjects = [
@@ -67,9 +68,9 @@ export function renderPortfolio() {
         "Designed the kernel for the Wiring Diagram SDK, using NVIDIA Isaac Sim as a test environment for concept validation and evaluation.",
       tech: ["Python", "Kernel design", "Wiring diagrams", "NVIDIA Isaac Sim"],
       story: [
-        ["Kernel design & validation", p.work.items[0].bullets[0]],
-        ["Evidence, within scope", p.work.items[0].bullets[1]],
-        ["Reproducibility", p.work.items[0].bullets[2]],
+        ["Kernel design & validation", mlRole.bullets[0]],
+        ["Evidence, within scope", mlRole.bullets[1]],
+        ["Reproducibility", mlRole.bullets[2]],
       ],
       projectLinks: [{ title: "Related experience", href: "#experience" }],
     },
@@ -85,7 +86,7 @@ export function renderPortfolio() {
           "The question",
           "How can successful agent behavior be organized into understandable strategies rather than a collection of opaque traces?",
         ],
-        ["My contribution", p.work.items[0].bullets[4]],
+        ["My contribution", mlRole.bullets[4]],
         [
           "Method",
           "Custom game environments, trained PPO agents, and Hasse-diagram clustering, with DBSCAN and hierarchical clustering comparisons.",
@@ -131,11 +132,22 @@ export function renderPortfolio() {
     },
   ];
   const featured = [
+    ["Driftless", "project-driftless", "product", [
+      ["Agent tooling", "Built an interactive terminal for agent runs with live task status, inbox handoffs, and model and provider selection."],
+      ["Full-stack delivery", "Shipped task workflows and agent sessions across React, Node.js, and MongoDB, including organization-scoped access."],
+    ]],
+    ["Terac", "project-terac", "research", [
+      ["Evaluation design", "Coordinated task design, review, and quality assurance for model capability evaluations."],
+      ["Response safety", "Led AI conversation red-teaming to identify weaknesses and assess response safety."],
+    ]],
+    ["SideShift", "project-sideshift", "product", [
+      ["Data access", "Improved caching and data access to reduce unnecessary cloud database and API usage."],
+      ["Subscription experience", "Contributed to product changes focused on subscription conversion and premium feature adoption."],
+    ]],
     ["PocketPilot", "project-pocketpilot", "product", [
       ["Full stack", "React web and Expo mobile clients share domain models and services, backed by Firebase and Rust HTTP services."],
       ["Retrieval", "Dense embeddings and sparse keyword vectors are stored in Qdrant. Merchant names, dates, and amounts receive explicit keyword boosts; unchanged records are skipped during re-indexing."],
     ]],
-    ["CareerLift", "project-careerlift", "product", existingProjects.find(project => project.id === "project-careerlift").story],
     ["ReelMeListing", "project-reelmelisting", "product", [
       ["Studio", "React and FastAPI handle photo uploads, job records, quality reports, and vertical reel assembly with FFmpeg."],
       ["Generated media", "Optional image-editing and ComfyUI/LTX workflows produce candidates for human review. Video generation requires a separately configured CUDA workflow; the browser handles planning and deterministic assembly."],
@@ -153,10 +165,9 @@ export function renderPortfolio() {
     return { id, name, kind, story, category: project.badge, description: project.desc,
       tech: project.tags, projectLinks: project.links };
   });
-  const supportingProjects = existingProjects.filter(project => project.id !== "project-careerlift");
   const featuredNames = new Set(featured.map(project => project.name));
   const otherProjects = p.projects.items.filter(
-    item => !featuredNames.has(item.name) && item !== research && item !== agent,
+    item => !featuredNames.has(item.name) && item !== research && item !== agent && item !== career,
   );
   const professionalLinks = [
     { label: "GitHub", href: `https://github.com/${p.meta.githubUser}` },
@@ -187,7 +198,7 @@ export function renderPortfolio() {
         <div class="hero__visual" id="workbench"><picture class="scene-poster"><source media="(max-width: 767px)" srcset="/assets/editorial/software-800.webp"><img src="/assets/editorial/software-1400.webp" width="1400" height="781" alt="" fetchpriority="high"></picture><div class="scene-mount"></div><div class="scene-shade"></div></div>
         <div class="journey-caption" hidden><p class="eyebrow" id="journey-label"></p><h2 id="journey-title"></h2><p id="journey-description"></p><a class="text-link" id="journey-link" href="#projects">See related work ${arrow}</a></div>
         <div class="journey-progress" aria-hidden="true"><span></span></div>
-        <div class="workbench-controls"><div class="workbench-topics" aria-label="Explore areas of work"><a class="topic is-active" aria-current="true" href="#project-careerlift" data-topic="software">Software</a><a class="topic" href="#project-pocketpilot" data-topic="products">AI engineering</a><a class="topic" href="#project-hasse-clustering" data-topic="research">ML & research</a><a class="topic" href="#project-robotics" data-topic="robotics">Robotics</a></div></div>
+        <div class="workbench-controls"><div class="workbench-topics" aria-label="Explore areas of work"><a class="topic is-active" aria-current="true" href="#project-driftless" data-topic="software">Software</a><a class="topic" href="#project-pocketpilot" data-topic="products">AI engineering</a><a class="topic" href="#project-hasse-clustering" data-topic="research">ML & research</a><a class="topic" href="#project-robotics" data-topic="robotics">Robotics</a></div></div>
         </div>
       </section>
 
@@ -214,7 +225,7 @@ export function renderPortfolio() {
       <section class="section work-section" id="projects" aria-labelledby="work-title"><span id="work" class="anchor-alias"></span>
         <div class="section-heading"><div><h2 id="work-title">Selected projects</h2></div></div>
         <div class="project-grid">${featured.map(projectCard).join("")}</div>
-        <details class="more-work"><summary>More projects <span>${otherProjects.length + supportingProjects.length} projects <span aria-hidden="true">+</span></span></summary><div class="project-grid">${supportingProjects.map(projectCard).join("")}</div><div class="project-list">${otherProjects.map((item) => `<article id="project-${slug(item.name)}"><div><p class="eyebrow">${escapeHtml(item.badge)}</p><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.desc)}</p>${tags(item.tags)}</div><div class="project-list__links">${links(item.links)}</div></article>`).join("")}</div></details>
+        <details class="more-work"><summary>More projects <span>${otherProjects.length + existingProjects.length} projects <span aria-hidden="true">+</span></span></summary><div class="project-grid">${existingProjects.map(projectCard).join("")}</div><div class="project-list">${otherProjects.map((item) => `<article id="project-${slug(item.name)}"><div><p class="eyebrow">${escapeHtml(item.badge)}</p><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.desc)}</p>${tags(item.tags)}</div><div class="project-list__links">${links(item.links)}</div></article>`).join("")}</div></details>
       </section>
 
       <section class="section research-section" id="research" aria-labelledby="research-title"><div class="section-heading"><div><h2 id="research-title">Research & publications</h2></div><p>Reinforcement learning, motion analysis, and the structure hidden inside sequential data.</p></div>

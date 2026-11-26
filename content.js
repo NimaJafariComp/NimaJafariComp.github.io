@@ -114,12 +114,12 @@ export const portfolio = {
       {
         role: "Expert Project Lead",
         org: "Terac",
-        when: "Oct 2026 - Present",
+        when: "Oct 2026 - Nov 2026",
         meta: "AI model evaluation",
         bullets: [
-          "Lead a team of 20 engineers developing software engineering and reinforcement learning evaluation studies and tasks.",
-          "Coordinate task design, review, and quality assurance for AI model capability evaluations.",
-          "Lead red-teaming of AI conversations to identify weaknesses and assess response safety."
+          "Led a team of 20 engineers developing software engineering and reinforcement learning evaluation studies and tasks.",
+          "Coordinated task design, review, and quality assurance for AI model capability evaluations.",
+          "Led red-teaming of AI conversations to identify weaknesses and assess response safety."
         ],
       },
       {
@@ -215,6 +215,27 @@ export const portfolio = {
         links: [
           { kind: "github", href: "https://github.com/NimaJafariComp/Strategy-Mining-in-Custom-RL-Environments-Dual-Path-Discovery-and-Robust-Graph-Clustering?tab=readme-ov-file", title: "Repo" },
         ],
+      },
+      {
+        name: "Driftless",
+        badge: "Founding AI Engineer",
+        desc: "Helped build a software delivery platform where engineering teams and AI agents turn requirements into tracked tasks and verify what ships.",
+        tags: ["React", "Node.js", "Express", "MongoDB", "CLI"],
+        links: [{ href: "https://godriftless.ai/", title: "Visit Driftless" }],
+      },
+      {
+        name: "Terac",
+        badge: "Expert Project Lead",
+        desc: "Led a team of 20 engineers developing software engineering and reinforcement learning evaluations for AI models at Terac, an expert network for research and AI evaluation.",
+        tags: ["Software Engineering Evaluations", "Reinforcement Learning", "Red Teaming"],
+        links: [{ href: "https://terac.com/", title: "Visit Terac" }],
+      },
+      {
+        name: "SideShift",
+        badge: "Full-Stack iOS Engineer · Contract",
+        desc: "Shipped SwiftUI fixes and backend-supported web features for SideShift, a platform where brands find creators and manage campaigns.",
+        tags: ["SwiftUI", "iOS", "Backend", "Caching"],
+        links: [{ href: "https://sideshift.app/", title: "Visit SideShift" }],
       },
       {
         name: "GhostD",
